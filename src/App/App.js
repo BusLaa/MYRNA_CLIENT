@@ -15,6 +15,7 @@ import Meetings from '../Meetings/Meetings';
 import AddMeeting from '../AddMeeting/AddMeeting';
 import Meeting from '../Meeting/Meeting';
 import Place from '../Place/Place';
+import Conversations from '../Conversations/Conversations';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
           <Route path='/addMeeting' element={<AddMeeting/>} />
           <Route path='/meeting' element={<Meeting/>} />
           <Route path='/place' element={<Place/>} />
+          <Route path='/conversations' element={<Conversations/>} />
         </Routes>
         
       </Router>

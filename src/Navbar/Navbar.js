@@ -4,6 +4,7 @@ import {gql} from 'graphql-request';
 
 import userImg from '../img/user.svg';
 import homeImg from '../img/home.svg';
+import conversationImg from '../img/home.svg';
 import mapImg from '../img/map.svg';
 import meetingsImg from '../img/meetings.svg';
 import latestImg from '../img/latest.svg'
@@ -93,9 +94,9 @@ function Navbar (props) {
                 <div>
                     <img src={homeImg}></img> <Link className="navlink" to="/allPosts"> Home </Link>
                 </div>
-                {/* <div>
-                    <img src={latestImg}></img> <Link className="navlink" to="/allUpdates"> Latest Updates </Link>
-                </div> */}
+                <div>
+                    <img src={conversationImg}></img> <Link className="navlink" to="/conversations"> Messenger </Link>
+                </div>
                 <div className={hidden}>
                     <img src={meetingsImg}></img> <Link className="navlink" to="/meetings"> Meetings </Link>
                 </div>

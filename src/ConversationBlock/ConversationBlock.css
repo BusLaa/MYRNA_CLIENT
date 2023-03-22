@@ -1,0 +1,85 @@
+.meetingBlock {
+    background-color: white;
+    width: 100%;
+    height: fit-content;
+    margin: 20px 0px;
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+}
+
+
+
+.meetingBlock > .meetingBlockTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+}
+
+.meetingBlock > .meetingBlockTop > a {
+    text-decoration: none;
+    color: black;
+}
+
+.meetingBlock > .meetingBlockTop > a > .meetingBlockName {
+    display: flex;
+    align-items: center;
+}
+
+
+.meetingBlock > .meetingBlockTop > a > .meetingBlockName > p {
+    font-size: 21px;
+    margin: 2px 2.5px;
+    cursor: pointer;
+}
+
+.meetingBlock > .meetingBlockTop > .meetingBlockDots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.meetingBlock > .meetingBlockTop > .meetingBlockDots > .date {
+    margin: 0px 16px;
+}
+
+.meetingBlock > .meetingBlockTop > .meetingBlockDots > img {
+    cursor: pointer;
+    margin: 18px 20px 18px 18px;
+    width: 32px;
+    transition: 0.2s;
+}
+
+.meetingBlock > .meetingBlockTop > .meetingBlockDots > img:hover {
+    opacity: 75%;
+}
+
+.meetingBlock > .meetingBlockTop > .meetingBlockDots > .dotsMenu {
+    position: absolute;
+    transform: translateX(60px) translateY(60px);
+}
+
+@keyframes fade-in {
+    from {opacity: 0%}
+    to {opacity: 100%}
+}
+
+.meetingBlock > .meetingBlockTop > .meetingBlockDots > .dotsMenu > .dotsMenuButton {
+    background-color: white;
+    animation: fade-in 0.1s ease-in;
+    padding: 8px;
+    margin: 2px;
+    border-radius: 0.5vw;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;   
+    cursor: pointer; 
+    transition: 0.2s;
+    user-select: none;
+}
+
+.meetingBlock > .meetingBlockTop > .meetingBlockDots > .dotsMenu > .dotsMenuButton:hover {
+    background-color: rgb(245, 249, 252);
+}

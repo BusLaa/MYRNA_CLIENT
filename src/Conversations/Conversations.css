@@ -1,0 +1,75 @@
+.conversationsPage {
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.conversationsPageText {
+    font-size: 36px;
+}
+
+.conversationsPage > .conversationsPageConversationsDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+.conversationsPage > .conversationsPageConversationsDiv > .conversationsPageConversations {
+    width: 700px;
+    max-width: 80%;
+}
+
+
+.conversationsPage > .conversationsPageConversationsDiv > .conversationsPageConversations > .noConversationsDiv {
+    background-color: white;
+    width: 700px;
+    margin: 20px 0px;
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+}
+
+.conversationsPage > .conversationsPageConversationsDiv > .conversationsPageConversations > .noConversationsDiv > p {
+    font-size: 26px;
+    margin-top: 36px;
+    padding: 32px;
+}
+
+.conversationsPage > .conversationsPageConversationsDiv > .conversationsPageConversations  > .noConversationsDiv > a > button {
+    width: 180px;
+    font-size: 24px;
+    margin-bottom: 68px;
+    padding: 8px;
+    transition: 0.2s;
+    background-color: #067BE2;
+    border-radius: 8px;
+    border-width: 0px;
+    color: white;
+    cursor: pointer;
+}
+
+.conversationsPage > .conversationsPageConversationsDiv > .conversationsPageConversations  > .noConversationsDiv > a > button:hover {
+    opacity: 75%;
+}
+
+.conversationsPage > .yesConversationsDiv {
+}
+
+.conversationsPage > .yesConversationsDiv > a > button {
+    width: 180px;
+    font-size: 18px;
+    margin: 12px;
+    padding: 12px;
+    transition: 0.2s;
+    background-color: #067BE2;
+    border-radius: 8px;
+    border-width: 0px;
+    color: white;
+    cursor: pointer;
+    transform: translateX(240px);
+}
+
+.conversationsPage > .yesConversationsDiv > a > button:hover {
+    opacity: 75%;
+}

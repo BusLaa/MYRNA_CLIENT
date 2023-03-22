@@ -49,8 +49,6 @@ function Meeting (props) {
 
 
     useEffect(() =>{
-        console.log(document.querySelector(".meetingChat"));
-        console.log(meeting);
         if (meeting.members != null) {
             setMembers(setMembersFast());           
         }
@@ -59,12 +57,8 @@ function Meeting (props) {
         }
         let b = new Date(parseInt(meeting.date));
         setDate(b);
-        console.log(b.getMilliseconds());
-        if (b.getMilliseconds() > new Date().getMilliseconds()) {
-            setDatePhrase("The meeting is going to happen on ");
-        } else {
-            setDatePhrase("The meeting has passed on ");
-        }
+        console.log(meeting);
+        setDatePhrase("The meeting is going to happen on ");
     }, [meeting])
 
     // useEffect(() =>{

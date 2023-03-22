@@ -195,11 +195,13 @@
     overflow-y: auto;
     overflow-x: hidden;
     min-height: 300px;
+    flex: 1 1 auto;
 }
 
 .meetingPage > .meetingDiv > .meetingChat > .meetingChatInput {
     display: flex;
     justify-content: center;
+    flex: 0 1 auto;
 }
 
 .meetingPage > .meetingDiv > .meetingChat > .meetingChatInput > input {
