@@ -16,14 +16,14 @@ function MeetingMessage (props) {
     const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
 
     useState(() => {
-        
+
     }, [])
 
     return(
         <div className='meetingMessage' id={props.message.id}>
             <div className="meetingMessageTop">
-                <img src={avatars[5]}></img>
-                <Link to="/profile" state={{ userId: 6 }} > <p> Georg Laabe </p> </Link>
+                <img src={avatars[props.message.author.avatar]}></img>
+                <Link to="/profile" state={{ userId: props.message.author.id }} > <p>{props.message.author.first_name} {props.message.author.last_name}</p> </Link>
             </div>
             <div className="meetingMessageContent">
                 <p> — {props.message.content} </p>

@@ -10,10 +10,12 @@ import SearchUsers from '../SearchUsers/SearchUsers';
 import { gql } from 'graphql-request';
 
 import placeImg from '../img/pizzakiosk.jpg';
+import { flushSync } from 'react-dom';
 
 function Meeting (props) {
 
     const [date, setDate] = useState(new Date());
+    const [datePhrase, setDatePhrase] = useState("");
 
     let a = new Date();
     a.toISOString();
@@ -23,6 +25,8 @@ function Meeting (props) {
     const [messages, setMessages] = useState([]);
 
     const location = useLocation();
+
+    const [content, setContent] = useState("");
 
     const [state, setState] = useState(location.state || localStorage.getItem("state"));
     
@@ -55,6 +59,12 @@ function Meeting (props) {
         }
         let b = new Date(parseInt(meeting.date));
         setDate(b);
+        console.log(b.getMilliseconds());
+        if (b.getMilliseconds() > new Date().getMilliseconds()) {
+            setDatePhrase("The meeting is going to happen on ");
+        } else {
+            setDatePhrase("The meeting has passed on ");
+        }
     }, [meeting])
 
     // useEffect(() =>{
@@ -77,7 +87,6 @@ function Meeting (props) {
         return a.meetings.find((x) => x.id === state.meetingId);
     }
       
-
     const saveState = (e) => {
         e.preventDefault();
         localStorage.setItem("state", location.state);
@@ -120,6 +129,12 @@ function Meeting (props) {
                     messages {
                         content
                         id
+                        author {
+                            id
+                            first_name
+                            last_name
+                            avatar
+                        }
                     }
                 }
             }
@@ -136,6 +151,21 @@ function Meeting (props) {
             }
         }
     `;
+
+    let query3 = gql`
+        mutation CreateMeetingMessage {
+            createMeetingMessage(meeting_id: ${meeting.id}, author: ${localStorage.getItem("user_id")}, content: "${content}") {
+                id
+                content
+                author {
+                    id
+                    first_name
+                    last_name
+                    avatar
+                }
+            }
+        }  
+    `;  
 
     async function getData() {
         try {
@@ -169,10 +199,6 @@ function Meeting (props) {
         }       
     }
 
-
-    function deleteMeeting() {
-    }
-
     function clickOnCancel() {
         setMeetingPageTextStyle("meetingPageText");
         setMeetingPageTextChangeStyle("hidden meetingPageTextChange");
@@ -190,6 +216,37 @@ function Meeting (props) {
     }
 
     function editPlace() {
+    }
+
+    async function addMessage(e) {
+        console.log("AddMessage!");
+        e.preventDefault();
+        try {
+            setContent(content.trim());
+            if (content == null || content === "" || content.slice(0,1) === " ") return;
+            console.log("AddMessage2!");
+            return fetch(process.env.REACT_APP_SERVER_IP, {
+                headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token")},
+                method: 'POST',
+                body: JSON.stringify({"query": query3})
+            }).then((a) => {
+                return a.json();
+            }).then((b) => {
+                console.log(b);
+                setMessages([].concat(messages, b.data.createMeetingMessage))
+                setContent("");
+                document.getElementById("messageInput").value = "";             
+                setTimeout(() => {
+                    document.querySelector(".meetingMessages").scroll({
+                        top: document.querySelector(".meetingMessages").scrollHeight,
+                        behavior: "smooth",
+                    });
+                }, 100);
+                return b;
+            })
+        } catch (err) {
+            console.log(err);
+        } 
     }
 
     function toggleInviteUser() {
@@ -262,7 +319,7 @@ function Meeting (props) {
 
                     <div className="meeting">
                         <div className="meetingInfo">
-                            <p className="meetingDateText"> The meeting is going to happen: { date.toLocaleDateString() } </p>
+                            <p className="meetingDateText"> { datePhrase } { date.toLocaleDateString() } </p>
 
                             <div className="meetingHr">
                                 <hr></hr>    
@@ -300,7 +357,8 @@ function Meeting (props) {
                             {messages.map((message) => <MeetingMessage key={message.id} message={message}/>)}
                         </div>
                         <div className='meetingChatInput'>
-                            <input placeholder='Wassup?'></input>
+                            <input id="messageInput" onChange={(e) => {setContent(e.target.value)}} placeholder='Wassup?'></input>
+                            <i onClick={addMessage} className="fa fa-paper-plane" aria-hidden='true'></i>
                         </div>
                     </div>      
 

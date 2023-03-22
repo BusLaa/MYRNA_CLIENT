@@ -171,7 +171,7 @@
 .meetingPage > .meetingDiv > .meetingChat {
     margin: 20px;
     width: 450px;
-    max-height: 500px;
+    max-height: 510px;
     background-color: white;
     border-radius: 0.5vw;
     border-color: #E9E9E9;
@@ -194,6 +194,7 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
+    min-height: 300px;
 }
 
 .meetingPage > .meetingDiv > .meetingChat > .meetingChatInput {
@@ -203,19 +204,32 @@
 
 .meetingPage > .meetingDiv > .meetingChat > .meetingChatInput > input {
     height: 20px;
-    width: 80%;
+    width: 75%;
     overflow-y: auto;
     resize: none;
     overflow: hidden;
     font-style: italic;
     border-radius: 12px;
-    font-size: 13px;
+    font-size: 16px;
     margin: 0px 12px 12px 12px;
     padding: 15px;
     border-style: solid;
     border-color: #E9E9E9;
     border-width:  0.1vw;
     background-color: #f0f0f0;
+}
+
+.meetingPage > .meetingDiv > .meetingChat > .meetingChatInput > i {
+    cursor: pointer;
+    transition: 0.2s;
+    color: #067BE2;
+    font-size: 24px;
+    margin: 13px 18px 0px 2px;
+}
+
+.meetingPage > .meetingDiv > .meetingChat > .meetingChatInput > i:hover {
+    opacity: 75%;
+    transform: skewY(8deg) scale(1.05);
 }
 
 .meetingPage > .meetingDiv > .meetingChat > p {

@@ -168,10 +168,11 @@
 .post > .postComment > input {
     display: flex;
     align-items: center;
-    font-size: 18px;
+    font-size: 14px;
     margin: 16px 4px 12px 16px;
     width: 100%;
-    padding: 5px;
+    padding: 8px;
+    font-style: italic;
     border-style: solid;
     border-color: #E9E9E9;
     border-width:  0.1vw;
@@ -188,4 +189,5 @@
 
 .post > .postComment > i:hover {
     opacity: 75%;
+    transform: skewY(8deg) scale(1.05);
 }
