@@ -56,6 +56,7 @@
     border-color: #E9E9E9;
     border-width: 0.1vw;
     border-style: solid;
+    padding-bottom: 16px;
 }
 
 .meetingPage > .meetingDiv > .meeting > .name {
@@ -167,7 +168,7 @@
 .meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingMembers {
 }
 
-.meetingPage > .meetingDiv > .meetingChat{
+.meetingPage > .meetingDiv > .meetingChat {
     margin: 20px;
     width: 450px;
     max-height: 500px;
@@ -178,20 +179,38 @@
     border-style: solid;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+}
+
+.meetingPage > .meetingDiv > .meetingChat > .meetingMessages {
+    border-radius: 0.5vw;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    margin: 16px;
+    background-color: #f0f0f0;
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.meetingPage > .meetingDiv > .meetingChat > input {
-    height: 175px;
-    width: 85%;
+.meetingPage > .meetingDiv > .meetingChat > .meetingChatInput {
+    display: flex;
+    justify-content: center;
+}
+
+.meetingPage > .meetingDiv > .meetingChat > .meetingChatInput > input {
+    height: 20px;
+    width: 80%;
     overflow-y: auto;
     resize: none;
     overflow: hidden;
     font-style: italic;
     border-radius: 12px;
     font-size: 13px;
-    margin: 12px 12px;
+    margin: 0px 12px 12px 12px;
     padding: 15px;
     border-style: solid;
     border-color: #E9E9E9;

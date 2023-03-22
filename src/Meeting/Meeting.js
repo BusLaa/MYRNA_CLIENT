@@ -46,7 +46,6 @@ function Meeting (props) {
 
     useEffect(() =>{
         console.log(document.querySelector(".meetingChat"));
-        document.querySelector(".meetingChat").scrollTo(0, 1000);
         console.log(meeting);
         if (meeting.members != null) {
             setMembers(setMembersFast());           
@@ -297,8 +296,12 @@ function Meeting (props) {
                     </div>
 
                     <div className='meetingChat'>
-                        {messages.map((message) => <MeetingMessage key={message.id} message={message}/>)}
-                        <input placeholder='Wassup?'></input>
+                        <div className='meetingMessages'>
+                            {messages.map((message) => <MeetingMessage key={message.id} message={message}/>)}
+                        </div>
+                        <div className='meetingChatInput'>
+                            <input placeholder='Wassup?'></input>
+                        </div>
                     </div>      
 
                 </div>

@@ -15,6 +15,10 @@ function MeetingMessage (props) {
 
     const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
 
+    useState(() => {
+        
+    }, [])
+
     return(
         <div className='meetingMessage' id={props.message.id}>
             <div className="meetingMessageTop">
