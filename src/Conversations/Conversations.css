@@ -57,7 +57,7 @@
 }
 
 .conversationsPage > .yesConversationsDiv > a > button {
-    width: 180px;
+    width: 240px;
     font-size: 18px;
     margin: 12px;
     padding: 12px;
@@ -67,7 +67,7 @@
     border-width: 0px;
     color: white;
     cursor: pointer;
-    transform: translateX(240px);
+    transform: translateX(210px);
 }
 
 .conversationsPage > .yesConversationsDiv > a > button:hover {

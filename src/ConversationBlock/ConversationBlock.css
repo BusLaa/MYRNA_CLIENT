@@ -1,4 +1,4 @@
-.meetingBlock {
+.conversationBlock {
     background-color: white;
     width: 100%;
     height: fit-content;
@@ -11,52 +11,52 @@
 
 
 
-.meetingBlock > .meetingBlockTop {
+.conversationBlock > .conversationBlockTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 12px;
 }
 
-.meetingBlock > .meetingBlockTop > a {
+.conversationBlock > .conversationBlockTop > a {
     text-decoration: none;
     color: black;
 }
 
-.meetingBlock > .meetingBlockTop > a > .meetingBlockName {
+.conversationBlock > .conversationBlockTop > a > .conversationBlockName {
     display: flex;
     align-items: center;
 }
 
 
-.meetingBlock > .meetingBlockTop > a > .meetingBlockName > p {
+.conversationBlock > .conversationBlockTop > a > .conversationBlockName > p {
     font-size: 21px;
     margin: 2px 2.5px;
     cursor: pointer;
 }
 
-.meetingBlock > .meetingBlockTop > .meetingBlockDots {
+.conversationBlock > .conversationBlockTop > .conversationBlockDots {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.meetingBlock > .meetingBlockTop > .meetingBlockDots > .date {
+.conversationBlock > .conversationBlockTop > .conversationBlockDots > .date {
     margin: 0px 16px;
 }
 
-.meetingBlock > .meetingBlockTop > .meetingBlockDots > img {
+.conversationBlock > .conversationBlockTop > .conversationBlockDots > img {
     cursor: pointer;
     margin: 18px 20px 18px 18px;
     width: 32px;
     transition: 0.2s;
 }
 
-.meetingBlock > .meetingBlockTop > .meetingBlockDots > img:hover {
+.conversationBlock > .conversationBlockTop > .conversationBlockDots > img:hover {
     opacity: 75%;
 }
 
-.meetingBlock > .meetingBlockTop > .meetingBlockDots > .dotsMenu {
+.conversationBlock > .conversationBlockTop > .conversationBlockDots > .dotsMenu {
     position: absolute;
     transform: translateX(60px) translateY(60px);
 }
@@ -66,7 +66,7 @@
     to {opacity: 100%}
 }
 
-.meetingBlock > .meetingBlockTop > .meetingBlockDots > .dotsMenu > .dotsMenuButton {
+.conversationBlock > .conversationBlockTop > .conversationBlockDots > .dotsMenu > .dotsMenuButton {
     background-color: white;
     animation: fade-in 0.1s ease-in;
     padding: 8px;
@@ -80,6 +80,6 @@
     user-select: none;
 }
 
-.meetingBlock > .meetingBlockTop > .meetingBlockDots > .dotsMenu > .dotsMenuButton:hover {
+.conversationBlock > .conversationBlockTop > .conversationBlockDots > .dotsMenu > .dotsMenuButton:hover {
     background-color: rgb(245, 249, 252);
 }

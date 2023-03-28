@@ -49,7 +49,7 @@ function deleteMeeting() {
         }).then((b) => {
             console.log(b.data)
             if (b.data.deleteMeeting) {
-                props.setImportantId(props.meeting.id)
+                props.setDeleteId(props.meeting.id);
             } 
             return b
         })

@@ -10,15 +10,19 @@ function Meetings (props) {
 
     const [meetings, setMeetings] = useState([]);
 
-    const [noMeetingsDivStyle, SetNoMeetingsDivStyle] = useState("hidden noMeetingsDiv");
-    const [yesMeetingsDivStyle, SetYesMeetingsDivStyle] = useState("hidden yesMeetingsDiv")
+    const [noMeetingsDivStyle, setNoMeetingsDivStyle] = useState("hidden noMeetingsDiv");
+    const [yesMeetingsDivStyle, setYesMeetingsDivStyle] = useState("hidden yesMeetingsDiv")
 
-    const [deleteId, setDeleteId] = useState(0);
+    const [deleteId, setDeleteId] = useState(-1);
 
     useEffect(() => {
         if (deleteId != -1) {
             const newList = meetings.filter((item) => item.id !== deleteId);
             setMeetings(newList);    
+            if (newList.length === 0) {
+                setNoMeetingsDivStyle("noMeetingsDiv");
+                setYesMeetingsDivStyle("hidden yesMeetingsDiv")                
+            }
             setDeleteId(-1);
         }
     },[deleteId])
@@ -62,12 +66,12 @@ function Meetings (props) {
         .then((a) => {
             console.log(a.data.getUserById.meetings);
             if (a.data.getUserById.meetings == null || a.data.getUserById.meetings.length == 0) {
-                SetNoMeetingsDivStyle("noMeetingsDiv");
-                SetYesMeetingsDivStyle("hidden yesMeetingsDiv")
+                setNoMeetingsDivStyle("noMeetingsDiv");
+                setYesMeetingsDivStyle("hidden yesMeetingsDiv")
             } else {
                 setMeetings(a.data.getUserById.meetings);
-                SetNoMeetingsDivStyle("hidden noMeetingsDiv");
-                SetYesMeetingsDivStyle("yesMeetingsDiv")
+                setNoMeetingsDivStyle("hidden noMeetingsDiv");
+                setYesMeetingsDivStyle("yesMeetingsDiv")
             }
         })
         

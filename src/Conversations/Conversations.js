@@ -81,11 +81,11 @@ function Conversations (props) {
                     <Link to="/addConversation"> <button> Create a Conversation </button> </Link>
                 </div>
 
-                <div className="conversationsPageMeetingsDiv">
-                    <div className='conversationsPageMeetings'>
+                <div className="conversationsPageConversationsDiv">
+                    <div className='conversationsPageConversations'>
                         <div className={noConversationsDivStyle}>
-                            <p> There are no any meetings yet </p>
-                            <Link to="/addMeeting"> <button> Create one </button> </Link>
+                            <p> There are no any conversations yet </p>
+                            <Link to="/addConversation"> <button> Create one </button> </Link>
                         </div>
                         {conversations.map((conversation) => <ConversationBlock setDeleteId={setDeleteId} key={conversation.id} conversation={conversation}/>)}
                     </div>

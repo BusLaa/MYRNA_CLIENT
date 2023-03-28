@@ -47,7 +47,7 @@ function ConversationBlock(props) {
 
   return (
 
-    <div className="conversationBlock" id={props.meeting.id}>
+    <div className="conversationBlock" id={props.conversation.id}>
         <div className="conversationBlockTop">
             <Link to="/conversation" state={{ conversationId: props.conversation.id }} >
                 <div className="conversationBlockName">
