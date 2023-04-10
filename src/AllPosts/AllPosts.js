@@ -33,8 +33,8 @@ function AllPosts (props) {
                 content
                 author {
                     id
-                    first_name
-                    last_name
+                    firstName
+                    lastName
                     avatar
                 }
                 comments {
@@ -42,8 +42,8 @@ function AllPosts (props) {
                     content
                     author {
                         id
-                        first_name
-                        last_name
+                        firstName
+                        lastName
                         avatar
                     }
                 }

@@ -42,6 +42,7 @@ function Navbar (props) {
                 return a.json()
             }).then((b) => {
                 return b
+
             })
 
         } catch (err) {
@@ -94,7 +95,7 @@ function Navbar (props) {
                 <div>
                     <img src={homeImg}></img> <Link className="navlink" to="/allPosts"> Home </Link>
                 </div>
-                <div>
+                <div className={hidden}>
                     <img src={conversationImg}></img> <Link className="navlink" to="/conversations"> Messenger </Link>
                 </div>
                 <div className={hidden}>

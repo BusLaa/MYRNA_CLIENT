@@ -26,19 +26,19 @@ function Registration (props) {
 
   let query = gql`
     mutation Signup {
-      signup(email: "${email}", password: "${pass}", first_name: "${firstName}", last_name: "${lastName}", birthday: "${birthday}", location_id: ${locationId}) {
+      signup(email: "${email}", password: "${pass}", firstName: "${firstName}", lastName: "${lastName}", birthday: "${birthday}", locationId: ${locationId}) {
         token
         user {
           id
           email
-          first_name
-          last_name
+          firstName
+          lastName
           birthday
           location {
             id
             country
             city
-            postal_code
+            postalCode
           }
         }
       }

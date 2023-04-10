@@ -67,7 +67,7 @@ function Comment (props) {
         <div className='comment' id={props.comment.id}>
             <div className="commentTop">
                 <img src={avatars[props.comment.author.avatar]}></img>
-                <Link to="/profile" state={{ userId: props.comment.author.id }} > <p> {props.comment.author.first_name} </p> <p> {props.comment.author.last_name} </p> </Link>
+                <Link to="/profile" state={{ userId: props.comment.author.id }} > <p> {props.comment.author.firstName} </p> <p> {props.comment.author.lastName} </p> </Link>
                 <div className="commentDots">
                     <img onClick={commentDots} src={DotsImg}></img>
                     <div className={dotsMenuStyle}>

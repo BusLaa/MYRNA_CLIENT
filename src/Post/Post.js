@@ -45,12 +45,12 @@ function Post(props) {
 
     let query = gql`
         mutation AddNewComment {
-            addNewComment(user_id: ${localStorage.getItem("user_id")}, post_id: ${props.post.id}, content: "${content}") {
+            addNewComment(userId: ${localStorage.getItem("user_id")}, postId: ${props.post.id}, content: "${content}") {
             id
             author {
                 id
-                first_name
-                last_name
+                firstName
+                lastName
                 avatar
             }
             content
@@ -60,19 +60,19 @@ function Post(props) {
 
     let query2 = gql`
         mutation LikePost {
-            likePost(user_id: ${localStorage.getItem("user_id")}, post_id: ${props.post.id})
+            likePost(userId: ${localStorage.getItem("user_id")}, postId: ${props.post.id})
         }
     `; 
 
     let query3 = gql`
         mutation DeletePost {
-            deletePost(post_id: ${props.post.id})
+            deletePost(postId: ${props.post.id})
         }
     `; 
 
     let query4 = gql`
         query Query {
-            isPostLikedByUser(post_id: ${props.post.id}, user_id: ${localStorage.getItem("user_id")})
+            isPostLikedByUser(postId: ${props.post.id}, userId: ${localStorage.getItem("user_id")})
         }
     `; 
 
@@ -188,8 +188,8 @@ function Post(props) {
             <div className="postAuthor">
                 <Link to="/profile" state={{ userId: props.post.author.id }} >
                 <img src={avatars[props.post.author.avatar]}></img>
-                <p> {props.post.author.first_name} </p> 
-                <p> {props.post.author.last_name} </p>
+                <p> {props.post.author.firstName} </p> 
+                <p> {props.post.author.lastName} </p>
                 </Link>
             </div>
             <div className="postDots">

@@ -61,8 +61,8 @@ function Profile (props) {
         query GetUserById {
             getUserById(id: ${state.userId}) {
                 id
-                first_name
-                last_name
+                firstName
+                lastName
                 birthday
                 subscribed {
                     id                    
@@ -71,7 +71,7 @@ function Profile (props) {
                     id
                     city
                     country
-                    postal_code
+                    postalCode
                 }
                 avatar
                 posts {
@@ -80,8 +80,8 @@ function Profile (props) {
                     content
                     author {
                         id
-                        first_name
-                        last_name
+                        firstName
+                        lastName
                         avatar
                     }
                     comments {
@@ -89,8 +89,8 @@ function Profile (props) {
                         content
                         author {
                             id
-                            first_name
-                            last_name
+                            firstName
+                            lastName
                             avatar
                         }
                     }
@@ -113,8 +113,10 @@ function Profile (props) {
                 method: 'POST',
                 body: JSON.stringify({"query": query})
             }).then((a) =>{
+                console.log(a);
                 return a.json()
             }).then((b) => {
+                console.log(b);
                 return b
             })
         } catch (err) {

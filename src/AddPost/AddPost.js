@@ -27,7 +27,7 @@ function AddPost (props) {
 
         let query = gql`
         mutation AddNewPost {
-            addNewPost(user_id: ${localStorage.getItem("user_id")}, 
+            addNewPost(userId: ${localStorage.getItem("user_id")}, 
                 header: """${header_2}""", 
                 content: """${content_2}""") {
                     id
