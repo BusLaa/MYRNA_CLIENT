@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {request, gql} from 'graphql-request';
 import "./Registration.css"
+import { flushSync } from 'react-dom';
 
 function Registration (props) {
 
@@ -47,11 +48,50 @@ function Registration (props) {
 
   let query2 = gql`
     mutation CreateLocation {
-      createLocation(country: "${country}", city: "${city}", postal_code: "${postalCode}") {
+      createLocation(country: "${country}", city: "${city}", postalCode: "${postalCode}") {
         id
       }
     }  
   `;
+
+  async function signUp2() {
+    try {
+
+      const res = await fetch(process.env.REACT_APP_SERVER_IP, {
+          headers: {'Content-Type': 'application/json'},
+          method: 'POST',
+          body: JSON.stringify({"query": query})
+      })
+
+      const res_json = await res.json();
+
+      try {
+
+        localStorage.setItem("user_id", res_json.data.signup.user.id);
+        localStorage.setItem("token", res_json.data.signup.token);
+
+        window.location.href = "http://localhost:3000/profile";
+
+      } catch (err) {
+
+        setErrorText(res_json.errors[0].message);
+        setErrorStyle("regFormError");
+
+      }
+
+    } catch (err) {
+
+      setErrorText(err);
+      setErrorStyle("regFormError");
+
+    } 
+  }
+
+  useEffect(() => {
+    if (locationId != null) {
+      signUp2();
+    }
+  }, [locationId])
 
 
   async function signUp(e) {
@@ -91,37 +131,6 @@ function Registration (props) {
       }
 
     }  
-
-    try {
-
-      const res = await fetch(process.env.REACT_APP_SERVER_IP, {
-          headers: {'Content-Type': 'application/json'},
-          method: 'POST',
-          body: JSON.stringify({"query": query})
-      })
-
-      const res_json = await res.json();
-
-      try {
-
-        localStorage.setItem("user_id", res_json.data.signup.user.id);
-        localStorage.setItem("token", res_json.data.signup.token);
-
-        window.location.href = "http://localhost:3000/profile";
-
-      } catch (err) {
-
-        setErrorText(res_json.errors[0].message);
-        setErrorStyle("regFormError");
-
-      }
-
-    } catch (err) {
-
-      setErrorText(err);
-      setErrorStyle("regFormError");
-
-    } 
     
   }
 

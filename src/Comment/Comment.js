@@ -24,7 +24,7 @@ function Comment (props) {
 
     let query = gql`
         mutation DeleteComment {
-            deleteComment(comment_id: ${props.comment.id})
+            deleteComment(commentId: ${props.comment.id})
         }
     `; 
 

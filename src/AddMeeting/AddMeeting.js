@@ -13,7 +13,7 @@ function AddMeeting (props) {
 
     let query = gql`
         mutation CreateNewMeeting {
-            createNewMeeting( name: "${header}", date: "${date}", type: ${type}, creator: ${localStorage.getItem("user_id")}) {
+            createNewMeeting(name: "${header}", date: "${date}", type: ${type}, creator: ${localStorage.getItem("user_id")}) {
                 id
             }
         }
@@ -26,7 +26,7 @@ function AddMeeting (props) {
         setHeader(header.trim());
 
         if (header == "" || header.slice(0, 1) == " " || date == "") {
-            setErrorText("Fill all fields correctly!")
+            setErrorText("Fill all the fields correctly!")
             setErrorStyle("addMeetingFormError");
             return;
         }
