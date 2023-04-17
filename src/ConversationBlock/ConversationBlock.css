@@ -30,9 +30,19 @@
 
 
 .conversationBlock > .conversationBlockTop > a > .conversationBlockName > p {
+    cursor: pointer;
+}
+
+.conversationBlock > .conversationBlockTop > a > .conversationBlockName > .conversationTitle {
     font-size: 21px;
     margin: 2px 2.5px;
-    cursor: pointer;
+}
+
+.conversationBlock > .conversationBlockTop > a > .conversationBlockName > .conversationIdea {
+    color: #AEAEAE;
+    font-style: italic;
+    margin: 2px 6px;
+    font-size: 18px; 
 }
 
 .conversationBlock > .conversationBlockTop > .conversationBlockDots {

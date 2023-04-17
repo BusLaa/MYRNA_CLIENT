@@ -37,9 +37,6 @@ function Meetings (props) {
                     date
                     type
                     status
-                    members {
-                        id
-                    }
                 }
             }
         }

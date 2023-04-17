@@ -10,7 +10,6 @@ function MeetingBlock(props) {
 
     const [dotsMenuStyle, setDotsMenuStyle] = useState("hidden dotsMenu");
     const [hiddenMe, setHiddenMe] = useState("hidden dotsMenuButton");
-    const [hiddenSub, setHiddenSub] = useState("hidden dotsMenuButton");
 
     const [makeImportantText, SetMakeImportantText] = useState("");
 
@@ -18,18 +17,18 @@ function MeetingBlock(props) {
 
     let query = gql`
         mutation DeleteMeeting {
-            deleteMeeting(meeting_id: ${props.meeting.id}, user_id: ${localStorage.getItem("user_id")})
+            deleteMeeting(meetingId: ${props.meeting.id}, userId: ${localStorage.getItem("user_id")})
         }
     `;  
 
     let query2 = gql`
         mutation MakeImportant {
-            makeImportant(meeting_id: ${props.meeting.id}, user_id: ${localStorage.getItem("user_id")})
+            makeImportant(meetingId: ${props.meeting.id}, userId: ${localStorage.getItem("user_id")})
         }
     `;  
 
 function meetingBlockDots() {
-    if (dotsMenuStyle != "dotsMenu") {
+    if (dotsMenuStyle !== "dotsMenu") {
         setHiddenMe("dotsMenuButton")
         setDotsMenuStyle("dotsMenu");
     } else {
@@ -107,7 +106,7 @@ useEffect(() =>{
             <div className="meetingBlockDots">
                 <p className='date'> { date.toLocaleDateString() } </p>
                 <div style={{borderRight: "solid 0.1vw #E9E9E9", height: '30px'}}></div>
-                <img onClick={meetingBlockDots} src={DotsImg}></img>
+                <img onClick={meetingBlockDots} src={DotsImg} alt="settings"></img>
                 <div className={dotsMenuStyle}>
                     <div onClick={makeImportant} className={hiddenMe}> {makeImportantText} </div>
                     <div onClick={deleteMeeting} className={hiddenMe}> Delete 🗑️ </div>

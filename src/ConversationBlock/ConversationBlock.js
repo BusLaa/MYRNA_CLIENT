@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { gql } from 'graphql-request';
 import {Link} from 'react-router-dom';
 
@@ -10,16 +10,15 @@ function ConversationBlock(props) {
 
     const [dotsMenuStyle, setDotsMenuStyle] = useState("hidden dotsMenu");
     const [hiddenMe, setHiddenMe] = useState("hidden dotsMenuButton");
-    const [hiddenSub, setHiddenSub] = useState("hidden dotsMenuButton");
 
     let query = gql`
         mutation DeleteConversation {
-            deleteConversation(conversation_id: ${props.conversation.id}, user_id: ${localStorage.getItem("user_id")})
+            deleteConversation(conversationId: ${props.conversation.id}, userId: ${localStorage.getItem("user_id")})
         }
     `;  
 
     function conversationBlockDots() {
-        if (dotsMenuStyle != "dotsMenu") {
+        if (dotsMenuStyle !== "dotsMenu") {
             setHiddenMe("dotsMenuButton")
             setDotsMenuStyle("dotsMenu");
         } else {
@@ -38,6 +37,9 @@ function ConversationBlock(props) {
                 return a.json()
             }).then((b) => {
                 console.log(b.data)
+                if (b.data.deleteConversation) {
+                    props.setDeleteId(props.conversation.id);
+                } 
                 return b
             })
         } catch (err) {
@@ -51,11 +53,12 @@ function ConversationBlock(props) {
         <div className="conversationBlockTop">
             <Link to="/conversation" state={{ conversationId: props.conversation.id }} >
                 <div className="conversationBlockName">
-                    <p> {props.conversation.name} </p> 
+                    <p class="conversationTitle"> {props.conversation.name} </p> 
+                    <p className="conversationIdea"> {props.conversation.idea} </p> 
                 </div>
             </Link>
             <div className="conversationBlockDots">
-                <img onClick={conversationBlockDots} src={DotsImg}></img>
+                <img onClick={conversationBlockDots} src={DotsImg} alt="settings"></img>
                 <div className={dotsMenuStyle}>
                     <div onClick={deleteConversation} className={hiddenMe}> Delete 🗑️ </div>
                 </div>

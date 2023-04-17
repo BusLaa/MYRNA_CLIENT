@@ -8,15 +8,19 @@ function Conversations (props) {
 
     const [conversations, setConversations] = useState([]);
 
-    const [noConversationsDivStyle, SetNoConversationsDivStyle] = useState("hidden noConversationDiv");
-    const [yesConversationsDivStyle, SetYesConversationsDivStyle] = useState("hidden yesConversationDiv")
+    const [noConversationsDivStyle, setNoConversationsDivStyle] = useState("hidden noConversationDiv");
+    const [yesConversationsDivStyle, setYesConversationsDivStyle] = useState("hidden yesConversationDiv")
 
     const [deleteId, setDeleteId] = useState(0);
 
     useEffect(() => {
         if (deleteId != -1) {
             const newList = conversations.filter((item) => item.id !== deleteId);
-            setConversations(newList);    
+            setConversations(newList);   
+            if (newList.length === 0) {
+                setNoConversationsDivStyle("noMeetingsDiv");
+                setYesConversationsDivStyle("hidden yesMeetingsDiv")                
+            } 
             setDeleteId(-1);
         }
     },[deleteId])
@@ -25,15 +29,10 @@ function Conversations (props) {
         query GetUserById {
             getUserById(id: ${localStorage.getItem("user_id")}) {
                 id
-                meetings {
+                conversations {
                     id
                     name
-                    date
-                    type
-                    status
-                    members {
-                        id
-                    }
+                    idea
                 }
             }
         }
@@ -58,14 +57,14 @@ function Conversations (props) {
     useEffect(() => {
         getData()
         .then((a) => {
-            console.log(a.data.getUserById.meetings);
-            if (a.data.getUserById.meetings == null || a.data.getUserById.meetings.length == 0) {
-                SetNoConversationsDivStyle("noConversationsDiv");
-                SetYesConversationsDivStyle("hidden yesConversationsDiv")
+            console.log(a.data.getUserById.conversations);
+            if (a.data.getUserById.conversations == null || a.data.getUserById.conversations.length == 0) {
+                setNoConversationsDivStyle("noConversationsDiv");
+                setYesConversationsDivStyle("hidden yesConversationsDiv")
             } else {
-                setConversations(a.data.getUserById.meetings);
-                SetNoConversationsDivStyle("hidden noConversationsDiv");
-                SetYesConversationsDivStyle("yesConversationsDiv")
+                setConversations(a.data.getUserById.conversations);
+                setNoConversationsDivStyle("hidden noConversationsDiv");
+                setYesConversationsDivStyle("yesConversationsDiv")
             }
         })
         

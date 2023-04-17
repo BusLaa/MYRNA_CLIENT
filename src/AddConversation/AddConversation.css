@@ -1,0 +1,92 @@
+.addConversationPage {
+    width: 100%;
+    margin: 40px 0px 40px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addConversationPage > .addConversation {
+    width: 760px;
+    max-width: 78%;
+    background-color:white;
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    text-align: center;
+}
+
+
+.addConversationPage > .addConversation > .addConversationText {
+    font-size: 36px;
+    margin: 20px 0px;
+    display: inline-block;
+}
+
+.addConversationPage > .addConversation > form > .addConversationForm > div {
+    width: 100%;
+}
+
+.addConversationPage > .addConversation > form > .addConversationForm > .addConversationFormSubmit {
+    display: flex;
+    justify-content: end;
+}
+
+
+
+.addConversationFormSubmit > input {
+    border-radius: 12px;
+    width: fit-content;
+    border-width: 0px;
+    padding: 10px 15px;
+    margin: 24px;
+    transition: 0.2s;
+    background-color: #067BE2;
+    color: white;
+    font-size: 21px;
+    cursor: pointer;
+}
+
+.addConversationFormSubmit > input:hover {
+    opacity: 75%;
+}
+
+.addConversationFormText > textarea {
+    max-width: 80%;
+    min-width: 60%;
+    resize: none;
+    overflow: hidden;
+    font-style: italic;
+    border-radius: 12px;
+    font-size: 24px;
+    margin: 10px 5px;
+    padding: 15px;
+    border-style: solid;
+    border-color: #E9E9E9;
+    border-width:  0.1vw;
+    background-color: #f0f0f0;
+}
+
+.addConversationFormText > textarea[name="title"] {
+    height: 32px;
+    width: 70%;
+}
+
+.addConversationFormText > textarea[name="idea"] {
+    height: 120px;
+    width: 85%;
+    overflow-y: auto;
+}
+
+
+.addConversationError {
+    margin: 0.2vw 0vw 1.2vw 0vw;
+}
+
+.addConversationError > .addConversationErrorText {
+    font-size: 21px;
+    color: red;
+    font-weight: 600;
+    font-style: italic;
+}

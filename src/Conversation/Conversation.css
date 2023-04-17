@@ -1,0 +1,304 @@
+.conversationPage {
+    width: 100%;
+    margin: 20px 0px;
+    text-align: center;
+}
+
+.conversationPage > .black {
+    background-color: rgb(0, 0, 0);
+    opacity: 50%;
+    width: 100%;
+    height: 120%;
+    position: absolute;
+    z-index: 1;
+    transform: translateY(-105px);
+}
+
+
+
+.conversationPageText {
+    font-size: 36px;
+}
+
+.conversationPage > .conversationDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.conversationPage > .conversationDiv > .inviteUser {
+    position: fixed;
+    margin: 10px;
+    padding: 24px 20px 24px 24px;
+    width: 300px;
+    z-index: 2;
+    background-color: white;
+    border-radius: 0.5vw;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    transform: translateY(-120px);
+}
+
+.conversationPage > .conversationDiv > .inviteUser > p {
+    font-size: 24px;
+    margin: 8px;
+}
+
+
+
+.conversationPage > .conversationDiv > .conversation {
+    max-width: 80%;
+    margin: 20px;
+    width: 600px;
+    background-color: white;
+    border-radius: 0.5vw;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    padding-bottom: 16px;
+}
+
+.conversationPage > .conversationDiv > .conversation > .name {
+    font-size: 32px;
+    font-weight: 600;
+    font-style: italic;
+    margin: 12px;
+}
+
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.conversationHr {
+    display: flex;
+    align-items: center; 
+    justify-content: center ;  
+}
+
+.conversationHr > hr {
+    width: 80%;
+    height: 0.02vw;
+    border: none;
+    background-color: #ECECEC;
+}
+
+
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationDateText {
+    font-size: 21px;
+    margin: 24px;
+}
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationPlaceText {
+    font-size: 21px;
+    margin: 18px 0px 12px 0px;
+}
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationPlace {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationPlace > img {
+    max-width: 40%;
+    border-radius: 12px;
+    margin: 12px;
+}
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationPlace > .conversationPlaceDesc {
+    text-align: center;
+    max-width: 60%;
+    margin: 16px;
+}
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationPlace > .conversationPlaceDesc > i > .conversationPlaceTextHeader {
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationPlace > .conversationPlaceDesc > I > .conversationPlaceTextContent {
+    font-size: 14px;
+    margin: 2px;
+}
+
+
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationMembersHeader {
+    margin: 16px 0px;
+    width: 100%;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationMembersHeader > .conversationMembersText {
+    font-size: 21px;
+    margin-bottom: 4px;
+}
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationMembersHeader > .conversationMembersInvite {
+    width: fit-content;
+    height: fit-content;
+    border-color: #E9E9E9;
+    border-style: none;
+    border-radius: 8px;
+    padding: 6px 6px;
+    margin: 8px 8px 8px 8px;
+    font-size: 16px;
+    background-color: #067BE2;
+    color: white;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationMembersHeader > .conversationMembersInvite:hover {
+    opacity: 75%;
+}
+
+
+.conversationPage > .conversationDiv > .conversation > .conversationInfo > .conversationMembers {
+}
+
+.conversationPage > .conversationDiv > .conversationChat {
+    margin: 20px;
+    width: 450px;
+    max-height: 510px;
+    background-color: white;
+    border-radius: 0.5vw;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.conversationPage > .conversationDiv > .conversationChat > .conversationMessages {
+    border-radius: 0.5vw;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    margin: 16px;
+    background-color: #f9f8f8;
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 300px;
+    flex: 1 1 auto;
+}
+
+.conversationPage > .conversationDiv > .conversationChat > .conversationChatInput {
+    display: flex;
+    justify-content: center;
+    flex: 0 1 auto;
+}
+
+.conversationPage > .conversationDiv > .conversationChat > .conversationChatInput > input {
+    height: 20px;
+    width: 75%;
+    overflow-y: auto;
+    resize: none;
+    overflow: hidden;
+    font-style: italic;
+    border-radius: 12px;
+    font-size: 16px;
+    margin: 0px 12px 12px 12px;
+    padding: 15px;
+    border-style: solid;
+    border-color: #E9E9E9;
+    border-width:  0.1vw;
+    background-color: #f0f0f0;
+}
+
+.conversationPage > .conversationDiv > .conversationChat > .conversationChatInput > i {
+    cursor: pointer;
+    transition: 0.2s;
+    color: #067BE2;
+    font-size: 24px;
+    margin: 13px 18px 0px 2px;
+}
+
+.conversationPage > .conversationDiv > .conversationChat > .conversationChatInput > i:hover {
+    opacity: 75%;
+    transform: skewY(8deg) scale(1.05);
+}
+
+.conversationPage > .conversationDiv > .conversationChat > p {
+    margin: 12px;
+    font-size: 21px;
+}
+
+
+.conversationPage > .conversationDiv > .conversation > input[type="button"] {
+    width: fit-content;
+    border-color: #E9E9E9;
+    border-style: none;
+    border-radius: 8px;
+    font-size: 18px;
+    padding: 8px 16px !important;
+    margin: 12px;
+    background-color: #067BE2;
+    color: white;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.conversationPage > .conversationDiv > .conversation > input[type="button"]:hover {
+    opacity: 75%;
+}
+
+.conversationPage > input[type="text"] {
+    width: 260px;
+    font-size: 18px;
+    margin: 0px 12px;
+    padding: 8px;
+    border-radius: 6px;
+    border-style: solid;
+    border-color: #E9E9E9;
+    border-width:  0.1vw;
+    background-color: #f0f0f0;
+}
+
+.conversationPage > input[id="cancel"] {
+    color: black !important;
+    background-color: #f0f0f0 !important;
+    border-style: solid !important;
+    border-color: #E9E9E9 !important;
+    border-width:  0.1vw !important;
+    background-color: #f0f0f0 !important;
+    padding: 8px 12px !important;
+}
+
+.conversationPage > input[type="button"] {
+    width: fit-content;
+    border-color: #E9E9E9;
+    border-style: none;
+    border-radius: 8px;
+    font-size: 18px;
+    padding: 8px 16px;
+    margin: 12px;
+    background-color: #067BE2;
+    color: white;
+    transition: 0.2s;
+}
+
+.conversationPage > input[type="button"]:hover {
+    opacity: 75%;
+    cursor: pointer;
+}
+
+.conversationPage > input[id="cancel"]:hover {
+    opacity: 75%;
+    cursor: pointer;
+}

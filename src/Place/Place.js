@@ -3,7 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 
 import "./Place.css";
 
-import Member from '../Member/Member';
+import Member from '../MeetingMember/MeetingMember';
 
 import { gql } from 'graphql-request';
 
