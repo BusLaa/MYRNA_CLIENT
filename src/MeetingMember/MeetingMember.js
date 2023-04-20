@@ -12,20 +12,20 @@ import {Link} from 'react-router-dom';
 
 function MeetingMember (props) {
 
-    const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
+    const [avatars, ] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
 
     const [crownStyle, setCrownStyle] = useState("hidden");
 
     useEffect(() => {
-        if (props.chief.id == props.member.id) {
+        if (props.chief.id === props.member.id) {
             setCrownStyle("");
         }
-    }, [])
+    }, [props.chief.id, props.member.id])
 
     return(
         <div className='member' id={props.member.id}>
             <div className="memberTop">
-                <img src={avatars[props.member.avatar]}></img>
+                <img src={avatars[props.member.avatar]} alt="avatar"></img>
                 <Link to="/profile" state={{ userId: props.member.id }} > <p> {props.member.first_name} </p> <p> {props.member.last_name} </p> <p className={crownStyle}> 👑 </p> </Link>
             </div>
         </div>

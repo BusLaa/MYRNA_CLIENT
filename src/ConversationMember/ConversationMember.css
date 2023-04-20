@@ -1,0 +1,37 @@
+.member {
+    background-color: #f9f8f8;
+    border-color: #f3f3f3;
+    border-width: 0.1vw;
+    border-style: solid;
+    padding: 0px 0px 0px 16px;
+}
+
+.member > .memberTop {
+    display: flex;
+    align-items: center;
+}
+
+.member > .memberTop > a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+.member > .memberTop > img {
+    border-radius: 8px;
+    width: 26px;
+    margin: 16px 8px 16px 16px;
+    border-radius: 0.5vw;
+    border-color:#ECECEC;
+    border-width: 0.05vw;
+    border-style: solid;
+    cursor: pointer;
+}
+
+.member > .memberTop > a > p {
+    font-size: 18px;
+    margin: 2px 2.5px;
+    cursor: pointer;
+}
+

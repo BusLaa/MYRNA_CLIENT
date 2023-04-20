@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation} from 'react-router-dom'
 
 import "./Profile.css"
 
@@ -16,7 +16,7 @@ import avatar6 from '../img/avatars/avatar6.jpg';
 
 function Profile (props) {
 
-    const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
+    const [avatars,] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
 
     const [user, setUser] = useState({});
     const [userPosts, setUserPosts] = useState([]);
@@ -40,16 +40,16 @@ function Profile (props) {
     let a = new Date();
     a.toISOString();
 
-    const [state, setState] = useState(loc.state || {userId: localStorage.getItem("user_id")});
+    const [state, ] = useState(loc.state || {userId: localStorage.getItem("user_id")});
 
     const [hiddenMe, setHiddenMe] = useState("");
-    const [hiddenSub, setHiddenSub] = useState("hidden");
+    const [, setHiddenSub] = useState("hidden");
     const [subscribeStyle, setSubscribeStyle] = useState("hidden");
 
     const [deleteId, setDeleteId] = useState(0);
 
     useEffect(() => {
-        if (deleteId != -1) {
+        if (deleteId !== -1) {
             const newList = userPosts.filter((item) => item.id !== deleteId);
             setUserPosts(newList);    
             setDeleteId(-1);
@@ -142,18 +142,18 @@ function Profile (props) {
                                         
                     setUserPosts([].concat([], a.posts));
 
-                    if (a.id == localStorage.getItem("user_id")) {
+                    if (a.id === localStorage.getItem("user_id")) {
                         setHiddenMe("");
                         setHiddenSub("hidden");
                         setSubscribeStyle("hidden");
                     } else {
                         setHiddenMe("hidden");
                         setHiddenSub("");
-                        if (a.subscribed.length == 0) {
+                        if (a.subscribed.length === 0) {
                             setSubsribeText("Subscribe");
                             setSubscribeStyle("");  
                         } else {
-                            if (a.subscribed.find((x) => x.id == localStorage.getItem("user_id")).id == localStorage.getItem("user_id")) {
+                            if (a.subscribed.find((x) => x.id === localStorage.getItem("user_id")).id === localStorage.getItem("user_id")) {
                                 setSubsribeText("Unsubscribe");
                                 setSubscribeStyle("backGrey");                        
                             } else {
@@ -211,7 +211,7 @@ function Profile (props) {
     }
 
     function enablePosts() {
-        if (profileTumblerPostsStyle == "profileTumblerPosts") {
+        if (profileTumblerPostsStyle === "profileTumblerPosts") {
 
             setProfileTumblerPostsStyle("profileTumblerPosts blue");
             setUserPostsStyle("profileUserPosts");
@@ -223,7 +223,7 @@ function Profile (props) {
     }
 
     function enableCorner() {
-        if (profileTumblerCornerStyle == "profileTumblerCorner") {
+        if (profileTumblerCornerStyle === "profileTumblerCorner") {
 
             setProfileTumblerCornerStyle("profileTumblerCorner blue");
             setUserCornerStyle("profileUserCorner");
@@ -245,7 +245,7 @@ function Profile (props) {
                     <div className="profile">
                         <p className="name" title={user.id}> {user.first_name} {user.last_name} </p>
                         <div className="profileInfo">
-                            <img className="avatar" src={avatars[user.avatar]}></img>
+                            <img className="avatar" src={avatars[user.avatar]} alt="avatar"></img>
                             <div>
                                 <p className={birthdayStyle}> Birthday: { birthday.toLocaleDateString() }</p>
                                 <p className={locationStyle}> Location: { location.country }, {location.city} </p>             

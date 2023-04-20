@@ -16,7 +16,7 @@ function Meetings (props) {
     const [deleteId, setDeleteId] = useState(-1);
 
     useEffect(() => {
-        if (deleteId != -1) {
+        if (deleteId !== -1) {
             const newList = meetings.filter((item) => item.id !== deleteId);
             setMeetings(newList);    
             if (newList.length === 0) {

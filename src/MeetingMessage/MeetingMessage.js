@@ -13,7 +13,7 @@ import {Link} from 'react-router-dom';
 
 function MeetingMessage (props) {
 
-    const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
+    const [avatars, ] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
 
     useState(() => {
 
@@ -22,7 +22,7 @@ function MeetingMessage (props) {
     return(
         <div className='meetingMessage' id={props.message.id}>
             <div className="meetingMessageTop">
-                <img src={avatars[props.message.author.avatar]}></img>
+                <img src={avatars[props.message.author.avatar]} alt="avatar"></img>
                 <Link to="/profile" state={{ userId: props.message.author.id }} > <p>{props.message.author.first_name} {props.message.author.last_name}</p> </Link>
             </div>
             <div className="meetingMessageContent">

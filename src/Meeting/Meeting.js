@@ -10,7 +10,7 @@ import SearchUsers from '../SearchUsers/SearchUsers';
 import { gql } from 'graphql-request';
 
 import placeImg from '../img/pizzakiosk.jpg';
-import { flushSync } from 'react-dom';
+//import { flushSync } from 'react-dom';
 
 function Meeting (props) {
 
@@ -28,7 +28,7 @@ function Meeting (props) {
 
     const [content, setContent] = useState("");
 
-    const [state, setState] = useState(location.state || localStorage.getItem("state"));
+    const [state, ] = useState(location.state || localStorage.getItem("state"));
     
     const [meetingPageTextStyle, setMeetingPageTextStyle] = useState("meetingPageText");
     const [meetingPageTextChangeStyle, setMeetingPageTextChangeStyle] = useState("hidden meetingPageTextChange");
@@ -244,7 +244,7 @@ function Meeting (props) {
     }
 
     function toggleInviteUser() {
-        if (inviteUserStyle == "inviteUser") {
+        if (inviteUserStyle === "inviteUser") {
             setInviteUserStyle("inviteUser hidden");
             setBlackStyle("black hidden");
         } else {
@@ -254,7 +254,7 @@ function Meeting (props) {
     }
 
     function toggleBlack() {
-        if (blackStyle == "black") {
+        if (blackStyle === "black") {
             toggleInviteUser();
             setBlackStyle("black hidden");
         } else {
@@ -285,7 +285,7 @@ function Meeting (props) {
                 setMembers([].concat(members, b.data.inviteUserToMeeting))
             })
         }
-        if (blackStyle == "black") {
+        if (blackStyle === "black") {
             toggleBlack();
         }
     }, [chooseId])
@@ -321,7 +321,7 @@ function Meeting (props) {
 
                             <p className="meetingPlaceText"> {meeting.places ? meeting.places[0].name : ""} </p>
                             <div className='meetingPlace'>
-                                <img className='meetingPlaceImg' src={placeImg}></img>
+                                <img className='meetingPlaceImg' src={placeImg} alt="place"></img>
                                 <div className='meetingPlaceDesc'>                                
                                     <i> <p className='meetingPlaceTextContent'> Location: {meeting.places ? meeting.places[0].location.country : ""}, {meeting.places ? meeting.places[0].location.city : ""} </p> </i>   
                                     <i> <p className='meetingPlaceTextContent'> Paradigm: {meeting.places ? meeting.places[0].paradigm :  ""} </p> </i>         

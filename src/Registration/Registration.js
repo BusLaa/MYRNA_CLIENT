@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {request, gql} from 'graphql-request';
+import {gql} from 'graphql-request';
 import "./Registration.css"
-import { flushSync } from 'react-dom';
+//import { flushSync } from 'react-dom';
 
 function Registration (props) {
 
@@ -97,11 +97,11 @@ function Registration (props) {
   async function signUp(e) {
     e.preventDefault();
 
-    if (locationStyle != "hidden") {
+    if (locationStyle !== "hidden") {
 
-      if (country.trim().slice(0,1) == " " || country == ""
-        || city.trim().slice(0,1) == " " || city == ""
-        || postalCode.trim().slice(0,1) == " " || postalCode == "") return;
+      if (country.trim().slice(0,1) === " " || country === ""
+        || city.trim().slice(0,1) === " " || city === ""
+        || postalCode.trim().slice(0,1) === " " || postalCode === "") return;
 
       try {
 
@@ -172,7 +172,7 @@ function Registration (props) {
 
 
   function toggleBirthday(e) {
-    if (birthdayStyle == "hidden") {
+    if (birthdayStyle === "hidden") {
       setDateRequire("required");
       setBirthdayStyle("");
     } else {
@@ -183,7 +183,7 @@ function Registration (props) {
   }
 
   function toggleLocation(e) {
-    if (locationStyle == "hidden") {
+    if (locationStyle === "hidden") {
       setLocationRequire("required");
       setLocationStyle("");
     } else {

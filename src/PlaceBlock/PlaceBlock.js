@@ -11,11 +11,11 @@ import placeImg from '../img/pizzakiosk.jpg';
 function PlaceBlock(props) {
     
 
-    const [star, setStar] = useState(0);
-    const [starStyle, setStarStyle] = useState("");
+    //const [star, setStar] = useState(0);
+    //const [starStyle, setStarStyle] = useState("");
 
     const [dotsMenuStyle, setDotsMenuStyle] = useState("hidden dotsMenu")
-    const [dotsMenuButtonStyle, setDotsMenuButtonStyle] = useState("dotsMenuButton")
+    const [dotsMenuButtonStyle, ] = useState("dotsMenuButton")
 
     let query = gql`
     `;  
@@ -53,7 +53,7 @@ function PlaceBlock(props) {
             <div className="placeBlockInfo">
                 <Link to="/place" state={{ placeId: props.place.id }} >
                     <div className="placeBlockAvatar">
-                        <img src={placeImg}></img>
+                        <img src={placeImg} alt="avatar"></img>
                     </div>
                     <div className="placeBlockName">
                         <p> {props.place.name} </p> 
@@ -62,7 +62,7 @@ function PlaceBlock(props) {
             </div>
             <div className="placeBlockDots">
                 <div style={{borderRight: "solid 0.1vw #E9E9E9", height: '30px'}}></div>
-                <img onClick={placeBlockDots} src={DotsImg}></img>
+                <img onClick={placeBlockDots} src={DotsImg} alt="dots"></img>
                 <div className={dotsMenuStyle}>
                     <div className={dotsMenuButtonStyle}> Add to corner ⭐</div>
                     <div className={dotsMenuButtonStyle}> Hide and forget ⛔️ </div>

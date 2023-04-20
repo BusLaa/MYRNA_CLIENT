@@ -1,5 +1,5 @@
-.meetingMessage {
-    width: 75%;
+.conversationMessage {
+    width: 94%;
     background-color: white;
     border-radius: 6px;
     border-style: solid;
@@ -11,19 +11,25 @@
     margin: 0px 12px 12px 12px;
 }
 
-.meetingMessage > .meetingMessageTop {
+.conversationMessageTop {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.conversationMessageTopLeft {
     display: flex;
     align-items: center;
 }
 
-.meetingMessage > .meetingMessageTop > a {
+.conversationMessageTopLeft > a {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: black;
 }
 
-.meetingMessage > .meetingMessageTop > img {
+.conversationMessageTopLeft > img {
     border-radius: 8px;
     width: 26px;
     margin: 14px 8px;
@@ -34,19 +40,32 @@
     cursor: pointer;
 }
 
-.meetingMessage > .meetingMessageTop > a > p {
+.conversationMessageTopLeft > a > p {
     font-size: 17px;
     cursor: pointer;
 }
 
-.meetingMessage > .meetingMessageContent {
+.conversationMessageTopRight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+}
+
+.conversationMessageTopRight > p {
+    font-size: 12px;
+    color: #AEAEAE;
+    font-style: italic;
+}
+
+.conversationMessageContent {
     display: flex;
     align-items: center;
     text-align: left !important;
     margin-bottom: 12px;
 }
 
-.meetingMessage > .meetingMessageContent > p {
+.conversationMessageContent > p {
     font-size: 14px;
     margin: 1px 24px;
 }

@@ -12,14 +12,14 @@ import avatar4 from '../img/avatars/avatar4.jpg';
 import avatar5 from '../img/avatars/avatar5.jpg';
 import avatar6 from '../img/avatars/avatar6.jpg';
 
-import {Link, useResolvedPath} from 'react-router-dom';
+//import {Link, useResolvedPath} from 'react-router-dom';
 
 function SearchUsers (props) {
 
     const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
 
     const [users, setUsers] = useState([]);
-    const [members, setMembers] = useState(props.members || []);
+    //const [members, setMembers] = useState(props.members || []);
 
     const [searchString, setSearchString] = useState("");
 
@@ -28,8 +28,8 @@ function SearchUsers (props) {
             getUsersByName(search: "${searchString}") {
                 id
                 email
-                first_name
-                last_name
+                firstName
+                lastName
                 avatar
             }
         }     
@@ -55,8 +55,8 @@ function SearchUsers (props) {
 
         if (searchString.length > 2) {
             getUsers().then((a) => {
-                setUsers([].concat([], a.data.getUsersByName));
-                console.log(a.data.getUsersByName);
+                setUsers((users) => [...users, a.data.getUsersByName]);
+                //console.log(a.data.getUsersByName);
             });            
         }
 
@@ -80,5 +80,5 @@ function SearchUsers (props) {
 
 export default SearchUsers;
 
-{/* <img src={avatars[props.member.avatar]}></img>
-<Link to="/profile" state={{ userId: 1 }} > <p> Georg </p> </Link> */}
+//{/* <img src={avatars[props.member.avatar]}></img>
+//<Link to="/profile" state={{ userId: 1 }} > <p> Georg </p> </Link> */}

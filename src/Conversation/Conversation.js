@@ -3,35 +3,48 @@ import { useLocation, Link } from 'react-router-dom';
 
 import "./Conversation.css";
 
-import Member from '../MeetingMember/MeetingMember';
+import ConversationMember from '../ConversationMember/ConversationMember';
 import ConversationMessage from '../ConversationMessage/ConversationMessage';
 import SearchUsers from '../SearchUsers/SearchUsers';
 
 import { gql } from 'graphql-request';
 
-import placeImg from '../img/pizzakiosk.jpg';
-import { flushSync } from 'react-dom';
+import { io } from "socket.io-client";
+
 
 function Conversation (props) {
 
-    const [date, setDate] = useState(new Date());
-    const [datePhrase, setDatePhrase] = useState("");
+    const [socket, setSocket] = useState(
+        io(process.env.REACT_APP_SERVER_IP, {
+            reconnectionDelayMax: 10000,
+            auth: {
+                token: "123"
+            },
+            query: {
+                "my-key": "my-value"
+            }
+        }));
+
+    
+
+
+    //const [date, setDate] = useState(new Date());
+    //const [datePhrase, setDatePhrase] = useState("");
 
     let a = new Date();
     a.toISOString();
     
-    const [Conversation, setConversation] = useState({});
+    const [conversation, setConversation] = useState({});
     const [members, setMembers] = useState([]);
     const [messages, setMessages] = useState([]);
 
-    const location = useLocation();
-
     const [content, setContent] = useState("");
 
-    const [state, setState] = useState(location.state || localStorage.getItem("state"));
+    const location = useLocation();
+    const [state, ] = useState(location.state || localStorage.getItem("state"));
     
-    const [ConversationPageTextStyle, setConversationPageTextStyle] = useState("ConversationPageText");
-    const [ConversationPageTextChangeStyle, setConversationPageTextChangeStyle] = useState("hidden ConversationPageTextChange");
+    const [conversationPageTextStyle, setConversationPageTextStyle] = useState("conversationName");
+    const [conversationPageTextChangeStyle, setConversationPageTextChangeStyle] = useState("hidden conversationPageTextChange");
 
     const [inviteUserStyle, setInviteUserStyle] = useState("inviteUser hidden");
     const [blackStyle, setBlackStyle] = useState("black hidden");
@@ -40,39 +53,59 @@ function Conversation (props) {
     const [deleteId, setDeleteId] = useState(0);
 
     useEffect(() => {
-        if (deleteId != -1) {
-            const newList = members.filter((item) => item.id !== deleteId);
-            setMembers(newList);
+        if (!socket || !conversation.id) return
+        socket.on('connect', () => {
+            console.log("connection established Front");
+            console.log("conversationId "+ conversation.id); 
+            socket.emit("askForRoom", {"userId": localStorage.getItem("user_id"), "conversationId": conversation.id});
+        });
+        socket.on('gotId', (args) => {
+            console.log("Sex: " + args);
+        });
+        socket.on('newMessage', (message) => {
+
+            setMessages((messages) => [...messages, message])
+            
+        });
+
+    }, [socket, conversation.id])
+
+    // useEffect(() =>{
+        
+    // }, [messages])
+
+    useEffect(() => {
+        if (deleteId !== -1) {
+            //const newList = members.filter((item) => item.id !== deleteId);
+            setMembers((members) => members.filter((item) => item.id !== deleteId))
+            //setMembers(newList);
             setDeleteId(-1);
         }
     },[deleteId])
 
 
     useEffect(() =>{
-        if (Conversation.members != null) {
+        if (conversation.members != null) {
             setMembers(setMembersFast());           
         }
-        if (Conversation.messages != null) {
+        if (conversation.messages != null) {
             setMessages(setMessagesFast());
         }
-        let b = new Date(parseInt(Conversation.date));
-        setDate(b);
-        console.log(Conversation);
-        setDatePhrase("The Conversation is going to happen on ");
-    }, [Conversation])
+        console.log(conversation);
+    }, [conversation])
 
     function setMembersFast() {
-        console.log(members.concat(Conversation.members));
-        return members.concat(Conversation.members);
+        console.log([].concat(conversation.members));
+        return [].concat(conversation.members);
     }
 
     function setMessagesFast() {
-        console.log(messages.concat(Conversation.messages));
-        return messages.concat(Conversation.messages);
+        console.log([].concat(conversation.messages));
+        return [].concat(conversation.messages);
     }
     
     function setConversationFast(a) {
-        return a.Conversations.find((x) => x.id === state.ConversationId);
+        return a.conversations.find((x) => x.id === state.conversationId);
     }
       
     const saveState = (e) => {
@@ -96,8 +129,9 @@ function Conversation (props) {
                         avatar
                     }
                     messages {
-                        content
                         id
+                        content
+                        createdAt
                         author {
                             id
                             firstName
@@ -112,29 +146,14 @@ function Conversation (props) {
 
     let query2 = gql`
         mutation InviteUserToConversation {
-            inviteUserToConversation(conversationId: ${Conversation.id}, userId: ${chooseId}) {
+            inviteUserToConversation(conversationId: ${conversation.id}, userId: ${chooseId}) {
                 id  
-                first_name
-                last_name
+                firstName
+                lastName
                 avatar
             }
         }
     `;
-
-    let query3 = gql`
-        mutation CreateConversationMessage {
-            createConversationMessage(conversationId: ${Conversation.id}, author: ${localStorage.getItem("user_id")}, content: "${content}") {
-                id
-                content
-                author {
-                    id
-                    first_name
-                    last_name
-                    avatar
-                }
-            }
-        }  
-    `;  
 
     async function getData() {
         try {
@@ -169,13 +188,13 @@ function Conversation (props) {
     }
 
     function clickOnCancel() {
-        setConversationPageTextStyle("ConversationPageText");
-        setConversationPageTextChangeStyle("hidden ConversationPageTextChange");
+        setConversationPageTextStyle("conversationName");
+        setConversationPageTextChangeStyle("hidden conversationPageTextChange");
     }
 
     function clickOnName() {
-        setConversationPageTextStyle("hidden ConversationPageText");
-        setConversationPageTextChangeStyle("ConversationPageTextChange");
+        setConversationPageTextStyle("hidden conversationName");
+        setConversationPageTextChangeStyle("conversationPageTextChange");
     }
 
     function editName() {
@@ -186,35 +205,46 @@ function Conversation (props) {
 
     async function addMessage(e) {
         e.preventDefault();
-        try {
-            setContent(content.trim());
-            if (content == null || content === "" || content.slice(0,1) === " ") return;
-            return fetch(process.env.REACT_APP_SERVER_IP, {
-                headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token")},
-                method: 'POST',
-                body: JSON.stringify({"query": query3})
-            }).then((a) => {
-                return a.json();
-            }).then((b) => {
-                console.log(b);
-                setMessages([].concat(messages, b.data.createConversationMessage))
-                setContent("");
-                document.getElementById("messageInput").value = "";             
-                setTimeout(() => {
-                    document.querySelector(".ConversationMessages").scroll({
-                        top: document.querySelector(".ConversationMessages").scrollHeight,
-                        behavior: "smooth",
-                    });
-                }, 100);
-                return b;
-            })
-        } catch (err) {
-            console.log(err);
-        } 
+        console.log("We are in addMessage")
+        socket.emit("sentMessage", {"conversationId": conversation.id, "authorId": localStorage.getItem("user_id"), "content": content});
+
+        setContent("");
+            document.getElementById("messageInput").value = "";             
+            setTimeout(() => {
+                document.querySelector(".conversationMessages").scroll({
+                    top: document.querySelector(".conversationMessages").scrollHeight,
+                    behavior: "smooth",
+                });
+            }, 100);
+        // try {
+        //     setContent(content.trim());
+        //     if (content == null || content === "" || content.slice(0,1) === " ") return;
+        //     return fetch(process.env.REACT_APP_SERVER_IP, {
+        //         headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token")},
+        //         method: 'POST',
+        //         body: JSON.stringify({"query": query3})
+        //     }).then((a) => {
+        //         return a.json();
+        //     }).then((b) => {
+        //         console.log(b);
+        //         setMessages([].concat(messages, b.data.createConversationMessage))
+        //         setContent("");
+        //         document.getElementById("messageInput").value = "";             
+        //         setTimeout(() => {
+        //             document.querySelector(".conversationMessages").scroll({
+        //                 top: document.querySelector(".conversationMessages").scrollHeight,
+        //                 behavior: "smooth",
+        //             });
+        //         }, 100);
+        //         return b;
+        //     })
+        // } catch (err) {
+        //     console.log(err);
+        // } 
     }
 
     function toggleInviteUser() {
-        if (inviteUserStyle == "inviteUser") {
+        if (inviteUserStyle === "inviteUser") {
             setInviteUserStyle("inviteUser hidden");
             setBlackStyle("black hidden");
         } else {
@@ -224,7 +254,7 @@ function Conversation (props) {
     }
 
     function toggleBlack() {
-        if (blackStyle == "black") {
+        if (blackStyle === "black") {
             toggleInviteUser();
             setBlackStyle("black hidden");
         } else {
@@ -236,7 +266,7 @@ function Conversation (props) {
         getData()
             .then((a) => {
                 a = a.data.getUserById;
-                if (a.Conversations.length === 0) {
+                if (a.conversations.length === 0) {
                     return;
                 } else {
                     setConversation(setConversationFast(a));
@@ -249,80 +279,76 @@ function Conversation (props) {
     }
 
     useEffect(() =>{
-        if (Conversation != null) {
+        if (conversation != null) {
             inviteUser().then((b) => {
                 console.log(b);
                 setMembers([].concat(members, b.data.inviteUserToConversation))
             })
         }
-        if (blackStyle == "black") {
+        if (blackStyle === "black") {
             toggleBlack();
         }
     }, [chooseId])
 
+    // useEffect(() =>{
+    //     console.log(messages)
+    // }, [messages])
+
 
     return(
 
-            <div className='ConversationPage'>
+            <div className='conversationPage'>
 
                 <div className={blackStyle} onClick={toggleBlack}></div>
 
-                <p onClick={clickOnName} className={ConversationPageTextStyle} title={Conversation.id}> {Conversation.name}  </p>
-                <input type="text" className={ConversationPageTextChangeStyle} defaultValue={Conversation.name} ></input>
-                <input onClick={clickOnCancel} id="cancel" type="button" className={ConversationPageTextChangeStyle} value=" Cancel "></input>
-                <input onClick={editName} type="button" className={ConversationPageTextChangeStyle} value=" Save "></input>
+                <div className="conversationDiv">
 
-                <div className="ConversationDiv">
+                    <div className="conversation">
 
-                    <div className={inviteUserStyle}>
-                        <p> Invite user to Conversation </p>
-                        <SearchUsers onChoose={onChoose} members={Conversation.members ? Conversation.members : []}></SearchUsers>
-                    </div>
+                        <div className={inviteUserStyle}>
+                            <p> Invite user to Conversation </p>
+                            <SearchUsers onChoose={onChoose} members={conversation.members ? conversation.members : []}></SearchUsers>
+                        </div>
 
-                    <div className="Conversation">
-                        <div className="ConversationInfo">
-                            <p className="ConversationDateText"> { datePhrase } { date.toLocaleDateString() } </p>
+                        <div className="conversationData">
 
-                            <div className="ConversationHr">
-                                <hr></hr>    
-                            </div>
+                            <div className="conversationInfo">
 
-                            <p className="ConversationPlaceText"> {Conversation.places ? Conversation.places[0].name : ""} </p>
-                            <div className='ConversationPlace'>
-                                <img className='ConversationPlaceImg' src={placeImg}></img>
-                                <div className='ConversationPlaceDesc'>                                
-                                    <i> <p className='ConversationPlaceTextContent'> Location: {Conversation.places ? Conversation.places[0].location.country : ""}, {Conversation.places ? Conversation.places[0].location.city : ""} </p> </i>   
-                                    <i> <p className='ConversationPlaceTextContent'> Paradigm: {Conversation.places ? Conversation.places[0].paradigm :  ""} </p> </i>         
-                                    <i> <p className='ConversationPlaceTextContent'> Rating: {Conversation.places ? Conversation.places[0].rating :  ""} </p> </i>
+                            <p onClick={clickOnName} className={conversationPageTextStyle} title={conversation.id}> {conversation.name}  </p>
+                            <input type="text" className={conversationPageTextChangeStyle} defaultValue={conversation.name} ></input>
+                            <input onClick={clickOnCancel} id="cancel" type="button" className={conversationPageTextChangeStyle} value=" Cancel "></input>
+                            <input onClick={editName} type="button" className={conversationPageTextChangeStyle} value=" Save "></input>
+
+                                <p className="conversationIdea"> { conversation.idea } </p>
+
+                                <div className="conversationHr">
+                                    <hr></hr>    
                                 </div>
-                            </div>
 
-                            <div className="ConversationHr">
-                                <hr></hr>    
-                            </div>
+                                <div className="conversationMembersHeader">
+                                    <p className="conversationMembersText"> Members </p>
+                                    <input onClick={toggleInviteUser} type="button" className="conversationMembersInvite" value=" Invite "></input>
+                                </div>
 
-                            <div className="ConversationMembersHeader">
-                                <p className="ConversationMembersText"> Members </p>
-                                <input onClick={toggleInviteUser} type="button" className="ConversationMembersInvite" value=" Invite "></input>
-                            </div>
+                                <div className='conversationMembers'>
+                                    {members.map((member) => <ConversationMember setDeleteId={setDeleteId} key={member.id} member={member}/>)}
+                                </div>    
 
-                            <div className='ConversationMembers'>
-                                {members.map((member) => <Member setDeleteId={setDeleteId} chief={Conversation.chief} key={member.id} member={member}/>)}
-                            </div>    
+                            </div>
 
                         </div>
+
+                        <div className='conversationChat'>
+                            <div className='conversationMessages'>
+                                {messages.map((message) => <ConversationMessage key={message.id} message={message}/>)}
+                            </div>
+                            <div className='conversationChatInput'>
+                                <input id="messageInput" onChange={(e) => {setContent(e.target.value)}} placeholder='Wassup?'></input>
+                                <i onClick={addMessage} className="fa fa-paper-plane" aria-hidden='true'></i>
+                            </div>
+                        </div>      
 
                     </div>
-
-                    <div className='ConversationChat'>
-                        <div className='ConversationMessages'>
-                            {messages.map((message) => <ConversationMessage key={message.id} message={message}/>)}
-                        </div>
-                        <div className='ConversationChatInput'>
-                            <input id="messageInput" onChange={(e) => {setContent(e.target.value)}} placeholder='Wassup?'></input>
-                            <i onClick={addMessage} className="fa fa-paper-plane" aria-hidden='true'></i>
-                        </div>
-                    </div>      
 
                 </div>
 

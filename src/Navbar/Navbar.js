@@ -7,12 +7,12 @@ import homeImg from '../img/home.svg';
 import conversationImg from '../img/conversations.svg';
 import mapImg from '../img/map.svg';
 import meetingsImg from '../img/meetings.svg';
-import latestImg from '../img/latest.svg'
+//import latestImg from '../img/latest.svg'
 import burgerImg from '../img/burger.svg'
 import notifyImg from '../img/bell.svg'
 import addPostImg from '../img/addpost.svg'
 
-import NotificationBar from 'react-notification-bar';
+//import NotificationBar from 'react-notification-bar';
 
 import "./Navbar.css";
 
@@ -88,33 +88,33 @@ function Navbar (props) {
         <nav className="navbar">
             <div className="navbar-mobile">
                 <div>
-                    <img src={burgerImg}></img>
+                    <img src={burgerImg} alt="navBar"></img>
                 </div>       
             </div>
             <div className="navbar-left">
                 <div>
-                    <img src={homeImg}></img> <Link className="navlink" to="/allPosts"> Home </Link>
+                    <img src={homeImg} alt="home"></img> <Link className="navlink" to="/allPosts"> Home </Link>
                 </div>
                 <div className={hidden}>
-                    <img src={conversationImg}></img> <Link className="navlink" to="/conversations"> Messenger </Link>
+                    <img src={conversationImg} alt="conversation"></img> <Link className="navlink" to="/conversations"> Messenger </Link>
                 </div>
                 <div className={hidden}>
-                    <img src={meetingsImg}></img> <Link className="navlink" to="/meetings"> Meetings </Link>
+                    <img src={meetingsImg} alt="meetings"></img> <Link className="navlink" to="/meetings"> Meetings </Link>
                 </div>
                 <div className={hidden}>
-                    <img style={{width: '16px'}} src={mapImg}></img> <Link className="navlink" to="/map"> Map </Link>
+                    <img style={{width: '16px'}} src={mapImg} alt="map"></img> <Link className="navlink" to="/map"> Map </Link>
                 </div>
             </div>
 
             <div className="navbar-right">
                 <div className={hidden}>
-                    <Link className="navlink" to="/addPost"> <img src={addPostImg}></img> </Link>
+                    <Link className="navlink" to="/addPost"> <img src={addPostImg} alt="addPost"></img> </Link>
                 </div>       
                 <div className={hidden} onClick={notifyOnClick}>
-                    <img src={notifyImg}></img>
+                    <img src={notifyImg} alt="notify"></img>
                 </div>
                 <div onClick={loginOnClick}>
-                    <img src={userImg}></img>
+                    <img src={userImg} alt="user"></img>
                 </div>
             </div>
         </nav>

@@ -108,6 +108,7 @@ function Post(props) {
             }).then((a) =>{
                 return a.json()
             }).then((b) => {
+                if(typeof b.data.likePost !== 'boolean') throw new Error("likePost returned not boolean")
                 if (b.data.likePost) {
                     setLikeStyle("blue");
                     setLike(like + 1);
@@ -148,8 +149,8 @@ function Post(props) {
     }
 
     function postDots() {
-        if (dotsMenuStyle != "dotsMenu") {
-            if (props.post.author.id == localStorage.getItem("user_id")) {
+        if (dotsMenuStyle !== "dotsMenu") {
+            if (props.post.author.id === localStorage.getItem("user_id")) {
                 setHiddenMe("dotsMenuButton");
                 setHiddenSub("hidden dotsMenuButton")
             } else {
@@ -211,7 +212,7 @@ function Post(props) {
             <p> {props.post.content} </p>
         </div>
         <div className="postLike">
-            <img className={likeStyle} onClick={likePost} src={PacmanImg}></img>
+            <img className={likeStyle} onClick={likePost} src={PacmanImg} alt="Like"></img>
             <p> {like} </p>
         </div>
         <div className="postComments">

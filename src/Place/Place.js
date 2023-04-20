@@ -29,7 +29,7 @@ function Meeting (props) {
     const [meetingPageTextChangeStyle, setMeetingPageTextChangeStyle] = useState("hidden meetingPageTextChange");
 
     useEffect(() => {
-        if (deleteId != -1) {
+        if (deleteId !== -1) {
             const newList = members.filter((item) => item.id !== deleteId);
             setMembers(newList);
             setDeleteId(-1);
@@ -47,7 +47,7 @@ function Meeting (props) {
     }, [meeting])
 
     useEffect(() =>{
-        if (members.length != 0) {
+        if (members.length !== 0) {
             console.log(members)
         }
     }, [members])
@@ -186,7 +186,7 @@ function Meeting (props) {
 
                                 <p className="meetingPlaceText"> Place </p>
                                 <div className='meetingPlace'>
-                                    <img className='meetingPlaceImg' src={placeImg}></img>
+                                    <img className='meetingPlaceImg' src={placeImg} alt="maaetingPlaceImg"></img>
                                     <div className='meetingPlaceDesc'>
                                         <i> <p className='meetingPlaceTextHeader'> Pizzakiosk Iidla </p> </i>
                                         <i> <p className='meetingPlaceTextContent'> Location: Kohtla-Järve </p> </i>   

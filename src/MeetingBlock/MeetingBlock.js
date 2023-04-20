@@ -91,7 +91,7 @@ useEffect(() =>{
     let b = new Date(parseInt(props.meeting.date));
     setDate(b);
 
-}, []);
+}, [props.meeting.important, props.meeting.date]);
 
 
   return (
