@@ -9,9 +9,6 @@ import SearchUsers from '../SearchUsers/SearchUsers';
 
 import { gql } from 'graphql-request';
 
-import { io } from "socket.io-client";
-import { flushSync } from 'react-dom';
-
 import { socket } from '../Socket/Socket';
 
 function Conversation (props) {

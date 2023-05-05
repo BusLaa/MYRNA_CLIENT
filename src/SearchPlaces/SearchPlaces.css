@@ -1,0 +1,30 @@
+.users > input[type="text"] {
+    width: 260px;
+    font-size: 18px;
+    margin: 16px 0px;
+    padding: 8px;
+    border-radius: 6px;
+    border-style: solid;
+    border-color: #E9E9E9;
+    border-width:  0.1vw;
+    background-color: #f0f0f0;
+}
+
+.users > div{
+    padding-right: 8px;              
+}
+
+
+.users > div::-webkit-scrollbar {
+    width: 6px;              
+}
+
+.users > div::-webkit-scrollbar-track {
+    background: #E9E9E9;
+    border-radius: 32px;      
+}
+
+.users > div::-webkit-scrollbar-thumb {
+    background-color: #d1d1d1;  
+    border-radius: 32px;      
+}

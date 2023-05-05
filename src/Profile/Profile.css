@@ -8,13 +8,13 @@
     font-size: 36px;
 }
 
-.profilePage > .profileDiv {
+.profileDiv {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.profilePage > .profileDiv > .profile {
+.profile {
     max-width: 80%;
     margin: 20px;
     width: 600px;
@@ -25,20 +25,19 @@
     border-style: solid;
 }
 
-.profilePage > .profileDiv > .profile > .name {
+.profileName {
     font-size: 32px;
     font-weight: 600;
-    font-style: italic;
     margin: 16px;
 }
 
 
-.profilePage > .profileDiv > .profile > .profileInfo > {
+.profileInfo > {
     display: flex;
     justify-content: center;
 }
 
-.profilePage > .profileDiv > .profile > .profileInfo > .avatar {
+.avatar {
     border-radius: 32px;
     width: 40%;
     border-color:#ECECEC;
@@ -47,13 +46,13 @@
 }
 
 
-.profilePage > .profileDiv > .profile > .profileInfo > div > .userInfo {
+.userInfo {
     font-size: 21px;
     margin: 9px;
 }
 
 
-.profilePage > .profileDiv > .profile > input[type="button"] {
+.profile > input[type="button"] {
     min-width: 120px;
     width: fit-content;
     border-color: #E9E9E9;
@@ -67,21 +66,20 @@
     transition: 0.2s;
 }
 
-.profilePage > .profileDiv > .profile > input[type="button"]:hover {
+.profile > input[type="button"]:hover {
     opacity: 75%;
     cursor: pointer;
 }
 
 
 
-
-.profilePage > .profileTumblerDiv {
+.profileTumblerDiv {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.profilePage > .profileTumblerDiv > .profileTumbler {
+.profileTumbler {
     width: fit-content;
     max-width: 80%;
     display: flex;
@@ -94,29 +92,29 @@
     padding: 4px 32px;
 }
 
-.profilePage > .profileTumblerDiv > .profileTumbler > div {
+.profileTumbler > div {
     margin: 24px 36px;
 }
 
-.profilePage > .profileTumblerDiv > .profileTumbler > .profileTumblerPosts {
+.profileTumblerPosts {
     cursor: pointer;
     transition: 0.2s;
 }
 
-.profilePage > .profileTumblerDiv > .profileTumbler > .profileTumblerPosts:hover {
+.profileTumblerPosts:hover {
     opacity: 75%;
 }
 
-.profilePage > .profileTumblerDiv > .profileTumbler > .profileTumblerCorner {
+.profileTumblerCorner {
     cursor: pointer;
     transition: 0.2s;
 }
 
-.profilePage > .profileTumblerDiv > .profileTumbler > .profileTumblerCorner:hover {
+.profileTumblerCorner:hover {
     opacity: 75%;
 }
 
-.profilePage > .profileTumblerDiv > .profileTumbler > div > p {
+.profileTumbler > div > p {
     font-size: 21px;
 }
 
@@ -124,24 +122,24 @@
 
 
 
-.profilePage > .profileUserPostsDiv {
+.profileUserPostsDiv {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.profilePage > .profileUserPostsDiv > .profileUserPosts {
+.profileUserPosts {
     width: fit-content;
     max-width: 80%;
 }
 
-.profilePage > .profileUserCornerDiv {
+.profileUserCornerDiv {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.profilePage > .profileUserCornerDiv > .profileUserCorner {
+.profileUserCorner {
     width: fit-content;
     max-width: 80%;
 }

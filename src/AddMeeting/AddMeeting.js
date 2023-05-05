@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { gql } from 'graphql-request';
 import './AddMeeting.css';
+import SearchPlaces from '../SearchPlaces/SearchPlaces';
 
 function AddMeeting (props) {
 
@@ -10,6 +11,8 @@ function AddMeeting (props) {
 
     const [errorStyle, setErrorStyle] = useState("addMeetingFormError hidden");
     const [errorText, setErrorText] = useState("");
+
+    const [chooseId, setChooseId] = useState(0);
 
     let query = gql`
         mutation CreateNewMeeting {
@@ -50,6 +53,14 @@ function AddMeeting (props) {
 
         }   
     }
+
+    function onChoose(a) {
+        setChooseId(a);
+    }
+
+    useEffect(() =>{
+        console.log("Chosen")
+    }, [chooseId])
    
     return(
 
@@ -57,7 +68,7 @@ function AddMeeting (props) {
 
             <div className='addMeeting'>
 
-                <p className='addMeetingText'> Add Meeting </p> 
+                <p className='addMeetingText'> Add a new Meeting </p> 
 
                     <form method="Meeting" onSubmit={addMeeting}>
 
@@ -68,12 +79,14 @@ function AddMeeting (props) {
                             </div>
 
                             <div className='addMeetingFormText'>
-                                <textarea onChange={(e) => {setHeader(e.target.value); console.log(e.target.value)}} onKeyDown={(e) => {if(e.keyCode === 13) { e.preventDefault();} }} maxLength="50" placeholder="" name="header"></textarea>              
+                                <p className='addMeetingFormPrompt'> Meeting Name </p>
+                                <textarea onChange={(e) => {setHeader(e.target.value); console.log(e.target.value)}} onKeyDown={(e) => {if(e.keyCode === 13) { e.preventDefault();} }} maxLength="50" placeholder="Keep calm and meet your friends" name="header"></textarea>              
                             </div>
 
                             <div className='addMeetingFormTypeAndDate'>
 
                                 <div className='addMeetingFormType'>
+                                    <p className='addMeetingFormPrompt'> Meeting Type </p>
                                     <select onChange={(e) => {setType(e.target.value); console.log(e.target.value)}} id="meetingTypes">
                                         <option value="1"> Hang Out </option>
                                         <option value="2"> Business </option>
@@ -82,9 +95,19 @@ function AddMeeting (props) {
                                 </div>
 
                                 <div className='addMeetingFormDate'>
+                                    <p className='addMeetingFormPrompt'> Takes place on... </p>
                                     <input onChange={(e) => {setDate(e.target.value); console.log(e.target.value)}} type="date"></input>
                                 </div>
 
+                            </div>
+
+                            <div className='addMeetingHr'>
+                                <hr></hr>
+                            </div>
+
+                            <div className='addMeetingFormPlace'>
+                                <p className='addMeetingFormPlaceText'>Choose the place</p>
+                                <SearchPlaces onChoose={onChoose}></SearchPlaces>
                             </div>
                             
                             <div className='addMeetingFormSubmit'>

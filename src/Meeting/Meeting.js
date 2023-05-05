@@ -61,12 +61,6 @@ function Meeting (props) {
         setDatePhrase("The meeting is going to happen on ");
     }, [meeting])
 
-    // useEffect(() =>{
-    //     if (members.length != 0) {
-    //         console.log(members)
-    //     }
-    // }, [members])
-
     function setMembersFast() {
         console.log(members.concat(meeting.members));
         return members.concat(meeting.members);

@@ -30,6 +30,7 @@ function Profile (props) {
     const [userPostsStyle, setUserPostsStyle] = useState("profileUserPosts");
     const [userCornerStyle, setUserCornerStyle] = useState("profileUserCorner hidden");
     
+    const [profileTumblerStyle, setProfileTumblerStyle] = useState("hidden");
     const [profileTumblerPostsStyle, setProfileTumblerPostsStyle] = useState("profileTumblerPosts blue");
     const [profileTumblerCornerStyle, setProfileTumblerCornerStyle] = useState("profileTumblerCorner");
 
@@ -102,9 +103,9 @@ function Profile (props) {
 
     let query2 = gql`
         mutation AddNewSubscription {
-            addNewSubscription(user_id: 2, subscribed_id: 1)
+            addNewSubscription(userId: ${localStorage.getItem("user_id")}, subscribedId: ${state.userId})
         }
-        `;
+    `;
 
     async function getUser() {
         try {
@@ -131,7 +132,6 @@ function Profile (props) {
     }
 
     useEffect(() =>{
-        //window.history.replaceState({}, document.title);
         getUser()
             .then((b) => {
                 let a = b.data.getUserById;
@@ -143,16 +143,16 @@ function Profile (props) {
                     if (a.id === parseInt(localStorage.getItem("user_id"))) {
                         setHiddenMe("");
                         setHiddenSub("hidden");
-                        setSubscribeStyle("hidden");                 
+                        setSubscribeStyle("hidden");    
+                        setProfileTumblerStyle("profileTumblerDiv")             
                     } else {
-                        setProfileTumblerCornerStyle("hidden");
                         setHiddenMe("hidden");
                         setHiddenSub("");
                         if (a.subscribed.length === 0) {
                             setSubsribeText("Subscribe");
                             setSubscribeStyle("");  
                         } else {
-                            if (a.subscribed.find((x) => x.id === localStorage.getItem("user_id")).id === localStorage.getItem("user_id")) {
+                            if (a.subscribed.find((x) => x.id === parseInt(localStorage.getItem("user_id"))).id === parseInt(localStorage.getItem("user_id"))) {
                                 setSubsribeText("Unsubscribe");
                                 setSubscribeStyle("backGrey");                        
                             } else {
@@ -237,12 +237,10 @@ function Profile (props) {
 
             <div className='profilePage'>
 
-                <p className='profilePageText'> Profile </p>
-
                 <div className="profileDiv">
 
                     <div className="profile">
-                        <p className="name" title={user.id}> {user.first_name} {user.last_name} </p>
+                        <p className="profileName" title={user.id}> {user.firstName} {user.lastName} </p>
                         <div className="profileInfo">
                             <img className="avatar" src={avatars[user.avatar]} alt="avatar"></img>
                             <div>
@@ -257,12 +255,12 @@ function Profile (props) {
 
                 </div>
 
-                <div className='profileTumblerDiv'>
+                <div className={profileTumblerStyle}>
                     <div className='profileTumbler'>
                         <div onClick={enablePosts} className={profileTumblerPostsStyle}>
                             <p> Posts 📄 </p>
                         </div>
-                        <div className={hiddenMe} style={{borderRight: "solid 0.1vw #E9E9E9", height: '30px'}}></div>
+                        <div style={{borderRight: "solid 0.1vw #E9E9E9", height: '30px'}}></div>
                         <div onClick={enableCorner} className={profileTumblerCornerStyle}>
                             <p> Corner ⭐ </p>
                         </div>
