@@ -10,26 +10,13 @@ import SearchUsers from '../SearchUsers/SearchUsers';
 import { gql } from 'graphql-request';
 
 import { io } from "socket.io-client";
+import { flushSync } from 'react-dom';
 
+import { socket } from '../Socket/Socket';
 
 function Conversation (props) {
 
-    const [socket, setSocket] = useState(
-        io(process.env.REACT_APP_SERVER_IP, {
-            reconnectionDelayMax: 10000,
-            auth: {
-                token: "123"
-            },
-            query: {
-                "my-key": "my-value"
-            }
-        }));
-
-    
-
-
-    //const [date, setDate] = useState(new Date());
-    //const [datePhrase, setDatePhrase] = useState("");
+    const [events, setEvents] = useState([]);
 
     let a = new Date();
     a.toISOString();
@@ -52,27 +39,82 @@ function Conversation (props) {
     const [chooseId, setChooseId] = useState(0);
     const [deleteId, setDeleteId] = useState(0);
 
+    useEffect(() =>{
+        getData()
+            .then((a) => {
+                a = a.data.getUserById;
+                if (a.conversations.length === 0) {
+                    return;
+                } else {
+                    setConversation(setConversationFast(a));
+                }
+            })
+
+        return () => {
+            console.log("dis")
+            socket.disconnect();
+        }
+    }, []);
+
     useEffect(() => {
-        if (!socket || !conversation.id) return
-        socket.on('connect', () => {
-            console.log("connection established Front");
-            console.log("conversationId "+ conversation.id); 
+        function onConnect(value) {
             socket.emit("askForRoom", {"userId": localStorage.getItem("user_id"), "conversationId": conversation.id});
-        });
-        socket.on('gotId', (args) => {
-            console.log("Sex: " + args);
-        });
-        socket.on('newMessage', (message) => {
+        }
+        function onGotId(args) {
+            console.log("Got room: " + args);
+        }
+        function onNewMessage(message) {
+            message.createdAt = new Date(message.createdAt).getTime();
+            console.log(message);
+            setMessages(messages => [...messages, message]);
+            if (message.authorId === localStorage.getItem("user_id")) {
+                setContent("");
+                document.getElementById("messageInput").value = "";             
+                setTimeout(() => {
+                    document.querySelector(".conversationMessages").scroll({
+                        top: document.querySelector(".conversationMessages").scrollHeight,
+                        behavior: "smooth",
+                    });
+                }, 100);                
+            }
+        }
 
-            setMessages((messages) => [...messages, message])
-            
-        });
+        socket.on('connect', onConnect);
+        socket.on('gotId', onGotId);
+        socket.on('newMessage', onNewMessage);
 
-    }, [socket, conversation.id])
+        return () => {
+            socket.off('connect', onConnect)
+            socket.off('gotId', onGotId);
+            socket.off('newMessage', onNewMessage);
+        }
+    }, [events, conversation.id])
 
-    // useEffect(() =>{
-        
-    // }, [messages])
+    // useEffect(() => {
+    //     socket.on('connect', () => {
+    //         console.log("connection established Front");
+    //         console.log("conversationId "+ conversation.id); 
+    //         socket.emit("askForRoom", {"userId": localStorage.getItem("user_id"), "conversationId": conversation.id});
+    //     });
+    //     socket.on('gotId', (args) => {
+    //         console.log("Got room: " + args);
+    //     });
+    //     socket.on('newMessage', (message) => {
+    //         message.createdAt = new Date(message.createdAt).getTime();
+    //         console.log(message);
+    //         setMessages(messages => [...messages, message]);
+    //         if (message.authorId === localStorage.getItem("user_id")) {
+    //             setContent("");
+    //             document.getElementById("messageInput").value = "";             
+    //             setTimeout(() => {
+    //                 document.querySelector(".conversationMessages").scroll({
+    //                     top: document.querySelector(".conversationMessages").scrollHeight,
+    //                     behavior: "smooth",
+    //                 });
+    //             }, 100);                
+    //         }
+    //     });
+    // }, [socket, conversation.id])
 
     useEffect(() => {
         if (deleteId !== -1) {
@@ -83,26 +125,32 @@ function Conversation (props) {
         }
     },[deleteId])
 
-
     useEffect(() =>{
-        if (conversation.members != null) {
-            setMembers(setMembersFast());           
+        if (Object.keys(conversation).length !== 0) {
+            if (conversation.members != null) {
+                setTimeout(() => {
+                    setMembers([].concat(members, conversation.members)); 
+                }, 0)     
+            }
+            if (conversation.messages != null) {
+                setMessages([].concat(messages, conversation.messages)); 
+            }
+            console.log("con");
+            socket.connect();
         }
-        if (conversation.messages != null) {
-            setMessages(setMessagesFast());
-        }
-        console.log(conversation);
     }, [conversation])
 
-    function setMembersFast() {
-        console.log([].concat(conversation.members));
-        return [].concat(conversation.members);
-    }
+    useEffect(() => {
+        if (messages.length !== 0) {
+            console.log(messages);
+        }
+    }, [messages])
 
-    function setMessagesFast() {
-        console.log([].concat(conversation.messages));
-        return [].concat(conversation.messages);
-    }
+    useEffect(() => {
+        if (members.length !== 0) {
+            console.log(members);
+        }
+    }, [members])
     
     function setConversationFast(a) {
         return a.conversations.find((x) => x.id === state.conversationId);
@@ -205,42 +253,10 @@ function Conversation (props) {
 
     async function addMessage(e) {
         e.preventDefault();
-        console.log("We are in addMessage")
-        socket.emit("sentMessage", {"conversationId": conversation.id, "authorId": localStorage.getItem("user_id"), "content": content});
-
-        setContent("");
-            document.getElementById("messageInput").value = "";             
-            setTimeout(() => {
-                document.querySelector(".conversationMessages").scroll({
-                    top: document.querySelector(".conversationMessages").scrollHeight,
-                    behavior: "smooth",
-                });
-            }, 100);
-        // try {
-        //     setContent(content.trim());
-        //     if (content == null || content === "" || content.slice(0,1) === " ") return;
-        //     return fetch(process.env.REACT_APP_SERVER_IP, {
-        //         headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token")},
-        //         method: 'POST',
-        //         body: JSON.stringify({"query": query3})
-        //     }).then((a) => {
-        //         return a.json();
-        //     }).then((b) => {
-        //         console.log(b);
-        //         setMessages([].concat(messages, b.data.createConversationMessage))
-        //         setContent("");
-        //         document.getElementById("messageInput").value = "";             
-        //         setTimeout(() => {
-        //             document.querySelector(".conversationMessages").scroll({
-        //                 top: document.querySelector(".conversationMessages").scrollHeight,
-        //                 behavior: "smooth",
-        //             });
-        //         }, 100);
-        //         return b;
-        //     })
-        // } catch (err) {
-        //     console.log(err);
-        // } 
+        if (content.length !== 0) {
+            console.log("We are in addMessage")
+            socket.emit("sentMessage", {"conversationId": conversation.id, "authorId": localStorage.getItem("user_id"), "content": content.trim()});
+        }
     }
 
     function toggleInviteUser() {
@@ -262,38 +278,23 @@ function Conversation (props) {
         }
     }
 
-    useEffect(() =>{
-        getData()
-            .then((a) => {
-                a = a.data.getUserById;
-                if (a.conversations.length === 0) {
-                    return;
-                } else {
-                    setConversation(setConversationFast(a));
-                }
-            })
-    }, [])
-
     function onChoose(a) {
         setChooseId(a);
     }
 
     useEffect(() =>{
-        if (conversation != null) {
-            inviteUser().then((b) => {
-                console.log(b);
-                setMembers([].concat(members, b.data.inviteUserToConversation))
-            })
-        }
-        if (blackStyle === "black") {
-            toggleBlack();
+        if (chooseId != 0) {
+            if (conversation != null) {
+                inviteUser().then((b) => {
+                    console.log(b);
+                    setMembers([].concat(members, b.data.inviteUserToConversation))
+                })
+            }
+            if (blackStyle === "black") {
+                toggleBlack();
+            }
         }
     }, [chooseId])
-
-    // useEffect(() =>{
-    //     console.log(messages)
-    // }, [messages])
-
 
     return(
 

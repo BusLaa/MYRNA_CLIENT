@@ -21,35 +21,18 @@ function Map (props) {
 
   const [userLocation, setUserLocation] = useState({});
 
-  const [mapStyle, setMapStyle] = useState("map");
-  const [map, setMap] = useState(new ol.Map({
-    target: 'map', controls: [],
-    layers: [
-      new layer.Tile({
-        source: new source.OSM(),
-      }),
-      new layer.Vector({
-        source: new source.Vector({
-          features: markers
-        }),
-        style: new style.Style({
-          image: new style.Icon({
-            anchor: [0.5, 46],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'pixels',
-            src: homeMarkerImg
-          })
-        })
-      })
-    ],
-    view: new ol.View({
-      center: proj.fromLonLat([25, 58.75]),
-      zoom: 7
-    })
-  }));
-
   const [iconLatitude, setIconLatitude] = useState(0);
   const [iconLongitude, setIconLongitude] = useState(0);
+
+  let home = new ol.Feature({
+    geometry: new geom.Point(proj.fromLonLat([iconLongitude, iconLatitude])),
+    name: 'Home',
+  });
+
+  const [markers, setMarkers] = useState([home]);
+
+  const [mapStyle, setMapStyle] = useState("map");
+  const [map, setMap] = useState({});
   
   let query = gql`
     query GetAllPlaces {
@@ -118,20 +101,46 @@ function Map (props) {
 
     getData2().then((a) => {
       setUserLocation(a.data.getUserById.location);
-
       setIconLatitude(a.data.getUserById.location.latitude); 
       setIconLongitude(a.data.getUserById.location.longitude);
     })
+  }, []);
 
-  }, [])
+  useEffect(() => {
+    document.getElementById("map").innerHTML = "";
+    setMap(map => new ol.Map({
+      target: 'map', controls: [],
+      layers: [
+        new layer.Tile({
+          source: new source.OSM(),
+        }),
+        new layer.Vector({
+          source: new source.Vector({
+            features: markers
+          }),
+          style: new style.Style({
+            image: new style.Icon({
+              anchor: [0.5, 46],
+              anchorXUnits: 'fraction',
+              anchorYUnits: 'pixels',
+              src: homeMarkerImg
+            })
+          })
+        })
+      ],
+      view: new ol.View({
+        center: proj.fromLonLat([userLocation.longitude, userLocation.latitude]),
+        zoom: 12
+      })
+    }))
+  }, [markers, userLocation]);
 
-
-  let home = new ol.Feature({
-    geometry: new geom.Point(proj.fromLonLat([27.41985955, 59.33215900])),
-    name: 'Somewhere near Nottingham',
-  });
-
-  const [markers, setMarkers] = useState([home]);
+  useEffect(() => {
+    markers[0] = new ol.Feature({
+      geometry: new geom.Point(proj.fromLonLat([iconLongitude, iconLatitude])),
+      name: 'Home',
+    });
+  }, [iconLatitude, iconLongitude]);
 
   return(
       <div className='mapPage'>
@@ -154,6 +163,7 @@ function Map (props) {
           </div>
       </div>
   )
+
 }
 
-export default Map
+export default Map;

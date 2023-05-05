@@ -8,8 +8,6 @@ import avatar4 from '../img/avatars/avatar4.jpg';
 import avatar5 from '../img/avatars/avatar5.jpg';
 import avatar6 from '../img/avatars/avatar6.jpg';
 
-//import {Link} from 'react-router-dom';
-
 function User (props) {
 
     const [avatars, ] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
@@ -22,7 +20,7 @@ function User (props) {
             <div className="userTop">
                 <img src={avatars[props.user.avatar]} alt="avatar"></img>
                 <div className='userInfo'>
-                    <p> {props.user.first_name} {props.user.last_name} </p> 
+                    <p> {props.user.firstName} {props.user.lastName} </p> 
                     <p className='userEmail'> {props.user.email} </p>
                 </div>
 

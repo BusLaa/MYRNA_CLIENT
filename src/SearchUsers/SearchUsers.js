@@ -12,7 +12,6 @@ import avatar4 from '../img/avatars/avatar4.jpg';
 import avatar5 from '../img/avatars/avatar5.jpg';
 import avatar6 from '../img/avatars/avatar6.jpg';
 
-//import {Link, useResolvedPath} from 'react-router-dom';
 
 function SearchUsers (props) {
 
@@ -52,14 +51,11 @@ function SearchUsers (props) {
     }   
 
     useEffect(() => {
-
         if (searchString.length > 2) {
             getUsers().then((a) => {
-                setUsers((users) => [...users, a.data.getUsersByName]);
-                //console.log(a.data.getUsersByName);
+                setUsers(a.data.getUsersByName);
             });            
         }
-
     }, [searchString])
 
     function onChoose2 () {

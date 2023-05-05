@@ -220,14 +220,14 @@ function Registration (props) {
                 <input className="birthdayCheckbox" type="checkbox" onChange={toggleBirthday}></input>
                 <p> Add birthday </p>
               </div>
-              <input className={birthdayStyle} type="date" name="birthday" onChange={handleBirthdayChange} value={birthday} required={dateRequire}></input><br></br>
+              <input className={birthdayStyle} type="date" name="birthday" onChange={handleBirthdayChange} value={birthday} required={dateRequire}></input>
               <div className="locationCheck">
                 <input className="locationCheckbox" type="checkbox" onChange={toggleLocation}></input>
                 <p> Add location </p>
               </div>
-              <input className={locationStyle} type="text" placeholder="Country" name="country" onChange={handleCountryChange} value={country} required={locationRequire}></input><br></br>
-              <input className={locationStyle} type="text" placeholder="City" name="city" onChange={handleCityChange} value={city} required={locationRequire}></input><br></br>
-              <input className={locationStyle} type="text" placeholder="Postal Code" name="postalCode" onChange={handlePostalCodeChange} value={postalCode} required={locationRequire}></input><br></br>
+              <input className={locationStyle} type="text" placeholder="Country" name="country" onChange={handleCountryChange} value={country} required={locationRequire}></input>
+              <input className={locationStyle} type="text" placeholder="City" name="city" onChange={handleCityChange} value={city} required={locationRequire}></input>
+              <input className={locationStyle} type="text" placeholder="Postal Code" name="postalCode" onChange={handlePostalCodeChange} value={postalCode} required={locationRequire}></input>
               <div className="regFormButtonsDiv">
                 <div className='regFormButtons'>
                   <input type="submit" value="Let's create an account"></input>

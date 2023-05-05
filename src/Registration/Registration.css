@@ -38,21 +38,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 24px 12px 12px 12px;
+}
+
+.birthdayCheckbox { 
     margin: 12px;
 }
 
-
-.regForm > .birthdayCheck > .birthdayCheckbox { 
-    margin: 12px;
+.birthdayCheck > p { 
+    font-size: 21px;
 }
 
-.regForm > .birthdayCheck > p { 
-    font-size: 1vw;
-}
-
-
-
-.regForm > .locationCheck {
+.locationCheck {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,12 +57,12 @@
 }
 
 
-.regForm > .locationCheck > .locationCheckbox { 
+.locationCheckbox { 
     margin: 12px;
 }
 
-.regForm > .locationCheck > p { 
-    font-size: 1vw;
+.locationCheck > p { 
+    font-size: 21px;
 }
 
 
@@ -81,7 +78,6 @@
 
 .regFormButtons {
     width: 24vw;
-    margin-top: 0.5vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -126,7 +122,7 @@
     justify-content: center;
 }
 
-.regFormTitle > .regFormTitleText {
+.regFormTitleText {
     font-size: 2vw;
 }
 
@@ -172,7 +168,7 @@
     margin: 0.2vw 0vw 1.2vw 0vw;
 }
 
-.regFormError > .regFormErrorText {
+.regFormErrorText {
     font-size: 1.1vw;
     color: red;
     font-weight: 600;

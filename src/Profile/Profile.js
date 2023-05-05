@@ -43,7 +43,7 @@ function Profile (props) {
     const [state, ] = useState(loc.state || {userId: localStorage.getItem("user_id")});
 
     const [hiddenMe, setHiddenMe] = useState("");
-    const [, setHiddenSub] = useState("hidden");
+    const [hiddenSub, setHiddenSub] = useState("hidden");
     const [subscribeStyle, setSubscribeStyle] = useState("hidden");
 
     const [deleteId, setDeleteId] = useState(0);
@@ -138,15 +138,14 @@ function Profile (props) {
                 if (a.length === 0) {
                     window.location.href = "http://localhost:3000/login";
                 } else {
-                    setUser(a);
-                                        
+                    setUser(a);                                     
                     setUserPosts([].concat([], a.posts));
-
-                    if (a.id === localStorage.getItem("user_id")) {
+                    if (a.id === parseInt(localStorage.getItem("user_id"))) {
                         setHiddenMe("");
                         setHiddenSub("hidden");
-                        setSubscribeStyle("hidden");
+                        setSubscribeStyle("hidden");                 
                     } else {
+                        setProfileTumblerCornerStyle("hidden");
                         setHiddenMe("hidden");
                         setHiddenSub("");
                         if (a.subscribed.length === 0) {
@@ -163,7 +162,7 @@ function Profile (props) {
                         }              
                     }
 
-                    if (a.birthday == null) {
+                    if (!a.birthday) {
                         setBirthdayStyle("userInfo hidden");  
                     } else {
                         let b = new Date(parseInt(a.birthday));
@@ -171,7 +170,7 @@ function Profile (props) {
                         setBirthdayStyle("userInfo");            
                     }
 
-                    if (a.location == null) {
+                    if (!a.location) {
                         setLocationStyle("userInfo hidden");  
                     } else {      
                         setLocation(a.location);
@@ -252,7 +251,7 @@ function Profile (props) {
                             </div>               
                         </div>
                         <input className={hiddenMe} type="button" onClick={logout} value="Logout"></input>
-                        <input className={hiddenMe} type="button" onClick={editProfile} value="Edit"></input>
+                        {/* <input className={hiddenMe} type="button" onClick={editProfile} value="Edit"></input> */}
                         <input className={subscribeStyle} type="button" onClick={subsribe} value={subsribeText}></input>
                     </div>
 
@@ -263,7 +262,7 @@ function Profile (props) {
                         <div onClick={enablePosts} className={profileTumblerPostsStyle}>
                             <p> Posts 📄 </p>
                         </div>
-                        <div style={{borderRight: "solid 0.1vw #E9E9E9", height: '30px'}}></div>
+                        <div className={hiddenMe} style={{borderRight: "solid 0.1vw #E9E9E9", height: '30px'}}></div>
                         <div onClick={enableCorner} className={profileTumblerCornerStyle}>
                             <p> Corner ⭐ </p>
                         </div>

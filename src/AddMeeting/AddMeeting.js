@@ -71,9 +71,9 @@ function AddMeeting (props) {
                                 <textarea onChange={(e) => {setHeader(e.target.value); console.log(e.target.value)}} onKeyDown={(e) => {if(e.keyCode === 13) { e.preventDefault();} }} maxLength="50" placeholder="" name="header"></textarea>              
                             </div>
 
-                            <div class='addMeetingFormTypeAndDate'>
+                            <div className='addMeetingFormTypeAndDate'>
 
-                                <div class='addMeetingFormType'>
+                                <div className='addMeetingFormType'>
                                     <select onChange={(e) => {setType(e.target.value); console.log(e.target.value)}} id="meetingTypes">
                                         <option value="1"> Hang Out </option>
                                         <option value="2"> Business </option>
@@ -81,7 +81,7 @@ function AddMeeting (props) {
                                     </select>
                                 </div>
 
-                                <div class='addMeetingFormDate'>
+                                <div className='addMeetingFormDate'>
                                     <input onChange={(e) => {setDate(e.target.value); console.log(e.target.value)}} type="date"></input>
                                 </div>
 

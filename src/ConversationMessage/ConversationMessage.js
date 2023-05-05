@@ -15,9 +15,9 @@ function ConversationMessage (props) {
 
     const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
 
-    useState(() => {
-        console.log(props.message)
-    }, [])
+    // useState(() => {
+    //     console.log(props.message)
+    // }, [])
 
     return(
         <div className='conversationMessage' id={props.message.id}>

@@ -197,7 +197,7 @@ function Post(props) {
                 <img onClick={postDots} src={DotsImg}></img>
                 <div className={dotsMenuStyle}>
                     <div className={hiddenSub}> Add to corner ⭐</div>
-                    <div className={hiddenSub}> Compain 😠 </div>
+                    {/* <div className={hiddenSub}> Compain 😠 </div> */}
                     <div onClick={deletePost} className={hiddenMe}> Delete 🗑️ </div>
                 </div>
             </div>
