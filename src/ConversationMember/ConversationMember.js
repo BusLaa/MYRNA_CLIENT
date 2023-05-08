@@ -12,12 +12,19 @@ import {Link} from 'react-router-dom';
 
 function ConversationMember (props) {
 
-    const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
+    const [avatars, ] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
+    const [avatar, setAvatar] = useState(avatars[5]);
+
+    useEffect(() => {
+        if (props.member.avatar) {
+            setAvatar(process.env.REACT_APP_SERVER_IP + "static/" + props.member.avatar.path)
+        }
+    }, [avatar]);
 
     return(
         <div className='member' id={props.member.id}>
             <div className="memberTop">
-                <img src={avatars[props.member.avatar]}></img>
+                <img src={avatar} alt="avatar"></img>
                 <Link to="/profile" state={{ userId: props.member.id }} > <p> {props.member.firstName} </p> <p> {props.member.lastName} </p> </Link>
             </div>
         </div>

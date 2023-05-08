@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { gql } from 'graphql-request';
 import './AddPost.css';
 
@@ -16,7 +16,6 @@ function AddPost (props) {
     const [imageFile, setImageFile] = useState(null);
 
     async function addPost(e) {
-        
 
         if (header === "" || header.trim().slice(0, 1) === " " || content === "" || content.trim().slice(0, 1) === " ") {
             setErrorText("You need to fill all the fields!")
@@ -38,22 +37,6 @@ function AddPost (props) {
         `; 
 
         try {
-            const data = new FormData();
-            data.append("image", imageFile);
-            fetch(process.env.REACT_APP_SERVER_IP + "upload", {
-                method: 'POST',
-                body: data
-            }).then((a) =>{
-                return a.json()
-            }).then((b) => {
-                console.log(b);
-            })
-        } catch (err) {
-            setErrorText(err)
-            setErrorStyle("logFormError");
-        }
-
-        try {
             return await fetch(process.env.REACT_APP_SERVER_IP, {
                 headers: {'Content-Type': 'application/json'},
                 method: 'POST',
@@ -61,16 +44,67 @@ function AddPost (props) {
             }).then((a) =>{
                 return a.json()
             }).then((b) => {
-                window.location.href = "http://localhost:3000/allPosts";
-                return  b
+                let postId = b.data.addNewPost.id;
+                if (imageFile) {
+                    uploadImage().then((a) => {
+                        let imageId = a.id;
+                        addImageToPost(postId, imageId).then((a) => {
+                            console.log(a);
+                            window.location.href = "http://localhost:3000/allPosts";  
+                        });
+                    });
+                } else {
+                    window.location.href = "http://localhost:3000/allPosts";  
+                }
             })
 
         } catch (err) {
-
             setErrorText(err)
             setErrorStyle("logFormError");
-
         }   
+
+
+    }
+
+    async function uploadImage() {
+        try {
+            const data = new FormData();
+            data.append("image", imageFile);
+            return await fetch(process.env.REACT_APP_SERVER_IP + "upload", {
+                headers: {'verify-token': localStorage.getItem("token")},
+                method: 'POST',
+                body: data
+            }).then((a) =>{
+                return a.json();
+            }).then((b) => {
+                return b;
+            })
+        } catch (err) {
+            throw new Error(err);
+        }    
+    }
+
+    async function addImageToPost(postId, imageId) {
+        if (postId && imageId) {
+            try {
+                let query2 = gql`
+                    mutation AddImageToPost {
+                        addImageToPost(postId: ${postId}, imageId: ${imageId})
+                    }  
+                `;          
+                return await fetch(process.env.REACT_APP_SERVER_IP, {
+                    headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token")},
+                    method: 'POST',
+                    body: JSON.stringify({"query": query2})
+                }).then((a) =>{
+                    return a.json()
+                }).then((b) => {
+                    return b;
+                }) 
+            } catch (err) {
+                throw new Error(err);
+            }
+        }
     }
 
     function updateImage() {
@@ -88,7 +122,7 @@ function AddPost (props) {
 
                 <p className='addPostText'> Add a New Post </p> 
 
-                    <form method="POST" enctype="multipart/form-data" onSubmit={async (e) => {e.preventDefault(); addPost(e);}}>
+                    <form method="POST" encType="multipart/form-data" onSubmit={async (e) => {e.preventDefault(); addPost(e);}}>
 
                         <div className={errorStyle}>
                             <p className="addPostErrorText">{errorText}</p>

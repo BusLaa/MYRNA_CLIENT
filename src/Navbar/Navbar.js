@@ -7,12 +7,9 @@ import homeImg from '../img/home.svg';
 import conversationImg from '../img/conversations.svg';
 import mapImg from '../img/map.svg';
 import meetingsImg from '../img/meetings.svg';
-//import latestImg from '../img/latest.svg'
 import burgerImg from '../img/burger.svg'
 import notifyImg from '../img/bell.svg'
 import addPostImg from '../img/addpost.svg'
-
-//import NotificationBar from 'react-notification-bar';
 
 import "./Navbar.css";
 
@@ -29,23 +26,17 @@ function Navbar (props) {
     `;
 
     async function getData() {
-
         try {
-            
-            if (localStorage.getItem("user_id") == null) return ;
-
+            if (localStorage.getItem("user_id") == null) return;
             return await fetch(process.env.REACT_APP_SERVER_IP, {
                 headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token")},
                 method: 'POST',
                 body: JSON.stringify({"query": query})
             }).then((a) =>{
-                return a.json()
+                return a.json();
             }).then((b) => {
-                console.log(b)
-                return b
-
+                return b;
             })
-
         } catch (err) {
             console.log(err)
         }       
@@ -62,8 +53,6 @@ function Navbar (props) {
         });
     }, [])
 
-
-
     let notifyOnClick = () => {
         props.setNotify(true)
         props.setNotifyText("No notifications yet!");
@@ -73,7 +62,7 @@ function Navbar (props) {
         window.history.replaceState({}, document.title);
         getData().then((a) =>{
             try {
-                if (a.data.getUserById.roles.indexOf('USER') == -1) {
+                if (a.data.getUserById.roles.indexOf('USER') === -1) {
                     window.location.href = "http://localhost:3000/login";
                 } else {
                     window.location.href = "http://localhost:3000/profile"
@@ -81,7 +70,6 @@ function Navbar (props) {
             } catch(e) {
                 window.location.href = "http://localhost:3000/login";
             }
-
         });
     }
 
@@ -124,4 +112,4 @@ function Navbar (props) {
     )
 }
 
-export default Navbar
+export default Navbar;

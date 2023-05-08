@@ -31,6 +31,10 @@ function AllPosts (props) {
                 id
                 header
                 content
+                images {
+                    id
+                    path
+                }
                 author {
                     id
                     firstName
@@ -91,19 +95,14 @@ function AllPosts (props) {
     }, [])
 
     return(
-
             <div className='homePage'>
-
                 <p className='homePageText'>Home</p>
-
                 <div className="homePagePostsDiv">
                     <div className='homePagePosts'>
                         {posts.map((post) => <Post setDeleteId={setDeleteId} key={post.id} post={post}/>)}
                     </div>
                 </div>
-
                 <p className='homePageEndText'> We reached the end </p>
-
             </div>
 
     )

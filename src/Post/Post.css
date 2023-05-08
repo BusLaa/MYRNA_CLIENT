@@ -64,7 +64,7 @@
     to {opacity: 100%; margin-top: 2px;}
 }
 
-.post > .postTop > .postDots > .dotsMenu > .dotsMenuButton {
+.dotsMenuButton {
     background-color: white;
     animation: fade-in 0.1s ease-in;
     padding: 8px;
@@ -77,18 +77,18 @@
     transition: 0.2s;
 }
 
-.post > .postTop > .postDots > .dotsMenu > .dotsMenuButton:hover {
+.dotsMenuButton:hover {
     background-color: rgb(245, 249, 252);
 }
 
 
-.post > .postHr {
+.postHr {
     display: flex;
     align-items: center; 
     justify-content: center ;  
 }
 
-.post > .postHr > hr {
+.postHr > hr {
     width: 95%;
     height: 0.05vw;
     border: none;
@@ -97,29 +97,43 @@
 
 
 
-.post > .postHeader {
+.postHeader {
     display: flex;
     align-items: center;
     text-align: left !important;
 }
 
-.post > .postHeader > p {
+.postHeader > p {
     font-size: 38px;
     margin: 12px 0px 8px 24px;
 }
 
 
 
-.post > .postContent {
+.postContent {
     display: flex;
     align-items: center;
     text-align: left !important;
 }
 
-.post > .postContent > p {
+.postContent > p {
     white-space: pre-line;
     font-size: 26px;
     margin: 4px 24px 16px 26px;
+}
+
+
+.postImages {
+    width: 100%;
+}
+
+.postImages > img {
+    max-width: 80%;
+    height: 350px;
+    border-radius: 0.5vw;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;   
 }
 
 

@@ -18,7 +18,14 @@ import avatar6 from '../img/avatars/avatar6.jpg';
 
 function Post(props) {
 
-    const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
+    const [avatars, ] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
+    const [avatar, setAvatar] = useState(avatars[5]);
+
+    useEffect(() => {
+        if (props.post.author.avatar) {
+            setAvatar(process.env.REACT_APP_SERVER_IP + "static/" + props.post.author.avatar.path)
+        }
+    }, [avatar]);
 
     const [comments, setComments] = useState(props.post.comments)
 
@@ -51,7 +58,10 @@ function Post(props) {
                 id
                 firstName
                 lastName
-                avatar
+                avatar {
+                    id
+                    path
+                }
             }
             content
             }
@@ -150,7 +160,7 @@ function Post(props) {
 
     function postDots() {
         if (dotsMenuStyle !== "dotsMenu") {
-            if (props.post.author.id === localStorage.getItem("user_id")) {
+            if (props.post.author.id === parseInt(localStorage.getItem("user_id"))) {
                 setHiddenMe("dotsMenuButton");
                 setHiddenSub("hidden dotsMenuButton")
             } else {
@@ -188,13 +198,13 @@ function Post(props) {
         <div className="postTop">
             <div className="postAuthor">
                 <Link to="/profile" state={{ userId: props.post.author.id }} >
-                <img src={avatars[props.post.author.avatar]}></img>
+                <img src={avatar} alt="avatar"></img>
                 <p> {props.post.author.firstName} </p> 
                 <p> {props.post.author.lastName} </p>
                 </Link>
             </div>
             <div className="postDots">
-                <img onClick={postDots} src={DotsImg}></img>
+                <img alt="settings" onClick={postDots} src={DotsImg}></img>
                 <div className={dotsMenuStyle}>
                     <div className={hiddenSub}> Add to corner ⭐</div>
                     {/* <div className={hiddenSub}> Compain 😠 </div> */}
@@ -211,6 +221,9 @@ function Post(props) {
         <div className="postContent">
             <p> {props.post.content} </p>
         </div>
+        <div className="postImages">
+            {props.post.images.map((image) => <img key={image.id} src={process.env.REACT_APP_SERVER_IP + "static/" + image.path} alt="suka"></img>)}
+        </div>  
         <div className="postLike">
             <img className={likeStyle} onClick={likePost} src={PacmanImg} alt="Like"></img>
             <p> {like} </p>

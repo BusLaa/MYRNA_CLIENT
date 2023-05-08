@@ -171,7 +171,10 @@ function Conversation (props) {
                         id 
                         firstName
                         lastName
-                        avatar
+                        avatar {
+                            id
+                            path
+                        }
                     }
                     messages {
                         id
@@ -181,7 +184,10 @@ function Conversation (props) {
                             id
                             firstName
                             lastName
-                            avatar
+                            avatar {
+                                id
+                                path
+                            }
                         }
                     }
                 }

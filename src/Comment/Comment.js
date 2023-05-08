@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Comment.css"
 import { gql } from 'graphql-request';
 
@@ -15,7 +15,14 @@ import {Link} from 'react-router-dom';
 
 function Comment (props) {
 
-    const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
+    const [avatars, ] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
+    const [avatar, setAvatar] = useState(avatars[5]);
+
+    useEffect(() => {
+        if (props.comment.author.avatar) {
+            setAvatar(process.env.REACT_APP_SERVER_IP + "static/" + props.comment.author.avatar.path)
+        }
+    }, [avatar]);
 
     const [dotsMenuStyle, setDotsMenuStyle] = useState("hidden dotsMenu");
 
@@ -66,7 +73,7 @@ function Comment (props) {
     return(
         <div className='comment' id={props.comment.id}>
             <div className="commentTop">
-                <img src={avatars[props.comment.author.avatar]}></img>
+                <img src={avatar} alt="avatar"></img>
                 <Link to="/profile" state={{ userId: props.comment.author.id }} > <p> {props.comment.author.firstName} </p> <p> {props.comment.author.lastName} </p> </Link>
                 <div className="commentDots">
                     <img onClick={commentDots} src={DotsImg}></img>

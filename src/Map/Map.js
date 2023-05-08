@@ -101,8 +101,8 @@ function Map (props) {
 
     getData2().then((a) => {
       setUserLocation(a.data.getUserById.location);
-      setIconLatitude(a.data.getUserById.location.latitude); 
-      setIconLongitude(a.data.getUserById.location.longitude);
+      setIconLatitude(a.data.getUserById.location?.latitude); 
+      setIconLongitude(a.data.getUserById.location?.longitude);
     })
   }, []);
 
@@ -129,7 +129,7 @@ function Map (props) {
         })
       ],
       view: new ol.View({
-        center: proj.fromLonLat([userLocation.longitude, userLocation.latitude]),
+        center: proj.fromLonLat([userLocation?.longitude || 27.7952597, userLocation?.latitude || 59.3912168]),
         zoom: 12
       })
     }))

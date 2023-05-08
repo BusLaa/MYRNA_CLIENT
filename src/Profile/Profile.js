@@ -17,9 +17,19 @@ import avatar6 from '../img/avatars/avatar6.jpg';
 function Profile (props) {
 
     const [avatars,] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
+    const [avatar, setAvatar] = useState(avatars[5]);
 
     const [user, setUser] = useState({});
+
+    useEffect(() => {
+        if (user.avatar) {
+            setAvatar(process.env.REACT_APP_SERVER_IP + "static/" + user.avatar.path)
+        }
+    }, [user]);
+
+
     const [userPosts, setUserPosts] = useState([]);
+    const [userCorner, setUserCorner] = useState([]);
 
     const [birthday, setBirthday] = useState(new Date());
     const [location, setLocation] = useState({});
@@ -65,6 +75,40 @@ function Profile (props) {
                 firstName
                 lastName
                 birthday
+                corner {
+                    posts {
+                        id
+                        header
+                        content
+                        images {
+                            id 
+                            path
+                        }
+                        author {
+                            id
+                            firstName
+                            lastName
+                            avatar {
+                                id
+                                path
+                            }
+                        }
+                        comments {
+                            id
+                            content
+                            author {
+                                id
+                                firstName
+                                lastName
+                                avatar {
+                                    id
+                                    path
+                                }
+                            }
+                        }
+                        likes
+                    }
+                }
                 avatar {
                     id
                     path
@@ -82,6 +126,10 @@ function Profile (props) {
                     id
                     header
                     content
+                    images {
+                        id 
+                        path
+                    }
                     author {
                         id
                         firstName
@@ -123,10 +171,9 @@ function Profile (props) {
                 method: 'POST',
                 body: JSON.stringify({"query": query})
             }).then((a) =>{
-                console.log(a);
                 return a.json()
             }).then((b) => {
-                console.log(b);
+                console.log(b.data.getUserById.corner);
                 return b
             })
         } catch (err) {
@@ -147,8 +194,10 @@ function Profile (props) {
                 if (a.length === 0) {
                     window.location.href = "http://localhost:3000/login";
                 } else {
-                    setUser(a);                                     
-                    setUserPosts([].concat([], a.posts));
+                    setUser(a);           
+                    console.log(a.posts);                      
+                    setUserPosts(a.posts);
+                    setUserCorner(a.corner.posts);
                     if (a.id === parseInt(localStorage.getItem("user_id"))) {
                         setHiddenMe("");
                         setHiddenSub("hidden");
@@ -251,7 +300,7 @@ function Profile (props) {
                     <div className="profile">
                         <p className="profileName" title={user.id}> {user.firstName} {user.lastName} </p>
                         <div className="profileInfo">
-                            <img className="avatar" src={user.avatar?.path } alt="avatar"></img>
+                            <img className="avatar" src={avatar} alt="avatar"></img>
                             <div>
                                 <p className={birthdayStyle}> Birthday: { birthday.toLocaleDateString() }</p>
                                 <p className={locationStyle}> Location: { location.country }, {location.city} </p>             
@@ -284,7 +333,7 @@ function Profile (props) {
 
                 <div className='profileUserCornerDiv'>
                     <div className={userCornerStyle}>
-                        
+                        {userCorner.map((post) => <Post setDeleteId={setDeleteId} key={post.id} post={post}/>)}
                     </div>
                 </div>
 
