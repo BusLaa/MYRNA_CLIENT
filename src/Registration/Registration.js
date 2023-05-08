@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {gql} from 'graphql-request';
 import "./Registration.css"
-//import { flushSync } from 'react-dom';
 
 function Registration (props) {
 
@@ -10,7 +9,7 @@ function Registration (props) {
   const [firstName, setFirstname] = useState("");
   const [lastName, setLastname] = useState("");
 
-  const [birthday, setBirthday] = useState("");
+  const [birthday, setBirthday] = useState(null);
   const [birthdayStyle, setBirthdayStyle] = useState("hidden");
 
   const [country, setCountry] = useState("");
@@ -130,7 +129,9 @@ function Registration (props) {
 
       }
 
-    }  
+    } else {
+      signUp2();
+    }
     
   }
 
@@ -211,7 +212,7 @@ function Registration (props) {
               <p className="regFormErrorText">{errorText}</p>
             </div>
 
-            <form className='regForm' method='POST' onSubmit={signUp}>
+            <form className='regForm' method='POST' onSubmit={(e) => {signUp(e)}}>
               <input type="email" name="email" onChange={handleEmailChange} value={email} placeholder='Email' required></input><br></br>
               <input type="password"  name="pass" minLength={9} onChange={handlePassChange} value={pass} placeholder='Password' required></input><br></br>
               <input type="text" name="firstname" onChange={handleFirstnameChange} value={firstName} placeholder='First Name' required></input><br></br>

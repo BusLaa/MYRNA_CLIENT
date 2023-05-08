@@ -36,7 +36,6 @@ function ConversationBlock(props) {
             }).then((a) =>{
                 return a.json()
             }).then((b) => {
-                console.log(b.data)
                 if (b.data.deleteConversation) {
                     props.setDeleteId(props.conversation.id);
                 } 

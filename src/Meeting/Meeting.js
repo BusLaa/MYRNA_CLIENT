@@ -40,9 +40,9 @@ function Meeting (props) {
     const [deleteId, setDeleteId] = useState(0);
 
     useEffect(() => {
-        if (deleteId != -1) {
-            const newList = members.filter((item) => item.id !== deleteId);
-            setMembers(newList);
+        if (deleteId !== -1) {
+            setMembers((members) => 
+                members.filter((item) => item.id !== deleteId))
             setDeleteId(-1);
         }
     },[deleteId])

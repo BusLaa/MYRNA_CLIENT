@@ -35,7 +35,10 @@ function AllPosts (props) {
                     id
                     firstName
                     lastName
-                    avatar
+                    avatar {
+                        id
+                        path
+                    }
                 }
                 comments {
                     id
@@ -44,7 +47,10 @@ function AllPosts (props) {
                         id
                         firstName
                         lastName
-                        avatar
+                        avatar {
+                            id
+                            path
+                        }
                     }
                 }
                 likes

@@ -62,7 +62,7 @@ function AddPost (props) {
                 return a.json()
             }).then((b) => {
                 window.location.href = "http://localhost:3000/allPosts";
-                return b
+                return  b
             })
 
         } catch (err) {

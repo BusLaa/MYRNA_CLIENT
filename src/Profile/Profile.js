@@ -65,6 +65,10 @@ function Profile (props) {
                 firstName
                 lastName
                 birthday
+                avatar {
+                    id
+                    path
+                }
                 subscribed {
                     id                    
                 }
@@ -74,7 +78,6 @@ function Profile (props) {
                     country
                     postalCode
                 }
-                avatar
                 posts {
                     id
                     header
@@ -83,7 +86,10 @@ function Profile (props) {
                         id
                         firstName
                         lastName
-                        avatar
+                        avatar {
+                            id
+                            path
+                        }
                     }
                     comments {
                         id
@@ -92,7 +98,10 @@ function Profile (props) {
                             id
                             firstName
                             lastName
-                            avatar
+                            avatar {
+                                id
+                                path
+                            }
                         }
                     }
                     likes
@@ -242,7 +251,7 @@ function Profile (props) {
                     <div className="profile">
                         <p className="profileName" title={user.id}> {user.firstName} {user.lastName} </p>
                         <div className="profileInfo">
-                            <img className="avatar" src={avatars[user.avatar]} alt="avatar"></img>
+                            <img className="avatar" src={user.avatar?.path } alt="avatar"></img>
                             <div>
                                 <p className={birthdayStyle}> Birthday: { birthday.toLocaleDateString() }</p>
                                 <p className={locationStyle}> Location: { location.country }, {location.city} </p>             

@@ -15,15 +15,11 @@ function ConversationMessage (props) {
 
     const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
 
-    // useState(() => {
-    //     console.log(props.message)
-    // }, [])
-
     return(
         <div className='conversationMessage' id={props.message.id}>
             <div className="conversationMessageTop">
                 <div className="conversationMessageTopLeft">
-                    <img src={avatars[props.message.author.avatar]}></img>
+                    <img src={avatars[props.message.author.avatar]} alt="avatar"></img>
                     <Link to="/profile" state={{ userId: props.message.author.id }} > <p>{props.message.author.firstName} {props.message.author.lastName}</p> </Link>
                 </div>
                 <div className="conversationMessageTopRight">
