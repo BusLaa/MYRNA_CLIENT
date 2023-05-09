@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./Comment.css"
 import { gql } from 'graphql-request';
 
-import avatar1 from '../img/avatars/avatar1.jpg';
-import avatar2 from '../img/avatars/avatar2.jpg';
-import avatar3 from '../img/avatars/avatar3.jpg';
-import avatar4 from '../img/avatars/avatar4.jpg';
-import avatar5 from '../img/avatars/avatar5.jpg';
-import avatar6 from '../img/avatars/avatar6.jpg';
+import stockAvatar from '../img/avatars/avatar1.jpg';
 
 import DotsImg from '../img/dots.svg'
 
@@ -15,14 +10,13 @@ import {Link} from 'react-router-dom';
 
 function Comment (props) {
 
-    const [avatars, ] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
-    const [avatar, setAvatar] = useState(avatars[5]);
+    const [avatar, setAvatar] = useState(stockAvatar);
 
     useEffect(() => {
         if (props.comment.author.avatar) {
             setAvatar(process.env.REACT_APP_SERVER_IP + "static/" + props.comment.author.avatar.path)
         }
-    }, [avatar]);
+    }, [props.comment]);
 
     const [dotsMenuStyle, setDotsMenuStyle] = useState("hidden dotsMenu");
 
@@ -71,7 +65,7 @@ function Comment (props) {
 
 
     return(
-        <div className='comment' id={props.comment.id}>
+        <div className='comment slide' id={props.comment.id}>
             <div className="commentTop">
                 <img src={avatar} alt="avatar"></img>
                 <Link to="/profile" state={{ userId: props.comment.author.id }} > <p> {props.comment.author.firstName} </p> <p> {props.comment.author.lastName} </p> </Link>

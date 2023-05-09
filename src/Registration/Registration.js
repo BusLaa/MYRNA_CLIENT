@@ -19,6 +19,7 @@ function Registration (props) {
   const [locationId, setLocationId] = useState(null);
 
   const [avatarStyle, setAvatarStyle] = useState("regFormImage hidden");
+  const [avatarStyle2, setAvatarStyle2] = useState("regFormImageArea hidden");
   const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
@@ -60,49 +61,6 @@ function Registration (props) {
       }
     }  
   `;
-
-  async function signUp2() {
-    try {
-
-      const res = await fetch(process.env.REACT_APP_SERVER_IP, {
-          headers: {'Content-Type': 'application/json'},
-          method: 'POST',
-          body: JSON.stringify({"query": query})
-      })
-
-      const res_json = await res.json();
-
-      try {
-
-        localStorage.setItem("user_id", res_json.data.signup.user.id);
-        localStorage.setItem("token", res_json.data.signup.token);
-
-        if (imageFile) {
-          uploadImage().then((a) => {
-            let imageId = a.id;
-            addImageToUser(res_json.data.signup.user.id, imageId).then((a) => {
-              console.log(a);
-              window.location.href = "http://localhost:3000/profile";  
-          });
-        });
-        } else {
-          window.location.href = "http://localhost:3000/profile";
-        }
-
-      } catch (err) {
-
-        setErrorText(res_json.errors[0].message);
-        setErrorStyle("regFormError");
-
-      }
-
-    } catch (err) {
-
-      setErrorText(err);
-      setErrorStyle("regFormError");
-
-    } 
-  }
 
   function imagePreview() {
     const imageArea = document.querySelector('.regFormImageArea');
@@ -146,54 +104,70 @@ function Registration (props) {
     }    
 }
 
+  async function signUp(e) {
+    e.preventDefault();
+    if (locationStyle !== "hidden") {
+      if (country.trim().slice(0,1) === " " || country === ""
+        || city.trim().slice(0,1) === " " || city === ""
+        || postalCode.trim().slice(0,1) === " " || postalCode === "") return;
+      try {
+        const res = await fetch(process.env.REACT_APP_SERVER_IP, {
+            headers: {'Content-Type': 'application/json'},
+            method: 'POST',
+            body: JSON.stringify({"query": query2})
+        })
+        const res_json = await res.json();
+        try {
+          setLocationId(res_json.data.createLocation.id);
+        } catch (e) {
+          setErrorText(res_json.errors[0].message);
+          setErrorStyle("regFormError");  
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    } else {
+      signUp2();
+    }
+  }
+
   useEffect(() => {
     if (locationId != null) {
       signUp2();
     }
   }, [locationId])
 
-
-  async function signUp(e) {
-    e.preventDefault();
-
-    if (locationStyle !== "hidden") {
-
-      if (country.trim().slice(0,1) === " " || country === ""
-        || city.trim().slice(0,1) === " " || city === ""
-        || postalCode.trim().slice(0,1) === " " || postalCode === "") return;
-
+  async function signUp2() {
+    try {
+      const res = await fetch(process.env.REACT_APP_SERVER_IP, {
+          headers: {'Content-Type': 'application/json'},
+          method: 'POST',
+          body: JSON.stringify({"query": query})
+      })
+      const res_json = await res.json();
       try {
-
-        const res = await fetch(process.env.REACT_APP_SERVER_IP, {
-            headers: {'Content-Type': 'application/json'},
-            method: 'POST',
-            body: JSON.stringify({"query": query2})
-        })
-
-        const res_json = await res.json();
-
-        try {
-
-          setLocationId(res_json.data.createLocation.id);
-
-        } catch (e) {
-
-          setErrorText(res_json.errors[0].message);
-          setErrorStyle("regFormError");  
-
+        localStorage.setItem("user_id", res_json.data.signup.user.id);
+        localStorage.setItem("token", res_json.data.signup.token);
+        if (imageFile) {
+          uploadImage().then((a) => {
+            let imageId = a.id;
+            addImageToUser(res_json.data.signup.user.id, imageId).then((a) => {
+              window.location.href = "http://localhost:3000/profile";  
+          });
+        });
+        } else {
+          window.location.href = "http://localhost:3000/profile";
         }
-
-      } catch (e) {
-
-        console.log(e)
-
+      } catch (err) {
+        setErrorText(res_json.errors[0].message);
+        setErrorStyle("regFormError");
       }
-
-    } else {
-      signUp2();
-    }
-    
+    } catch (err) {
+      setErrorText(err);
+      setErrorStyle("regFormError");
+    } 
   }
+
 
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -231,7 +205,6 @@ function Registration (props) {
     console.log(e.target.value);
   }
 
-
   function toggleBirthday(e) {
     if (birthdayStyle === "hidden") {
       setDateRequire("required");
@@ -260,10 +233,12 @@ function Registration (props) {
     if (avatarStyle === "regFormImage hidden") {
       setAvatarRequire("required");
       setAvatarStyle("regFormImage");
+      setAvatarStyle2("regFormImageArea");
     } else {
       setAvatarRequire("");
       setImageFile(null);
       setAvatarStyle("regFormImage hidden");
+      setAvatarStyle2("regFormImageArea hidden");
     }
   }
 
@@ -271,8 +246,9 @@ function Registration (props) {
     if (userId && imageId) {
         try {
             let query2 = gql`
-              mutation ChangeUser() {
-                changeUser(userId: ${userId}, imageId: ${imageId}) {          
+              mutation ChangeUser {
+                changeUser(userId: ${userId}, imageId: ${imageId}) {     
+                  id     
                 }
               }  
             `;          
@@ -330,7 +306,7 @@ function Registration (props) {
               </div>
               <div className={avatarStyle}>
                   <div>
-                      <div onClick={(e) => {imagePreview(e)}} className='regFormImageArea'>
+                      <div onClick={(e) => {imagePreview(e)}} className={avatarStyle2}>
                           <input  multiple="multiple" maxLength={3} className='regFormImageInput' id="image" name="image" accept="image/png, image/jpeg" type="file" hidden required={avatarRequire}></input>
                           <i className="fa fa-upload"></i>
                           <p> Upload a picture </p>

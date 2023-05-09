@@ -54,6 +54,7 @@ function Chat (props) {
         function onNewMessage(message) {
             message.createdAt = new Date(message.createdAt).getTime();
             setMessages(messages => [...messages, message]);
+            console.log(message);
             if (message.authorId === localStorage.getItem("user_id")) {
                 setContent("");
                 document.getElementById("messageInput").value = "";             

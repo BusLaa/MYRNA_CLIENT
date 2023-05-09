@@ -13,7 +13,7 @@ function ChatMessage (props) {
         if (props.message.author.avatar) {
             setAvatar(process.env.REACT_APP_SERVER_IP + "static/" + props.message.author.avatar.path)
         }
-    }, [avatar]);
+    }, [props.message]);
 
     return(
         <div className='message' id={props.message.id}>

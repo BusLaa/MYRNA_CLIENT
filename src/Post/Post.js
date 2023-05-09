@@ -26,8 +26,9 @@ function Post(props) {
     const [comments, setComments] = useState(props.post.comments)
 
     const [content, setContent] = useState("");
-
+    
     const [like, setLike] = useState(props.post.likes);
+    const [likeTitle, setLikeTitle] = useState(props.post.likes);
     const [likeStyle, setLikeStyle] = useState("");
 
     const [dotsMenuStyle, setDotsMenuStyle] = useState("hidden dotsMenu");
@@ -38,12 +39,18 @@ function Post(props) {
     const [deleteId, setDeleteId] = useState(0);
 
     useEffect(() => {
-        if (deleteId != -1) {
+        if (deleteId !== -1) {
             const newList = comments.filter((item) => item.id !== deleteId);
             setComments(newList);    
             setDeleteId(-1);
         }
     },[deleteId]);
+
+    useEffect(() => {
+        if (likeTitle > 999) {
+            setLike(likeTitle & 1000 + "k");
+        }
+    }, [likeTitle]);
 
     useEffect(() => {
         if (props.post.isLiked) {
@@ -89,12 +96,6 @@ function Post(props) {
     `; 
 
     let query4 = gql`
-        query Query {
-            isPostLikedByUser(postId: ${props.post.id}, userId: ${localStorage.getItem("user_id")})
-        }
-    `; 
-
-    let query5 = gql`
         mutation AddPostToCorner {
             addPostToCorner(postId: ${props.post.id}, userId: ${localStorage.getItem("user_id")})
         }
@@ -113,7 +114,6 @@ function Post(props) {
                 return a.json()
             }).then((b) => {
                 setComments([].concat(comments, b.data.addNewComment))
-                console.log(comments)
                 document.getElementById("commentInput").value = "";
                 setContent("");
                 return b
@@ -135,10 +135,10 @@ function Post(props) {
                 if(typeof b.data.likePost !== 'boolean') throw new Error("likePost returned not boolean")
                 if (b.data.likePost) {
                     setLikeStyle("blue");
-                    setLike(like + 1);
+                    setLikeTitle(likeTitle + 1);
                 } else {
                     setLikeStyle("");   
-                    setLike(like - 1);           
+                    setLikeTitle(likeTitle - 1);       
                 }
             })     
         } catch (err) {
@@ -151,7 +151,7 @@ function Post(props) {
             return fetch(process.env.REACT_APP_SERVER_IP, {
                 headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token")},
                 method: 'POST',
-                body: JSON.stringify({"query": query5})
+                body: JSON.stringify({"query": query4})
             }).then((a) =>{
                 return a.json();
             }).then((b) => {
@@ -289,7 +289,7 @@ function Post(props) {
         </div>  
         <div className="postLike">
             <img className={likeStyle} onClick={likePost} src={PacmanImg} alt="Like"></img>
-            <p> {like} </p>
+            <p title={likeTitle} className={likeStyle}> {like} </p>
         </div>
         <div className="postComments">
             {comments.map((comment) => <Comment setDeleteId={setDeleteId} key={comment.id} comment={comment}/>)}

@@ -128,7 +128,8 @@
 
 .postImagesImage {
     transition: 0.35s;
-    z-index: 100;
+    z-index: 2;
+    position: relative;
     max-width: 80%;
     max-height: 350px;
     border-radius: 0.5vw;
@@ -138,48 +139,49 @@
     margin: 12px 0px 6px 0px;    
 }
 
-
-.post > .postLike {
+.postLike {
     display: flex;
     align-items: center;    
 
 }
 
-.post > .postLike > img {
+.postLike > img {
     margin: 18px 8px 18px 20px;
+    z-index: 1;
+    position: relative;
     cursor: pointer;  
     transition: 0.35s;
     filter: brightness(0) saturate(100%) invert(85%) sepia(0%) saturate(16%) hue-rotate(74deg) brightness(89%) contrast(89%);
 }
 
-.post > .postLike > .blue {
+.postLike > img:hover {
+    opacity: 75%;
+    transform: rotateZ(-12deg) scale(1.15);
+    filter: brightness(0) saturate(100%) invert(45%) sepia(4%) saturate(2500%) hue-rotate(192deg) brightness(125%) contrast(100%);
+}
+
+.postLike > p {
+    transition: 0.35s;
+    font-size: 24px;
+    padding-bottom: 2px;
+    color:rgb(150, 150, 150);
+}
+
+img.blue {
     filter: brightness(0) saturate(100%) invert(35%) sepia(39%) saturate(5441%) hue-rotate(192deg) brightness(96%) contrast(95%);
 }
 
-.post > .postLike > img:hover {
-    opacity: 75%;
-    transform: rotateZ(-15deg) scale(1.2);
-    filter: brightness(0) saturate(100%) invert(45%) sepia(4%) saturate(4500%) hue-rotate(192deg) brightness(96%) contrast(95%);
-}
-
-.post > .postLike > p {
-    height: fit-content;
-    font-size: 24px;
-    color:#067BE2;
-}
-
-.blue {
+p.blue {
     color:#067BE2;
 }
 
 
-
-.post > .postComment {
+.postComment {
     display: flex;
     align-items: center;
 }
 
-.post > .postComment > input {
+.postComment > input {
     display: flex;
     align-items: center;
     font-size: 14px;
