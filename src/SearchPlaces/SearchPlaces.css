@@ -10,21 +10,30 @@
     background-color: #f0f0f0;
 }
 
-.users > div{
-    padding-right: 8px;              
-}
-
-
-.users > div::-webkit-scrollbar {
+html::-webkit-scrollbar {
     width: 6px;              
-}
-
-.users > div::-webkit-scrollbar-track {
+  }
+  
+  html::-webkit-scrollbar-track {
     background: #E9E9E9;
     border-radius: 32px;      
-}
-
-.users > div::-webkit-scrollbar-thumb {
+  }
+  
+  html::-webkit-scrollbar-thumb {
     background-color: #d1d1d1;  
     border-radius: 32px;      
+  }
+
+.placesDiv {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    height: 275px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    border-bottom: 0.1vw solid #E9E9E9;
+    border-top: 0.1vw solid #E9E9E9;
 }

@@ -71,15 +71,11 @@ function Conversations (props) {
     }, [])
 
     return(
-
-            <div className='conversationsPage'>
-
+            <div className='conversationsPage  slide'>
                 <p className='conversationsPageText'> Conversations </p>
-
                 <div className={yesConversationsDivStyle}>
                     <Link to="/addConversation"> <button> Create a Conversation </button> </Link>
                 </div>
-
                 <div className="conversationsPageConversationsDiv">
                     <div className='conversationsPageConversations'>
                         <div className={noConversationsDivStyle}>
@@ -89,9 +85,7 @@ function Conversations (props) {
                         {conversations.map((conversation) => <ConversationBlock setDeleteId={setDeleteId} key={conversation.id} conversation={conversation}/>)}
                     </div>
                 </div>
-
             </div>
-
     )
 }
 

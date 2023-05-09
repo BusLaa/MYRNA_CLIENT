@@ -18,8 +18,16 @@ function Registration (props) {
   const [locationStyle, setLocationStyle] = useState("hidden");
   const [locationId, setLocationId] = useState(null);
 
+  const [avatarStyle, setAvatarStyle] = useState("regFormImage hidden");
+  const [imageFile, setImageFile] = useState(null);
+
+  useEffect(() => {
+      console.log(imageFile);
+  }, [imageFile]);
+
   const [dateRequire, setDateRequire] = useState("");
   const [locationRequire, setLocationRequire] = useState("");
+  const [avatarRequire, setAvatarRequire] = useState("");
 
   const [errorStyle, setErrorStyle] = useState("");
   const [errorText, setErrorText] = useState("");
@@ -69,7 +77,17 @@ function Registration (props) {
         localStorage.setItem("user_id", res_json.data.signup.user.id);
         localStorage.setItem("token", res_json.data.signup.token);
 
-        window.location.href = "http://localhost:3000/profile";
+        if (imageFile) {
+          uploadImage().then((a) => {
+            let imageId = a.id;
+            addImageToUser(res_json.data.signup.user.id, imageId).then((a) => {
+              console.log(a);
+              window.location.href = "http://localhost:3000/profile";  
+          });
+        });
+        } else {
+          window.location.href = "http://localhost:3000/profile";
+        }
 
       } catch (err) {
 
@@ -85,6 +103,48 @@ function Registration (props) {
 
     } 
   }
+
+  function imagePreview() {
+    const imageArea = document.querySelector('.regFormImageArea');
+    const inputFile = document.getElementById("image");
+    if (inputFile != null) {
+      inputFile.click();
+      inputFile.addEventListener(
+        'change', () => {
+          const image = inputFile.files[0];
+          setImageFile(image);
+          const reader = new FileReader();
+          reader.onload = () => {
+            const imgUrl = reader.result;
+            if (!imageArea.classList.contains('regFormImagePreview')) {
+              imageArea.classList.add('regFormImagePreview');
+            }
+            imageArea.setAttribute('style', "background-image: url('" + imgUrl + "'); background-repeat: no-repeat; background-size: cover; background-blend-mode: hard-light");
+        };
+          reader.readAsDataURL(image);
+        },
+        { once: true }
+      );
+    }
+  }
+
+  async function uploadImage() {
+    try {
+        const data = new FormData();
+        data.append("image", imageFile);
+        return await fetch(process.env.REACT_APP_SERVER_IP + "upload", {
+            headers: {'verify-token': localStorage.getItem("token")},
+            method: 'POST',
+            body: data
+        }).then((a) =>{
+            return a.json();
+        }).then((b) => {
+            return b;
+        })
+    } catch (err) {
+        throw new Error(err);
+    }    
+}
 
   useEffect(() => {
     if (locationId != null) {
@@ -195,6 +255,41 @@ function Registration (props) {
       setLocationStyle("hidden");
     }
   }
+
+  function toggleAvatar(e) {
+    if (avatarStyle === "regFormImage hidden") {
+      setAvatarRequire("required");
+      setAvatarStyle("regFormImage");
+    } else {
+      setAvatarRequire("");
+      setImageFile(null);
+      setAvatarStyle("regFormImage hidden");
+    }
+  }
+
+  async function addImageToUser(userId, imageId) {
+    if (userId && imageId) {
+        try {
+            let query2 = gql`
+              mutation ChangeUser() {
+                changeUser(userId: ${userId}, imageId: ${imageId}) {          
+                }
+              }  
+            `;          
+            return await fetch(process.env.REACT_APP_SERVER_IP, {
+                headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token")},
+                method: 'POST',
+                body: JSON.stringify({"query": query2})
+            }).then((a) =>{
+                return a.json();
+            }).then((b) => {
+                return b;
+            }) 
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+  }
     
   return (
 
@@ -229,6 +324,19 @@ function Registration (props) {
               <input className={locationStyle} type="text" placeholder="Country" name="country" onChange={handleCountryChange} value={country} required={locationRequire}></input>
               <input className={locationStyle} type="text" placeholder="City" name="city" onChange={handleCityChange} value={city} required={locationRequire}></input>
               <input className={locationStyle} type="text" placeholder="Postal Code" name="postalCode" onChange={handlePostalCodeChange} value={postalCode} required={locationRequire}></input>
+              <div className="avatarCheck">
+                <input className="avatarCheckbox" type="checkbox" onChange={toggleAvatar}></input>
+                <p> Add avatar </p>
+              </div>
+              <div className={avatarStyle}>
+                  <div>
+                      <div onClick={(e) => {imagePreview(e)}} className='regFormImageArea'>
+                          <input  multiple="multiple" maxLength={3} className='regFormImageInput' id="image" name="image" accept="image/png, image/jpeg" type="file" hidden required={avatarRequire}></input>
+                          <i className="fa fa-upload"></i>
+                          <p> Upload a picture </p>
+                      </div>
+                  </div>
+              </div>       
               <div className="regFormButtonsDiv">
                 <div className='regFormButtons'>
                   <input type="submit" value="Let's create an account"></input>

@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { gql } from 'graphql-request';
-import {Link} from 'react-router-dom';
 
-import './PlaceBlock.css';
+import './PlaceSearchBlock.css';
 
-import DotsImg from '../img/dots.svg'
+import stockAvatar from '../img/avatars/avatar1.jpg';
 
-import stockAvatar from '../img/pizzakiosk.jpg';
-
-function PlaceBlock(props) {
+function PlaceSearchBlock(props) {
 
     const [placeImg, setPlaceImg] = useState(stockAvatar);
 
@@ -17,7 +14,7 @@ function PlaceBlock(props) {
             setPlaceImg(process.env.REACT_APP_SERVER_IP + "static/" + props.place.images[0].path);
         }
     }, [props.place]);
-
+    
     const [dotsMenuStyle, setDotsMenuStyle] = useState("hidden dotsMenu")
     const [dotsMenuButtonStyle, ] = useState("dotsMenuButton")
 
@@ -52,25 +49,15 @@ function PlaceBlock(props) {
 
   return (
 
-    <div className="placeBlock" id={props.place.id}>
-        <div className="placeBlockTop">
-            <div className="placeBlockInfo">
-                <Link to="/place" state={{ placeId: props.place.id }} >
-                    <div className="placeBlockAvatar">
-                        <img src={placeImg} alt="avatar"></img>
-                    </div>
-                    <div className="placeBlockName">
-                        <p> {props.place.name} </p> 
-                    </div>  
-                </Link>
-            </div>
-            <div className="placeBlockDots">
-                <div style={{borderRight: "solid 0.1vw #E9E9E9", height: '30px'}}></div>
-                <img onClick={placeBlockDots} src={DotsImg} alt="dots"></img>
-                <div className={dotsMenuStyle}>
-                    <div className={dotsMenuButtonStyle}> Add to corner ⭐</div>
-                    <div className={dotsMenuButtonStyle}> Hide and forget ⛔️ </div>
+    <div className="placeSearchBlock" id={props.place.id} onClick={() => {props.onChoose(props.place.id); props.onChoose2()}}>
+        <div className="placeSearchBlockTop">
+            <div className="placeSearchBlockInfo">
+                <div className="placeSearchBlockAvatar">
+                    <img src={placeImg} alt="avatar"></img>
                 </div>
+                <div className="placeSearchBlockName">
+                    <p> {props.place.name} </p> 
+                </div>  
             </div>
         </div>
     </div>
@@ -79,4 +66,4 @@ function PlaceBlock(props) {
 
 }
 
-export default PlaceBlock;
+export default PlaceSearchBlock;

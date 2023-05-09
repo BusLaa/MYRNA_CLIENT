@@ -9,23 +9,19 @@ import {Link} from 'react-router-dom';
 import DotsImg from '../img/dots.svg'
 import PacmanImg from '../img/pacman.svg'
 
-import avatar1 from '../img/avatars/avatar1.jpg';
-import avatar2 from '../img/avatars/avatar2.jpg';
-import avatar3 from '../img/avatars/avatar3.jpg';
-import avatar4 from '../img/avatars/avatar4.jpg';
-import avatar5 from '../img/avatars/avatar5.jpg';
-import avatar6 from '../img/avatars/avatar6.jpg';
+import stockAvatar from '../img/avatars/avatar1.jpg';
 
 function Post(props) {
 
-    const [avatars, ] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
-    const [avatar, setAvatar] = useState(avatars[5]);
+    const [avatar, setAvatar] = useState(stockAvatar);
+
+    const [addToCornerText, setAddToCornerText] = useState("");
 
     useEffect(() => {
         if (props.post.author.avatar) {
             setAvatar(process.env.REACT_APP_SERVER_IP + "static/" + props.post.author.avatar.path)
         }
-    }, [avatar]);
+    }, [props.post]);
 
     const [comments, setComments] = useState(props.post.comments)
 
@@ -49,6 +45,18 @@ function Post(props) {
         }
     },[deleteId]);
 
+    useEffect(() => {
+        if (props.post.isLiked) {
+            setLikeStyle("blue");
+        } else {
+            setLikeStyle("");
+        }
+        if (props.post.isCornered) {
+            setAddToCornerText("Throw out of corner 👋");
+        } else {
+            setAddToCornerText("Add to corner ⭐");
+        }    
+    }, [])
 
     let query = gql`
         mutation AddNewComment {
@@ -83,6 +91,12 @@ function Post(props) {
     let query4 = gql`
         query Query {
             isPostLikedByUser(postId: ${props.post.id}, userId: ${localStorage.getItem("user_id")})
+        }
+    `; 
+
+    let query5 = gql`
+        mutation AddPostToCorner {
+            addPostToCorner(postId: ${props.post.id}, userId: ${localStorage.getItem("user_id")})
         }
     `; 
 
@@ -131,31 +145,26 @@ function Post(props) {
             console.log(err)
         }
     }
-
-    useEffect(() =>{
-        setLikeStyleOnSetup().then((a) => {
-            if (a.data.isPostLikedByUser) {
-                setLikeStyle("blue");
-            } else {
-                setLikeStyle("");                    
-            }
-        })
-    }, [])
-
-    function setLikeStyleOnSetup() {
+    
+    function addToCorner() {
         try {
             return fetch(process.env.REACT_APP_SERVER_IP, {
                 headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token")},
                 method: 'POST',
-                body: JSON.stringify({"query": query4})
+                body: JSON.stringify({"query": query5})
             }).then((a) =>{
-                return a.json()
+                return a.json();
             }).then((b) => {
+                if (b.data.addPostToCorner) {
+                    setAddToCornerText("Throw out of corner 👋");
+                } else {
+                    setAddToCornerText("Add to corner ⭐");
+                }
                 return b
-            })     
+            })
         } catch (err) {
             console.log(err)
-        }       
+        }         
     }
 
     function postDots() {
@@ -192,6 +201,59 @@ function Post(props) {
         }         
     }
 
+    function watchImage(e) {
+        if (!e.target.classList.contains('watchPhoto')) {
+            disableScroll();
+            e.target.classList.add('watchPhoto');
+            document.body.setAttribute('style', 'overflow: hidden');
+            document.querySelector('.watchPhotoBack').classList.remove('hidden');
+            document.querySelector('.watchPhotoBack').setAttribute('style', 'opacity: 100%');
+        } else {
+            enableScroll();
+            document.querySelector('.watchPhotoBack').classList.add("hidden");
+            e.target.classList.remove('watchPhoto');
+            document.body.setAttribute('style', 'overflow: auto');
+            document.querySelector('.watchPhotoBack').setAttribute('style', 'opacity: 0%');
+        }
+    }
+
+    var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+    function preventDefault(e) {
+        e.preventDefault();
+    }
+
+    function preventDefaultForScrollKeys(e) {
+        if (keys[e.keyCode]) {
+            preventDefault(e);
+            return false;
+        }
+    }
+
+    var supportsPassive = false;
+    try {
+        window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
+          get: function () { supportsPassive = true; return 0; } 
+        }));
+      } catch(e) {}
+
+    var wheelOpt = supportsPassive ? { passive: false } : false;
+    var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+    function disableScroll() {
+        window.addEventListener('DOMMouseScroll', preventDefault, false); 
+        window.addEventListener(wheelEvent, preventDefault, wheelOpt); 
+        window.addEventListener('touchmove', preventDefault, wheelOpt); 
+        window.addEventListener('keydown', preventDefaultForScrollKeys, false);
+    }
+      
+    function enableScroll() {
+        window.removeEventListener('DOMMouseScroll', preventDefault, false);
+        window.removeEventListener(wheelEvent, preventDefault, wheelOpt); 
+        window.removeEventListener('touchmove', preventDefault, wheelOpt);
+        window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
+    }
+
   return (
 
     <div className="post" id={props.post.id}>
@@ -206,7 +268,7 @@ function Post(props) {
             <div className="postDots">
                 <img alt="settings" onClick={postDots} src={DotsImg}></img>
                 <div className={dotsMenuStyle}>
-                    <div className={hiddenSub}> Add to corner ⭐</div>
+                    <div onClick={addToCorner} className={hiddenSub}> {addToCornerText} </div>
                     {/* <div className={hiddenSub}> Compain 😠 </div> */}
                     <div onClick={deletePost} className={hiddenMe}> Delete 🗑️ </div>
                 </div>
@@ -222,7 +284,8 @@ function Post(props) {
             <p> {props.post.content} </p>
         </div>
         <div className="postImages">
-            {props.post.images.map((image) => <img key={image.id} src={process.env.REACT_APP_SERVER_IP + "static/" + image.path} alt="suka"></img>)}
+            <div className='watchPhotoBack slide hidden'></div>
+            {props.post.images.map((image) => <img className='postImagesImage' onClick={(e) => {watchImage(e)}} key={image.id} src={process.env.REACT_APP_SERVER_IP + "static/" + image.path} alt="suka"></img>)}
         </div>  
         <div className="postLike">
             <img className={likeStyle} onClick={likePost} src={PacmanImg} alt="Like"></img>

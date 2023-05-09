@@ -1,16 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import "./Meeting.css";
 
 import Member from '../MeetingMember/MeetingMember';
-import MeetingMessage from '../MeetingMessage/MeetingMessage';
 import SearchUsers from '../SearchUsers/SearchUsers';
+import Chat from '../Chat/Chat';
 
 import { gql } from 'graphql-request';
 
 import placeImg from '../img/pizzakiosk.jpg';
-//import { flushSync } from 'react-dom';
 
 function Meeting (props) {
 
@@ -20,9 +19,8 @@ function Meeting (props) {
     let a = new Date();
     a.toISOString();
     
-    const [meeting, setMeeting] = useState({});
+    const [meeting, setMeeting] = useState(null);
     const [members, setMembers] = useState([]);
-    const [messages, setMessages] = useState([]);
 
     const location = useLocation();
 
@@ -48,28 +46,21 @@ function Meeting (props) {
     },[deleteId])
 
 
-    useEffect(() =>{
-        if (meeting.members != null) {
+    useEffect(() => {
+        if (meeting?.members != null) {
             setMembers(setMembersFast());           
         }
-        if (meeting.messages != null) {
-            setMessages(setMessagesFast());
-        }
-        let b = new Date(parseInt(meeting.date));
+        let b = new Date(parseInt(meeting?.date));
         setDate(b);
         console.log(meeting);
         setDatePhrase("The meeting is going to happen on ");
     }, [meeting])
 
     function setMembersFast() {
-        console.log(members.concat(meeting.members));
-        return members.concat(meeting.members);
+        console.log(members.concat(meeting?.members));
+        return members.concat(meeting?.members);
     }
 
-    function setMessagesFast() {
-        console.log(messages.concat(meeting.messages));
-        return messages.concat(meeting.messages);
-    }
     
     function setMeetingFast(a) {
         return a.meetings.find((x) => x.id === state.meetingId);
@@ -100,7 +91,10 @@ function Meeting (props) {
                         id 
                         firstName
                         lastName
-                        avatar
+                        avatar {
+                            id
+                            path
+                        }
                     }
                     places {
                         id
@@ -121,7 +115,10 @@ function Meeting (props) {
                             id
                             firstName
                             lastName
-                            avatar
+                            avatar {
+                                id
+                                path
+                            }
                         }
                     }
                 }
@@ -131,18 +128,21 @@ function Meeting (props) {
 
     let query2 = gql`
         mutation InviteUserToMeeting {
-            inviteUserToMeeting(meeting_id: ${meeting.id}, user_id: ${chooseId}) {
+            inviteUserToMeeting(meetingId: ${meeting?.id}, userId: ${chooseId}) {
                 id  
-                first_name
-                last_name
-                avatar
+                firstName
+                lastName
+                avatar {
+                    id
+                    path
+                }
             }
         }
     `;
 
     let query3 = gql`
         mutation CreateMeetingMessage {
-            createMeetingMessage(meeting_id: ${meeting.id}, author: ${localStorage.getItem("user_id")}, content: "${content}") {
+            createMeetingMessage(meeting_id: ${meeting?.id}, author: ${localStorage.getItem("user_id")}, content: "${content}") {
                 id
                 content
                 author {
@@ -206,37 +206,6 @@ function Meeting (props) {
     function editPlace() {
     }
 
-    async function addMessage(e) {
-        console.log("AddMessage!");
-        e.preventDefault();
-        try {
-            setContent(content.trim());
-            if (content == null || content === "" || content.slice(0,1) === " ") return;
-            console.log("AddMessage2!");
-            return fetch(process.env.REACT_APP_SERVER_IP, {
-                headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token")},
-                method: 'POST',
-                body: JSON.stringify({"query": query3})
-            }).then((a) => {
-                return a.json();
-            }).then((b) => {
-                console.log(b);
-                setMessages([].concat(messages, b.data.createMeetingMessage))
-                setContent("");
-                document.getElementById("messageInput").value = "";             
-                setTimeout(() => {
-                    document.querySelector(".meetingMessages").scroll({
-                        top: document.querySelector(".meetingMessages").scrollHeight,
-                        behavior: "smooth",
-                    });
-                }, 100);
-                return b;
-            })
-        } catch (err) {
-            console.log(err);
-        } 
-    }
-
     function toggleInviteUser() {
         if (inviteUserStyle === "inviteUser") {
             setInviteUserStyle("inviteUser hidden");
@@ -263,6 +232,7 @@ function Meeting (props) {
                 if (a.meetings.length === 0) {
                     return;
                 } else {
+                    console.log(a);
                     setMeeting(setMeetingFast(a));
                 }
             })
@@ -273,7 +243,8 @@ function Meeting (props) {
     }
 
     useEffect(() =>{
-        if (meeting != null) {
+        if (meeting) {
+            console.log(meeting)
             inviteUser().then((b) => {
                 console.log(b);
                 setMembers([].concat(members, b.data.inviteUserToMeeting))
@@ -293,8 +264,8 @@ function Meeting (props) {
 
                 </div>
 
-                <p onClick={clickOnName} className={meetingPageTextStyle} title={meeting.id}> {meeting.name}  </p>
-                <input type="text" className={meetingPageTextChangeStyle} defaultValue={meeting.name} ></input>
+                <p onClick={clickOnName} className={meetingPageTextStyle} title={meeting?.id}> {meeting?.name}  </p>
+                <input type="text" className={meetingPageTextChangeStyle} defaultValue={meeting?.name} ></input>
                 <input onClick={clickOnCancel} id="cancel" type="button" className={meetingPageTextChangeStyle} value=" Cancel "></input>
                 <input onClick={editName} type="button" className={meetingPageTextChangeStyle} value=" Save "></input>
 
@@ -302,7 +273,7 @@ function Meeting (props) {
 
                     <div className={inviteUserStyle}>
                         <p> Invite user to meeting </p>
-                        <SearchUsers onChoose={onChoose} members={meeting.members ? meeting.members : []}></SearchUsers>
+                        <SearchUsers onChoose={onChoose} members={meeting?.members || []}></SearchUsers>
                     </div>
 
                     <div className="meeting">
@@ -313,13 +284,13 @@ function Meeting (props) {
                                 <hr></hr>    
                             </div>
 
-                            <p className="meetingPlaceText"> {meeting.places ? meeting.places[0].name : ""} </p>
+                            <p className="meetingPlaceText"> {meeting?.places || ""} </p>
                             <div className='meetingPlace'>
                                 <img className='meetingPlaceImg' src={placeImg} alt="place"></img>
                                 <div className='meetingPlaceDesc'>                                
-                                    <i> <p className='meetingPlaceTextContent'> Location: {meeting.places ? meeting.places[0].location.country : ""}, {meeting.places ? meeting.places[0].location.city : ""} </p> </i>   
-                                    <i> <p className='meetingPlaceTextContent'> Paradigm: {meeting.places ? meeting.places[0].paradigm :  ""} </p> </i>         
-                                    <i> <p className='meetingPlaceTextContent'> Rating: {meeting.places ? meeting.places[0].rating :  ""} </p> </i>
+                                    <i> <p className='meetingPlaceTextContent'> Location: {meeting?.places[0].location.country || ""}, {meeting?.places[0].location.city || ""} </p> </i>   
+                                    <i> <p className='meetingPlaceTextContent'> Paradigm: {meeting?.places[0].paradigm || ""} </p> </i>         
+                                    <i> <p className='meetingPlaceTextContent'> Rating: {meeting?.places[0].rating || ""} </p> </i>
                                 </div>
                             </div>
 
@@ -333,22 +304,14 @@ function Meeting (props) {
                             </div>
 
                             <div className='meetingMembers'>
-                                {members.map((member) => <Member setDeleteId={setDeleteId} chief={meeting.chief} key={member.id} member={member}/>)}
+                                {members.map((member) => <Member setDeleteId={setDeleteId} chief={meeting?.chief} key={member.id} member={member}/>)}
                             </div>    
 
                         </div>
 
                     </div>
 
-                    <div className='meetingChat'>
-                        <div className='meetingMessages'>
-                            {messages.map((message) => <MeetingMessage key={message.id} message={message}/>)}
-                        </div>
-                        <div className='meetingChatInput'>
-                            <input id="messageInput" onChange={(e) => {setContent(e.target.value)}} placeholder='Wassup?'></input>
-                            <i onClick={addMessage} className="fa fa-paper-plane" aria-hidden='true'></i>
-                        </div>
-                    </div>      
+                    <Chat conversation={meeting}/>    
 
                 </div>
 

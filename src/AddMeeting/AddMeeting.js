@@ -16,7 +16,7 @@ function AddMeeting (props) {
 
     let query = gql`
         mutation CreateNewMeeting {
-            createNewMeeting(name: "${header}", date: "${date}", type: ${type}, creator: ${localStorage.getItem("user_id")}) {
+            createNewMeeting(name: "${header}", date: "${date}", type: ${type}, creator: ${localStorage.getItem("user_id")}, placeId: ${chooseId}) {
                 id
             }
         }
@@ -28,7 +28,7 @@ function AddMeeting (props) {
 
         setHeader(header.trim());
 
-        if (header == "" || header.slice(0, 1) == " " || date == "") {
+        if (header === "" || header.slice(0, 1) === " " || date === "") {
             setErrorText("Fill all the fields correctly!")
             setErrorStyle("addMeetingFormError");
             return;
@@ -43,7 +43,7 @@ function AddMeeting (props) {
             }).then((a) =>{
                 return a.json()
             }).then((b) => {
-                window.location.href = "http://localhost:3000/meetings";
+                //window.location.href = "http://localhost:3000/meetings";
                 return b
             })
 
@@ -54,37 +54,28 @@ function AddMeeting (props) {
         }   
     }
 
-    function onChoose(a) {
-        setChooseId(a);
-    }
-
     useEffect(() =>{
-        console.log("Chosen")
+        console.log(chooseId);
     }, [chooseId])
+
+    function onChoose(id) {
+        setChooseId(id);
+    }
    
     return(
-
-        <div className='addMeetingPage'>
-
+        <div className='addMeetingPage slide'>
             <div className='addMeeting'>
-
                 <p className='addMeetingText'> Add a new Meeting </p> 
-
                     <form method="Meeting" onSubmit={addMeeting}>
-
                         <div className='addMeetingForm'>
-
                             <div className={errorStyle}>
                             <p onClick={(e) => {setErrorStyle("addMeetingFormError hidden");}} className="addMeetingFormErrorText">{errorText}</p>
                             </div>
-
                             <div className='addMeetingFormText'>
                                 <p className='addMeetingFormPrompt'> Meeting Name </p>
                                 <textarea onChange={(e) => {setHeader(e.target.value); console.log(e.target.value)}} onKeyDown={(e) => {if(e.keyCode === 13) { e.preventDefault();} }} maxLength="50" placeholder="Keep calm and meet your friends" name="header"></textarea>              
                             </div>
-
                             <div className='addMeetingFormTypeAndDate'>
-
                                 <div className='addMeetingFormType'>
                                     <p className='addMeetingFormPrompt'> Meeting Type </p>
                                     <select onChange={(e) => {setType(e.target.value); console.log(e.target.value)}} id="meetingTypes">
@@ -93,33 +84,24 @@ function AddMeeting (props) {
                                         <option value="3"> Date </option>
                                     </select>
                                 </div>
-
                                 <div className='addMeetingFormDate'>
                                     <p className='addMeetingFormPrompt'> Takes place on... </p>
                                     <input onChange={(e) => {setDate(e.target.value); console.log(e.target.value)}} type="date"></input>
                                 </div>
-
                             </div>
-
                             <div className='addMeetingHr'>
                                 <hr></hr>
                             </div>
-
                             <div className='addMeetingFormPlace'>
                                 <p className='addMeetingFormPlaceText'>Choose the place</p>
                                 <SearchPlaces onChoose={onChoose}></SearchPlaces>
                             </div>
-                            
                             <div className='addMeetingFormSubmit'>
                                 <input type="submit" value=" Here we go "></input>
                             </div>
-
                         </div>
-
                     </form>
-
             </div>
-
         </div>
     )
 }

@@ -52,39 +52,26 @@ function AddConversation (props) {
     }
    
     return(
-
-        <div className='addConversationPage'>
-
+        <div className='addConversationPage  slide'>
             <div className='addConversation'>
-
                 <p className='addConversationText'> Add a New Conversation </p> 
-
                     <form method="Conversation" onSubmit={async (e) => {e.preventDefault(); addConversation(e);}}>
-
                         <div className={errorStyle}>
                             <p className="addConversationErrorText">{errorText}</p>
                         </div>
-
                         <div className='addConversationForm'>
-                            
-
                             <div className='addConversationFormText'>
                                 <p> Title </p>
                                 <textarea required onChange={(e) => {setTitle(e.target.value); console.log(e.target.value)}} onKeyDown={(e) => {if(e.keyCode === 13) { e.preventDefault();} }} maxLength="128" placeholder="Soldering Iron Brotherhood" name="title"></textarea>
                                 <p> Idea </p>
                                 <textarea required onChange={(e) => {setIdea(e.target.value)}} maxLength="4096" placeholder="Let's discuss some politics" name="idea"></textarea>    
-                            </div>
-                            
+                            </div>                  
                             <div className='addConversationFormSubmit'>
                                 <input type="submit" value=" Here we go "></input>
                             </div>
-
                         </div>
-
                     </form>
-
             </div>
-
         </div>
     )
 }

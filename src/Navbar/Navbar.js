@@ -43,8 +43,7 @@ function Navbar (props) {
     }
 
     useEffect(() => {
-        getData().then((a) =>{
-            console.log(a)
+        getData().then((a) => {
             if (a.data.getUserById.roles.indexOf('USER') === -1) {
                 setHidden("hidden");
             } else {

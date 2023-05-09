@@ -39,6 +39,11 @@ function Map (props) {
       getAllPlaces {
         id
         name
+        paradigm 
+        images {
+          id
+          path
+        }
         location {
           id
           latitude
@@ -95,7 +100,7 @@ function Map (props) {
   useEffect(() => {
     
     getData().then((a) => {
-      console.log(a.data.getAllPlaces);
+      console.log(a);
       setPlaces([].concat(places, a.data.getAllPlaces));
     })    
 
@@ -143,7 +148,7 @@ function Map (props) {
   }, [iconLatitude, iconLongitude]);
 
   return(
-      <div className='mapPage'>
+      <div className='mapPage slide'>
           <p className='mapPageText'>Map</p>
           <div className='mapDiv'>
             <div id="map" className="map">

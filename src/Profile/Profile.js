@@ -7,17 +7,11 @@ import { gql } from 'graphql-request';
 
 import Post from '../Post/Post';
 
-import avatar1 from '../img/avatars/avatar1.jpg';
-import avatar2 from '../img/avatars/avatar2.jpg';
-import avatar3 from '../img/avatars/avatar3.jpg';
-import avatar4 from '../img/avatars/avatar4.jpg';
-import avatar5 from '../img/avatars/avatar5.jpg';
-import avatar6 from '../img/avatars/avatar6.jpg';
+import stockAvatar from '../img/avatars/avatar1.jpg';
 
 function Profile (props) {
 
-    const [avatars,] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
-    const [avatar, setAvatar] = useState(avatars[5]);
+    const [avatar, setAvatar] = useState(stockAvatar);
 
     const [user, setUser] = useState({});
 
@@ -293,7 +287,7 @@ function Profile (props) {
 
     return(
 
-            <div className='profilePage'>
+            <div className='profilePage slide'>
 
                 <div className="profileDiv">
 
@@ -327,13 +321,13 @@ function Profile (props) {
                 
                 <div className='profileUserPostsDiv'>
                     <div className={userPostsStyle}>
-                        {userPosts.map((post) => <Post setDeleteId={setDeleteId} key={post.id} post={post}/>)}
+                        {userPosts?.map((post) => <Post setDeleteId={setDeleteId} key={post.id} post={post}/>)}
                     </div>
                 </div>
 
                 <div className='profileUserCornerDiv'>
                     <div className={userCornerStyle}>
-                        {userCorner.map((post) => <Post setDeleteId={setDeleteId} key={post.id} post={post}/>)}
+                        {userCorner?.map((post) => <Post setDeleteId={setDeleteId} key={post.id} post={post}/>)}
                     </div>
                 </div>
 

@@ -3,7 +3,7 @@ import "./SearchPlaces.css"
 
 import { gql } from 'graphql-request';
 
-import Place from '../Place/Place'
+import PlaceSearchBlock from '../PlaceSearchBlock/PlaceSearchBlock';
 
 function SearchPlaces (props) {
 
@@ -13,11 +13,15 @@ function SearchPlaces (props) {
 
     let query = gql`
         query GetPlacesByName {
-            getPlacesByName(search: "${searchString}") {
+            getPlacesByName(searchString: "${searchString}") {
                 id
                 name
                 paradigm
                 rating
+                images {
+                    id
+                    path
+                }
                 location {
                     id
                     city
@@ -57,12 +61,11 @@ function SearchPlaces (props) {
         setSearchString("");
     }
 
-
     return(
         <div className='places'>
             <input className='addMeetingFormPlaceSearchbar' onChange={(e) => setSearchString(e.target.value)} value={searchString} type="text" placeholder='Type to search'></input>
-            <div style={{height: '300px', overflowX: 'hidden', overflowY: 'auto', scrollbarGutter: "stable"}}>
-                {places.map((place) => <Place onChoose2={onChoose2} onChoose={props.onChoose} key={place.id} place={place}/>)}
+            <div className='placesDiv'>
+                {places.map((place) => <PlaceSearchBlock onChoose2={onChoose2} onChoose={props.onChoose} key={place.id} place={place}/>)}
             </div>
         </div>
     )

@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.addPostPage > .addPost {
+.addPost {
     width: 760px;
     max-width: 78%;
     background-color:white;
@@ -18,22 +18,97 @@
 }
 
 
-.addPostPage > .addPost > .addPostText {
+.addPostText {
     font-size: 36px;
     margin: 20px 0px;
     display: inline-block;
 }
 
-.addPostPage > .addPost > form > .addPostForm > div {
+.addPostForm > div {
     width: 100%;
 }
 
-.addPostPage > .addPost > form > .addPostForm > .addPostFormSubmit {
-    display: flex;
-    justify-content: end;
+.addPostFormPrompt {
+    font-size: 21px;
 }
 
 
+.addPostFormImage {
+    display: flex !important;
+    justify-content: center;
+}
+
+.addPostFormImage > div {
+    width: 40%;
+    margin: 25px 0px;
+    transition: 0.35s;    
+}
+
+.addPostFormImageArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: 16 / 9;   
+    background-color:#067BE2;
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    color: white;
+    cursor: pointer;
+    transition: 0.35s;    
+}
+
+.addPostFormImageArea:hover {
+    opacity: 75%;
+}
+
+
+.addPostFormImageArea > input {
+    background-color:white;
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    text-align: center;
+}
+
+.addPostFormImageArea > i {
+    margin-top: 26px;
+    font-size: 1.45rem;
+}
+
+.addPostFormImageArea > p {
+    font-size: 1.48rem;
+}
+
+.addPostFormImagePreview {
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+}
+
+.addPostFormImagePreview > i {
+    text-shadow: 0px 0px 4px black;
+}
+    
+.addPostFormImagePreview > p {
+    text-shadow: 0px 0px 4px black;
+}
+
+div:has(> .addPostFormImagePreview) {
+    width: 70%;
+}
+
+
+
+
+.addPostFormSubmit {
+    display: flex;
+    justify-content: end;
+}
 
 .addPostFormSubmit > input {
     border-radius: 12px;

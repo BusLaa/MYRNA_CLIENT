@@ -31,6 +31,10 @@ function AllPosts (props) {
                 id
                 header
                 content
+
+                isLiked
+                isCornered
+
                 images {
                     id
                     path
@@ -67,7 +71,7 @@ function AllPosts (props) {
         try {
 
             return await fetch(process.env.REACT_APP_SERVER_IP, {
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token") || null},
                 method: 'POST',
                 body: JSON.stringify({"query": query})
             }).then((a) =>{
@@ -95,7 +99,7 @@ function AllPosts (props) {
     }, [])
 
     return(
-            <div className='homePage'>
+            <div className='homePage slide'>
                 <p className='homePageText'>Home</p>
                 <div className="homePagePostsDiv">
                     <div className='homePagePosts'>
@@ -104,8 +108,7 @@ function AllPosts (props) {
                 </div>
                 <p className='homePageEndText'> We reached the end </p>
             </div>
-
     )
 }
 
-export default AllPosts
+export default AllPosts;

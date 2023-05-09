@@ -66,8 +66,7 @@ function makeImportant() {
         }).then((a) =>{
             return a.json()
         }).then((b) => {
-            console.log(b.data)
-            if (!b.data.makeImportant) {
+            if (b.data.makeImportant) {
                 SetMakeImportantText("Make Trivial ❕");
             } else {
                 SetMakeImportantText("Make Important ❗");
@@ -81,7 +80,7 @@ function makeImportant() {
 
 useEffect(() =>{
 
-    console.log(props.meeting.important);
+    console.log(props.meeting)
     if (props.meeting.important) {
         SetMakeImportantText("Make Trivial ❕");
     } else {
@@ -91,8 +90,7 @@ useEffect(() =>{
     let b = new Date(parseInt(props.meeting.date));
     setDate(b);
 
-}, [props.meeting.important, props.meeting.date]);
-
+}, [props.meeting]);
 
   return (
 

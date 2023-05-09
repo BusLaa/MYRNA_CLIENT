@@ -1,31 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import "./Conversation.css";
 
 import ConversationMember from '../ConversationMember/ConversationMember';
-import ConversationMessage from '../ConversationMessage/ConversationMessage';
 import SearchUsers from '../SearchUsers/SearchUsers';
+import Chat from '../Chat/Chat';
 
 import { gql } from 'graphql-request';
 
-import { socket } from '../Socket/Socket';
-
 function Conversation (props) {
-
-    const [events, setEvents] = useState([]);
 
     let a = new Date();
     a.toISOString();
     
-    const [conversation, setConversation] = useState({});
+    const [conversation, setConversation] = useState(null);
     const [members, setMembers] = useState([]);
-    const [messages, setMessages] = useState([]);
-
-    const [content, setContent] = useState("");
 
     const location = useLocation();
-    const [state, ] = useState(location.state || localStorage.getItem("state"));
+    const [state] = useState(location.state || localStorage.getItem("state"));
     
     const [conversationPageTextStyle, setConversationPageTextStyle] = useState("conversationName");
     const [conversationPageTextChangeStyle, setConversationPageTextChangeStyle] = useState("hidden conversationPageTextChange");
@@ -46,73 +39,9 @@ function Conversation (props) {
                     setConversation(setConversationFast(a));
                 }
             })
-
-        return () => {
-            console.log("dis")
-            socket.disconnect();
-        }
     }, []);
-
-    useEffect(() => {
-        function onConnect(value) {
-            socket.emit("askForRoom", {"userId": localStorage.getItem("user_id"), "conversationId": conversation.id});
-        }
-        function onGotId(args) {
-            console.log("Got room: " + args);
-        }
-        function onNewMessage(message) {
-            message.createdAt = new Date(message.createdAt).getTime();
-            console.log(message);
-            setMessages(messages => [...messages, message]);
-            if (message.authorId === localStorage.getItem("user_id")) {
-                setContent("");
-                document.getElementById("messageInput").value = "";             
-                setTimeout(() => {
-                    document.querySelector(".conversationMessages").scroll({
-                        top: document.querySelector(".conversationMessages").scrollHeight,
-                        behavior: "smooth",
-                    });
-                }, 100);                
-            }
-        }
-
-        socket.on('connect', onConnect);
-        socket.on('gotId', onGotId);
-        socket.on('newMessage', onNewMessage);
-
-        return () => {
-            socket.off('connect', onConnect)
-            socket.off('gotId', onGotId);
-            socket.off('newMessage', onNewMessage);
-        }
-    }, [events, conversation.id])
-
-    // useEffect(() => {
-    //     socket.on('connect', () => {
-    //         console.log("connection established Front");
-    //         console.log("conversationId "+ conversation.id); 
-    //         socket.emit("askForRoom", {"userId": localStorage.getItem("user_id"), "conversationId": conversation.id});
-    //     });
-    //     socket.on('gotId', (args) => {
-    //         console.log("Got room: " + args);
-    //     });
-    //     socket.on('newMessage', (message) => {
-    //         message.createdAt = new Date(message.createdAt).getTime();
-    //         console.log(message);
-    //         setMessages(messages => [...messages, message]);
-    //         if (message.authorId === localStorage.getItem("user_id")) {
-    //             setContent("");
-    //             document.getElementById("messageInput").value = "";             
-    //             setTimeout(() => {
-    //                 document.querySelector(".conversationMessages").scroll({
-    //                     top: document.querySelector(".conversationMessages").scrollHeight,
-    //                     behavior: "smooth",
-    //                 });
-    //             }, 100);                
-    //         }
-    //     });
-    // }, [socket, conversation.id])
-
+    
+    
     useEffect(() => {
         if (deleteId !== -1) {
             //const newList = members.filter((item) => item.id !== deleteId);
@@ -122,26 +51,15 @@ function Conversation (props) {
         }
     },[deleteId])
 
-    useEffect(() =>{
-        if (Object.keys(conversation).length !== 0) {
+    useEffect(() => {
+        if (conversation) {
             if (conversation.members != null) {
                 setTimeout(() => {
                     setMembers([].concat(members, conversation.members)); 
                 }, 0)     
             }
-            if (conversation.messages != null) {
-                setMessages([].concat(messages, conversation.messages)); 
-            }
-            console.log("con");
-            socket.connect();
         }
     }, [conversation])
-
-    useEffect(() => {
-        if (messages.length !== 0) {
-            console.log(messages);
-        }
-    }, [messages])
 
     useEffect(() => {
         if (members.length !== 0) {
@@ -152,11 +70,6 @@ function Conversation (props) {
     function setConversationFast(a) {
         return a.conversations.find((x) => x.id === state.conversationId);
     }
-      
-    const saveState = (e) => {
-        e.preventDefault();
-        localStorage.setItem("state", location.state);
-    };
 
     let query = gql`
         query GetUserById {
@@ -197,11 +110,14 @@ function Conversation (props) {
 
     let query2 = gql`
         mutation InviteUserToConversation {
-            inviteUserToConversation(conversationId: ${conversation.id}, userId: ${chooseId}) {
+            inviteUserToConversation(conversationId: ${conversation?.id}, userId: ${chooseId}) {
                 id  
                 firstName
                 lastName
-                avatar
+                avatar {
+                    id
+                    path
+                }
             }
         }
     `;
@@ -254,14 +170,6 @@ function Conversation (props) {
     function editIdea() {
     }
 
-    async function addMessage(e) {
-        e.preventDefault();
-        if (content.length !== 0) {
-            console.log("We are in addMessage")
-            socket.emit("sentMessage", {"conversationId": conversation.id, "authorId": localStorage.getItem("user_id"), "content": content.trim()});
-        }
-    }
-
     function toggleInviteUser() {
         if (inviteUserStyle === "inviteUser") {
             setInviteUserStyle("inviteUser hidden");
@@ -311,19 +219,19 @@ function Conversation (props) {
 
                         <div className={inviteUserStyle}>
                             <p> Invite user to Conversation </p>
-                            <SearchUsers onChoose={onChoose} members={conversation.members ? conversation.members : []}></SearchUsers>
+                            <SearchUsers onChoose={onChoose} members={conversation?.members || []}></SearchUsers>
                         </div>
 
                         <div className="conversationData">
 
                             <div className="conversationInfo">
 
-                            <p onClick={clickOnName} className={conversationPageTextStyle} title={conversation.id}> {conversation.name}  </p>
-                            <input type="text" className={conversationPageTextChangeStyle} defaultValue={conversation.name} ></input>
+                            <p onClick={clickOnName} className={conversationPageTextStyle} title={conversation?.id}> {conversation?.name}  </p>
+                            <input type="text" className={conversationPageTextChangeStyle} defaultValue={conversation?.name} ></input>
                             <input onClick={clickOnCancel} id="cancel" type="button" className={conversationPageTextChangeStyle} value=" Cancel "></input>
                             <input onClick={editName} type="button" className={conversationPageTextChangeStyle} value=" Save "></input>
 
-                                <p className="conversationIdea"> { conversation.idea } </p>
+                                <p className="conversationIdea"> { conversation?.idea } </p>
 
                                 <div className="conversationHr">
                                     <hr></hr>    
@@ -342,15 +250,7 @@ function Conversation (props) {
 
                         </div>
 
-                        <div className='conversationChat'>
-                            <div className='conversationMessages'>
-                                {messages.map((message) => <ConversationMessage key={message.id} message={message}/>)}
-                            </div>
-                            <div className='conversationChatInput'>
-                                <input id="messageInput" onChange={(e) => {setContent(e.target.value)}} placeholder='Wassup?'></input>
-                                <i onClick={addMessage} className="fa fa-paper-plane" aria-hidden='true'></i>
-                            </div>
-                        </div>      
+                        <Chat conversation={conversation}/>
 
                     </div>
 

@@ -5,17 +5,7 @@ import { gql } from 'graphql-request';
 
 import User from '../User/User';
 
-import avatar1 from '../img/avatars/avatar1.jpg';
-import avatar2 from '../img/avatars/avatar2.jpg';
-import avatar3 from '../img/avatars/avatar3.jpg';
-import avatar4 from '../img/avatars/avatar4.jpg';
-import avatar5 from '../img/avatars/avatar5.jpg';
-import avatar6 from '../img/avatars/avatar6.jpg';
-
-
 function SearchUsers (props) {
-
-    const [avatars, setAvatars] = useState([avatar1, avatar2, avatar3, avatar4, avatar5, avatar6]);
 
     const [users, setUsers] = useState([]);
     //const [members, setMembers] = useState(props.members || []);
@@ -29,7 +19,10 @@ function SearchUsers (props) {
                 email
                 firstName
                 lastName
-                avatar
+                avatar {
+                    id
+                    path
+                }
             }
         }     
     `;

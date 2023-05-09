@@ -35,7 +35,7 @@ function Meetings (props) {
                     id
                     name
                     date
-                    type
+                    type    
                     status
                 }
             }
@@ -75,15 +75,11 @@ function Meetings (props) {
     }, [])
 
     return(
-
-            <div className='meetingsPage'>
-
+            <div className='meetingsPage slide'>
                 <p className='meetingsPageText'> Meetings </p>
-
                 <div className={yesMeetingsDivStyle}>
                     <Link to="/addMeeting"> <button> Create a Meeting </button> </Link>
                 </div>
-
                 <div className="meetingsPageMeetingsDiv">
                     <div className='meetingsPageMeetings'>
                         <div className={noMeetingsDivStyle}>
@@ -93,9 +89,7 @@ function Meetings (props) {
                         {meetings.map((meeting) => <MeetingBlock setDeleteId={setDeleteId} key={meeting.id} meeting={meeting}/>)}
                     </div>
                 </div>
-
             </div>
-
     )
 }
 

@@ -34,7 +34,7 @@
 }
 
 
-.regForm > .birthdayCheck {
+.birthdayCheck {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,7 +56,6 @@
     margin: 12px;
 }
 
-
 .locationCheckbox { 
     margin: 12px;
 }
@@ -64,6 +63,96 @@
 .locationCheck > p { 
     font-size: 21px;
 }
+
+
+.avatarCheck {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 12px;
+}
+
+.avatarCheckbox { 
+    margin: 12px;
+}
+
+.avatarCheck > p { 
+    font-size: 21px;
+}
+
+
+
+
+.regFormImage {
+    display: flex !important;
+    justify-content: center;
+}
+
+.regFormImage > div {
+    width: 55%;
+    margin: 25px 0px;
+    transition: 0.35s;    
+}
+
+.regFormImageArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: 16 / 9;   
+    background-color:#067BE2;
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    color: white;
+    cursor: pointer;
+    transition: 0.35s;    
+}
+
+.regFormImageArea:hover {
+    opacity: 75%;
+}
+
+
+.regFormImageArea > input {
+    background-color:white;
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    text-align: center;
+}
+
+.regFormImageArea > i {
+    margin-top: 26px;
+    font-size: 1.45rem;
+}
+
+.regFormImageArea > p {
+    font-size: 1.48rem;
+}
+
+.regFormImagePreview {
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+}
+
+.regFormImagePreview > i {
+    text-shadow: 0px 0px 4px black;
+}
+    
+.regFormImagePreview > p {
+    text-shadow: 0px 0px 4px black;
+}
+
+div:has(> .regFormImagePreview) {
+    width: 70%;
+}
+
+
 
 
 
