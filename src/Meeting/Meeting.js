@@ -247,7 +247,7 @@ function Meeting (props) {
     useEffect(() =>{
         if (meeting) {
             inviteUser().then((b) => {
-                setMembers([].concat(members, b.data.inviteUserToMeeting))
+                setMembers([].concat(b.data.inviteUserToMeeting, members))
             })
         }
         if (blackStyle === "black") {
@@ -291,7 +291,7 @@ function Meeting (props) {
                                 <input onClick={toggleInviteUser} type="button" className="meetingMembersInvite" value=" Invite "></input>
                             </div>
                             <div className='meetingMembers'>
-                                {members.map((member) => <Member setDeleteId={setDeleteId} chief={meeting?.chief} key={member.id} member={member}/>)}
+                                {members.sort((a,b) => a.chief && !b.chief ? 1 : -1).map((member) => <Member setDeleteId={setDeleteId} chief={meeting?.chief} key={member.id} member={member}/>)}
                             </div>    
                         </div>
                     </div>
