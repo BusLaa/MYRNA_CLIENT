@@ -43,7 +43,7 @@ function AddMeeting (props) {
             }).then((a) =>{
                 return a.json()
             }).then((b) => {
-                //window.location.href = "http://localhost:3000/meetings";
+                window.location.href = "http://localhost:3000/meetings";
                 return b
             })
 

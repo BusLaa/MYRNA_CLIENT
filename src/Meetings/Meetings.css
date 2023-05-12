@@ -14,13 +14,14 @@
     justify-content: center;
     
 }
-.meetingsPage > .meetingsPageMeetingsDiv > .meetingsPageMeetings {
+
+.meetingsPageMeetings {
     width: 700px;
     max-width: 80%;
 }
 
 
-.meetingsPage > .meetingsPageMeetingsDiv > .meetingsPageMeetings > .noMeetingsDiv {
+.noMeetingsDiv {
     background-color: white;
     width: 700px;
     margin: 20px 0px;
@@ -30,13 +31,13 @@
     border-style: solid;
 }
 
-.meetingsPage > .meetingsPageMeetingsDiv > .meetingsPageMeetings > .noMeetingsDiv > p {
+.noMeetingsDiv > p {
     font-size: 26px;
     margin-top: 36px;
     padding: 32px;
 }
 
-.meetingsPage > .meetingsPageMeetingsDiv > .meetingsPageMeetings  > .noMeetingsDiv > a > button {
+.noMeetingsDiv > a > button {
     width: 180px;
     font-size: 24px;
     margin-bottom: 68px;
@@ -49,14 +50,14 @@
     cursor: pointer;
 }
 
-.meetingsPage > .meetingsPageMeetingsDiv > .meetingsPageMeetings  > .noMeetingsDiv > a > button:hover {
+.noMeetingsDiv > a > button:hover {
     opacity: 75%;
 }
 
-.meetingsPage > .yesMeetingsDiv {
+.yesMeetingsDiv {
 }
 
-.meetingsPage > .yesMeetingsDiv > a > button {
+.yesMeetingsDiv > a > button {
     width: 180px;
     font-size: 18px;
     margin: 12px;
@@ -70,6 +71,6 @@
     transform: translateX(240px);
 }
 
-.meetingsPage > .yesMeetingsDiv > a > button:hover {
+.yesMeetingsDiv > a > button:hover {
     opacity: 75%;
 }

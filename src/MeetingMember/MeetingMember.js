@@ -27,7 +27,7 @@ function MeetingMember (props) {
         <div className='member' id={props.member.id}>
             <div className="memberTop">
                 <img src={avatar} alt="avatar"></img>
-                <Link to="/profile" state={{ userId: props.member.id }} > <p> {props.member.first_name} </p> <p> {props.member.last_name} </p> <p className={crownStyle}> 👑 </p> </Link>
+                <Link to="/profile" state={{ userId: props.member.id }} > <p> {props.member.firstName} </p> <p> {props.member.lastName} </p> <p className={crownStyle}> 👑 </p> </Link>
             </div>
         </div>
     )

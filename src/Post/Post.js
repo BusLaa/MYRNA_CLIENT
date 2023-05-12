@@ -49,6 +49,8 @@ function Post(props) {
     useEffect(() => {
         if (likeTitle > 999) {
             setLike(likeTitle & 1000 + "k");
+        } else {
+            setLike(likeTitle);
         }
     }, [likeTitle]);
 

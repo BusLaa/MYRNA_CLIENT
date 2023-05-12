@@ -11,6 +11,10 @@ function Chat (props) {
 
     const [events] = useState([]);
 
+    const [conversationId, setConversationId] = useState(props.id);
+
+    //const [isConnected, setIsConnected] = useState(socket.connected)
+
     let a = new Date();
     a.toISOString();
     
@@ -20,74 +24,73 @@ function Chat (props) {
 
     const location = useLocation();
     const [state] = useState(location.state || localStorage.getItem("state"));  
-    
+
+    function onConnect(value) {
+        console.log("onConnect")
+        socket.emit("askForRoom", {"userId": localStorage.getItem("user_id"), "conversationId": props.id, "type": props.type});
+    }
+
+    function onGotId(args) {
+        if (args.search("undefined") !== -1) {
+            socket.emit("askForRoom", {"userId": localStorage.getItem("user_id"), "conversationId": props.id, "type": props.type});
+        } else {
+            console.log("Got room: " + args);
+            document.addEventListener("keypress", (e) => addMessageOnEnter(e));                
+        }
+    }
+
+    function onNewMessage(message) {
+        message.createdAt = new Date(message.createdAt).getTime();
+        setMessages(messages => [...messages, message]);
+        console.log(message);
+        if (message.authorId === localStorage.getItem("user_id")) {
+            setContent("");
+            document.getElementById("messageInput").value = "";             
+            setTimeout(() => {
+                document.querySelector(".chatMessages").scroll({
+                    top: document.querySelector(".chatMessages").scrollHeight,
+                    behavior: "smooth",
+                });
+            }, 100);                
+        }
+    }
+
     useEffect(() => {
         return () => {
             console.log("Disconnected")
             socket.disconnect();
-            document.addEventListener("keypress", (e) => addMessageOnEnter(e)); 
         }
-    }, []);
-
+    }, [])
+    
     useEffect(() => {
-        if (props.conversation) {
+
+        if (!props.id) {
+            console.log("No Id");
+        } else {
+            socket.on('connect', onConnect);
+            socket.on('gotId', onGotId);
+            socket.on('newMessage', onNewMessage);
             socket.connect();
-            console.log("Connected");
-            setMessages(props.conversation.messages);
         }
-    }, [props.conversation]);
-
-    useEffect(() => {
-        function onConnect(value) {
-            if (props.conversation?.id) {
-                socket.emit("askForRoom", {"userId": localStorage.getItem("user_id"), "conversationId": props.conversation.id});
-            }
-        }
-        function onGotId(args) {
-            if (args === "roomundefined") {
-                socket.emit("askForRoom", {"userId": localStorage.getItem("user_id"), "conversationId": props.conversation.id});
-            } else {
-                console.log("Got room: " + args);
-                document.addEventListener("keypress", (e) => addMessageOnEnter(e));                
-            }
-        }
-        function onNewMessage(message) {
-            message.createdAt = new Date(message.createdAt).getTime();
-            setMessages(messages => [...messages, message]);
-            console.log(message);
-            if (message.authorId === localStorage.getItem("user_id")) {
-                setContent("");
-                document.getElementById("messageInput").value = "";             
-                setTimeout(() => {
-                    document.querySelector(".chatMessages").scroll({
-                        top: document.querySelector(".chatMessages").scrollHeight,
-                        behavior: "smooth",
-                    });
-                }, 100);                
-            }
-        }
-
-        socket.on('connect', onConnect);
-        socket.on('gotId', onGotId);
-        socket.on('newMessage', onNewMessage);
 
         return () => {
             socket.off('connect', onConnect)
             socket.off('gotId', onGotId);
             socket.off('newMessage', onNewMessage);
+            document.addEventListener("keypress", (e) => addMessageOnEnter(e)); 
         }
-    }, [events, props.conversation?.id])
+    }, [props.id]);
 
     useEffect(() => {
-        if (messages) {
-            console.log(messages);
+        if (props.messages) {
+            setMessages(props.messages);
         }
-    }, [messages])
+    }, [props.messages])
 
     async function addMessage(e) {
         e.preventDefault();
         if (content.length !== 0) {
-            socket.emit("sentMessage", {"conversationId": props.conversation.id, "authorId": localStorage.getItem("user_id"), "content": content.trim()});
+            socket.emit("sentMessage", {"conversationId": props.id, "authorId": localStorage.getItem("user_id"), "content": content.trim(), "type": props.type});
         }
     }
 

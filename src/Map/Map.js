@@ -149,7 +149,7 @@ function Map (props) {
 
   return(
       <div className='mapPage slide'>
-          <p className='mapPageText'>Map</p>
+          {/* <p className='mapPageText'>Map</p> */}
           <div className='mapDiv'>
             <div id="map" className="map">
               <p></p>

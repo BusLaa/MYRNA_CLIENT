@@ -84,7 +84,7 @@ function AllPosts (props) {
 
     return(
         <div className='homePage slide'>
-            <p className='homePageText'>Home</p>
+            {/* <p className='homePageText'>Home</p> */}
             <div className="homePagePostsDiv">
                 <div className='homePagePosts'>
                     {posts.map((post) => <Post setDeleteId={setDeleteId} key={post.id} post={post}/>)}

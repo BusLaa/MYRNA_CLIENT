@@ -52,12 +52,10 @@ function Meeting (props) {
         }
         let b = new Date(parseInt(meeting?.date));
         setDate(b);
-        console.log(meeting);
         setDatePhrase("The meeting is going to happen on ");
     }, [meeting])
 
     function setMembersFast() {
-        console.log(members.concat(meeting?.members));
         return members.concat(meeting?.members);
     }
 
@@ -81,6 +79,10 @@ function Meeting (props) {
                     date
                     type
                     status
+                    image {
+                        id
+                        path
+                    }
                     creator {
                         id
                     }
@@ -96,7 +98,7 @@ function Meeting (props) {
                             path
                         }
                     }
-                    places {
+                    place {
                         id
                         name
                         paradigm
@@ -111,6 +113,7 @@ function Meeting (props) {
                     messages {
                         content
                         id
+                        createdAt
                         author {
                             id
                             firstName
@@ -232,7 +235,6 @@ function Meeting (props) {
                 if (a.meetings.length === 0) {
                     return;
                 } else {
-                    console.log(a);
                     setMeeting(setMeetingFast(a));
                 }
             })
@@ -244,9 +246,7 @@ function Meeting (props) {
 
     useEffect(() =>{
         if (meeting) {
-            console.log(meeting)
             inviteUser().then((b) => {
-                console.log(b);
                 setMembers([].concat(members, b.data.inviteUserToMeeting))
             })
         }
@@ -255,68 +255,49 @@ function Meeting (props) {
         }
     }, [chooseId])
 
-
     return(
-
             <div className='meetingPage'>
-
                 <div className={blackStyle} onClick={toggleBlack}>
-
                 </div>
-
                 <p onClick={clickOnName} className={meetingPageTextStyle} title={meeting?.id}> {meeting?.name}  </p>
                 <input type="text" className={meetingPageTextChangeStyle} defaultValue={meeting?.name} ></input>
                 <input onClick={clickOnCancel} id="cancel" type="button" className={meetingPageTextChangeStyle} value=" Cancel "></input>
                 <input onClick={editName} type="button" className={meetingPageTextChangeStyle} value=" Save "></input>
-
                 <div className="meetingDiv">
-
                     <div className={inviteUserStyle}>
                         <p> Invite user to meeting </p>
                         <SearchUsers onChoose={onChoose} members={meeting?.members || []}></SearchUsers>
                     </div>
-
                     <div className="meeting">
                         <div className="meetingInfo">
                             <p className="meetingDateText"> { datePhrase } { date.toLocaleDateString() } </p>
-
                             <div className="meetingHr">
                                 <hr></hr>    
                             </div>
-
                             <p className="meetingPlaceText"> {meeting?.places || ""} </p>
                             <div className='meetingPlace'>
                                 <img className='meetingPlaceImg' src={placeImg} alt="place"></img>
                                 <div className='meetingPlaceDesc'>                                
-                                    <i> <p className='meetingPlaceTextContent'> Location: {meeting?.places[0].location.country || ""}, {meeting?.places[0].location.city || ""} </p> </i>   
-                                    <i> <p className='meetingPlaceTextContent'> Paradigm: {meeting?.places[0].paradigm || ""} </p> </i>         
-                                    <i> <p className='meetingPlaceTextContent'> Rating: {meeting?.places[0].rating || ""} </p> </i>
+                                    <i> <p className='meetingPlaceTextContent'> Location: {meeting?.place.location.country || "No data"}, {meeting?.place.location.city || ""} </p> </i>   
+                                    <i> <p className='meetingPlaceTextContent'> Paradigm: {meeting?.place.paradigm || "No data"} </p> </i>         
+                                    <i> <p className='meetingPlaceTextContent'> Rating: {meeting?.place.rating} </p> </i>
                                 </div>
                             </div>
-
                             <div className="meetingHr">
                                 <hr></hr>    
                             </div>
-
                             <div className="meetingMembersHeader">
                                 <p className="meetingMembersText"> Members </p>
                                 <input onClick={toggleInviteUser} type="button" className="meetingMembersInvite" value=" Invite "></input>
                             </div>
-
                             <div className='meetingMembers'>
                                 {members.map((member) => <Member setDeleteId={setDeleteId} chief={meeting?.chief} key={member.id} member={member}/>)}
                             </div>    
-
                         </div>
-
                     </div>
-
-                    <Chat conversation={meeting}/>    
-
+                    <Chat messages={meeting?.messages} id={meeting?.id} type="meeting"/>    
                 </div>
-
             </div>
-
     )
 }
 

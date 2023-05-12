@@ -32,6 +32,7 @@ function Meetings (props) {
             getUserById(id: ${localStorage.getItem("user_id")}) {
                 id
                 meetings {
+                    isImportant
                     id
                     name
                     date
@@ -62,7 +63,7 @@ function Meetings (props) {
         getData()
         .then((a) => {
             console.log(a.data.getUserById.meetings);
-            if (a.data.getUserById.meetings == null || a.data.getUserById.meetings.length == 0) {
+            if (a.data.getUserById.meetings == null || a.data.getUserById.meetings.length === 0) {
                 setNoMeetingsDivStyle("noMeetingsDiv");
                 setYesMeetingsDivStyle("hidden yesMeetingsDiv")
             } else {
@@ -76,7 +77,7 @@ function Meetings (props) {
 
     return(
             <div className='meetingsPage slide'>
-                <p className='meetingsPageText'> Meetings </p>
+                {/* <p className='meetingsPageText'> Meetings </p> */}
                 <div className={yesMeetingsDivStyle}>
                     <Link to="/addMeeting"> <button> Create a Meeting </button> </Link>
                 </div>

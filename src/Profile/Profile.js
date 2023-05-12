@@ -73,6 +73,8 @@ function Profile (props) {
                     posts {
                         id
                         header
+                        isLiked
+                        isCornered
                         content
                         images {
                             id 
@@ -120,6 +122,7 @@ function Profile (props) {
                     id
                     header
                     content
+                    isLiked
                     images {
                         id 
                         path

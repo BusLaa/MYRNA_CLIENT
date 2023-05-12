@@ -250,7 +250,7 @@ function Conversation (props) {
 
                         </div>
 
-                        <Chat conversation={conversation}/>
+                        <Chat id={conversation?.id} messages={conversation?.messages} type="conversation"/>
 
                     </div>
 

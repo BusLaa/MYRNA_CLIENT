@@ -91,7 +91,7 @@ function Navbar (props) {
                     <img src={meetingsImg} alt="meetings"></img> <Link className="navlink" to="/meetings"> Meetings </Link>
                 </div>
                 <div className={hidden}>
-                    <img style={{width: '16px'}} src={mapImg} alt="map"></img> <Link className="navlink" to="/map"> Map </Link>
+                    <img style={{width: '16px'}} src={mapImg} alt="map"></img> <Link className="navlink" to="/map"> Places </Link>
                 </div>
             </div>
 
