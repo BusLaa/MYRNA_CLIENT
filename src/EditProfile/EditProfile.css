@@ -1,0 +1,347 @@
+.modal {
+    display: flex;
+    justify-content: center;
+    margin-top: 3vw;
+    width: 100%;
+    outline-style: none;
+}
+
+.regPage {
+    width: 30vw;
+    height: fit-content;
+    background-color: white;
+    border-radius: 0.5vw;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    padding: 1vw;
+    text-align: center;
+}
+
+.regDiv {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.regFormDiv {
+    width: 100%;
+    background-color: white;
+}
+
+.regForm {
+    margin-bottom: 2vw;
+}
+
+
+.birthdayCheck {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 24px 12px 12px 12px;
+}
+
+.birthdayCheckbox { 
+    margin: 12px;
+}
+
+.birthdayCheck > p { 
+    font-size: 21px;
+}
+
+.locationCheck {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 12px;
+}
+
+.locationCheckbox { 
+    margin: 12px;
+}
+
+.locationCheck > p { 
+    font-size: 21px;
+}
+
+
+.avatarCheck {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 12px;
+}
+
+.avatarCheckbox { 
+    margin: 12px;
+}
+
+.avatarCheck > p { 
+    font-size: 21px;
+}
+
+
+
+
+.regFormImage {
+    display: flex !important;
+    justify-content: center;
+}
+
+.regFormImage > div {
+    width: 55%;
+    margin: 25px 0px;
+    transition: 0.35s;    
+}
+
+.regFormImageArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: 16 / 9;   
+    background-color:#067BE2;
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    color: white;
+    cursor: pointer;
+    transition: 0.35s;    
+}
+
+.regFormImageArea:hover {
+    opacity: 75%;
+}
+
+
+.regFormImageArea > input {
+    background-color:white;
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    text-align: center;
+}
+
+.regFormImageArea > i {
+    margin-top: 26px;
+    font-size: 1.45rem;
+}
+
+.regFormImageArea > p {
+    font-size: 1.48rem;
+}
+
+.regFormImagePreview {
+    border-radius: 12px;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+}
+
+.regFormImagePreview > i {
+    text-shadow: 0px 0px 4px black;
+}
+    
+.regFormImagePreview > p {
+    text-shadow: 0px 0px 4px black;
+}
+
+div:has(> .regFormImagePreview) {
+    width: 70%;
+}
+
+
+
+
+
+
+
+.regFormButtonsDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.regFormButtons {
+    width: 24vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.regFormButtons > * {
+    margin: 1.5vw 1vw 1.5vw 1vw;
+}
+
+.regFormButtons > p {
+    color: #067BE2;
+    font-size: 1.045vw;
+    transition: 0.2s;
+}
+
+.regFormButtons > p:hover {
+    opacity: 75%;
+    cursor: pointer;
+}
+
+
+.regXDiv {
+    display: flex;
+    justify-content: end;
+}
+
+.regX {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.regX > img {
+    width: 0.95vw;
+    filter: invert(37%) sepia(48%) saturate(6009%) hue-rotate(193deg) brightness(97%) contrast(95%);
+}
+
+.regFormTitle {
+    width: 100%;
+    padding: 2.2vw 0vw 1.6vw 0vw;
+    display: flex;
+    justify-content: center;
+}
+
+.regFormTitleText {
+    font-size: 2vw;
+}
+
+
+.regFormDiv > form {
+    text-align: center;
+}
+
+
+.regRegDiv {
+    text-align: center;
+    margin-bottom: 2vw;
+}
+
+.regRegDiv > p {
+    color: #989898;
+    font-size: 1.25vw;
+    margin-top: 4vw;
+}
+
+
+.regPage > hr {
+    height: 0.05vw;
+    border: none;
+    background-color: #ECECEC;
+}
+
+
+.regForm > input {
+    border-radius: 0.65vw;
+}
+
+.regFormButtons > input {
+    border-radius: 0.65vw;
+}
+
+.regRegDiv > input {
+    border-radius: 0.65vw;
+}
+
+
+.regFormError {
+    margin: 0.2vw 0vw 1.2vw 0vw;
+}
+
+.regFormErrorText {
+    font-size: 1.1vw;
+    color: red;
+    font-weight: 600;
+    font-style: italic;
+}
+
+
+.regForm > input[type="password"] {
+    width: 15vw;
+    font-size: 1vw;
+    margin: 0.5vw;
+    padding: 0.6vw;
+    border-style: solid;
+    border-color: #E9E9E9;
+    border-width:  0.1vw;
+    background-color: #f0f0f0;
+}
+
+.regForm > input[type="email"] {
+    width: 15vw;
+    font-size: 1vw;
+    margin: 0.5vw;
+    padding: 0.6vw;
+    border-style: solid;
+    border-color: #E9E9E9;
+    border-width:  0.1vw;
+    background-color: #f0f0f0;
+}
+
+
+.regForm > input[type="date"] {
+    width: 15vw;
+    font-size: 1vw;
+    margin: 0.5vw;
+    padding: 0.6vw;
+    border-style: solid;
+    border-color: #E9E9E9;
+    border-width:  0.1vw;
+    background-color: #f0f0f0;
+}
+
+.regForm > input[type="text"] {
+    width: 15vw;
+    font-size: 1vw;
+    margin: 0.5vw;
+    padding: 0.6vw;
+    border-style: solid;
+    border-color: #E9E9E9;
+    border-width:  0.1vw;
+    background-color: #f0f0f0;
+}
+
+.regFormButtons > input[type="submit"] {
+    width: fit-content;
+    border-width: 0px;
+    padding: 0.55vw 1.2vw 0.55vw 1.2vw !important;
+    margin: 26px;
+    transition: 0.2s;
+    background-color: #067BE2;
+    color: white;
+    font-size: 1vw;
+}
+
+.regRegDiv > a > button {
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
+    border-radius: 12px;
+    padding: 0.55vw 1.2vw 0.55vw 1.2vw !important;
+    margin: 1.3vw;
+    width: fit-content;
+    transition: 0.2s;
+    background-color: #f0f0f0;
+    color: black;
+    font-size: 1vw;
+}
+
+.regFormButtons > input[type="submit"]:hover {
+    opacity: 75%;
+    cursor: pointer;
+}
+
+.regRegDiv > input[type="button"]:hover {
+    opacity: 75%;
+    cursor: pointer;
+}
+

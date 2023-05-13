@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { useLocation} from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 
 import "./Profile.css"
 
@@ -20,7 +20,6 @@ function Profile (props) {
             setAvatar(process.env.REACT_APP_SERVER_IP + "static/" + user.avatar.path)
         }
     }, [user]);
-
 
     const [userPosts, setUserPosts] = useState([]);
     const [userCorner, setUserCorner] = useState([]);
@@ -61,7 +60,6 @@ function Profile (props) {
         }
     },[deleteId])
 
-
     let query = gql`
         query GetUserById {
             getUserById(id: ${state.userId}) {
@@ -69,6 +67,7 @@ function Profile (props) {
                 firstName
                 lastName
                 birthday
+                email
                 corner {
                     posts {
                         id
@@ -191,8 +190,7 @@ function Profile (props) {
                 if (a.length === 0) {
                     window.location.href = "http://localhost:3000/login";
                 } else {
-                    setUser(a);           
-                    console.log(a.posts);                      
+                    setUser(a);                                
                     setUserPosts(a.posts);
                     setUserCorner(a.corner.posts);
                     if (a.id === parseInt(localStorage.getItem("user_id"))) {
@@ -216,7 +214,6 @@ function Profile (props) {
                             }                               
                         }              
                     }
-
                     if (!a.birthday) {
                         setBirthdayStyle("userInfo hidden");  
                     } else {
@@ -231,7 +228,6 @@ function Profile (props) {
                         setLocation(a.location);
                         setLocationStyle("userInfo");            
                     }
-
                 }
             })
         
@@ -261,39 +257,32 @@ function Profile (props) {
         } 
     }
 
-    function editProfile() {
+    function goToEditUser() {
+        window.history.replaceState(user, "", "http://localhost:3000/editProfile");
+        window.location.href = "http://localhost:3000/editProfile";
     }
 
     function enablePosts() {
         if (profileTumblerPostsStyle === "profileTumblerPosts") {
-
             setProfileTumblerPostsStyle("profileTumblerPosts blue");
             setUserPostsStyle("profileUserPosts");
-
             setProfileTumblerCornerStyle("profileTumblerCorner");
             setUserCornerStyle("profileUserCorner hidden");
-
         }
     }
 
     function enableCorner() {
         if (profileTumblerCornerStyle === "profileTumblerCorner") {
-
             setProfileTumblerCornerStyle("profileTumblerCorner blue");
             setUserCornerStyle("profileUserCorner");
-
             setProfileTumblerPostsStyle("profileTumblerPosts");
             setUserPostsStyle("profileUserPosts hidden");
-
         }
     }
 
     return(
-
             <div className='profilePage slide'>
-
                 <div className="profileDiv">
-
                     <div className="profile">
                         <p className="profileName" title={user.id}> {user.firstName} {user.lastName} </p>
                         <div className="profileInfo">
@@ -304,12 +293,11 @@ function Profile (props) {
                             </div>               
                         </div>
                         <input className={hiddenMe} type="button" onClick={logout} value="Logout"></input>
-                        {/* <input className={hiddenMe} type="button" onClick={editProfile} value="Edit"></input> */}
+                        <input className={hiddenMe} type="button" onClick={goToEditUser} value="Edit"></input>
+     
                         <input className={subscribeStyle} type="button" onClick={subsribe} value={subsribeText}></input>
                     </div>
-
                 </div>
-
                 <div className={profileTumblerStyle}>
                     <div className='profileTumbler'>
                         <div onClick={enablePosts} className={profileTumblerPostsStyle}>
@@ -321,21 +309,17 @@ function Profile (props) {
                         </div>
                     </div>
                 </div>
-                
                 <div className='profileUserPostsDiv'>
                     <div className={userPostsStyle}>
                         {userPosts?.map((post) => <Post setDeleteId={setDeleteId} key={post.id} post={post}/>)}
                     </div>
                 </div>
-
                 <div className='profileUserCornerDiv'>
                     <div className={userCornerStyle}>
                         {userCorner?.map((post) => <Post setDeleteId={setDeleteId} key={post.id} post={post}/>)}
                     </div>
                 </div>
-
             </div>
-
     )
 }
 

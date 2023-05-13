@@ -18,12 +18,12 @@ import Place from '../Place/Place';
 import Conversations from '../Conversations/Conversations';
 import Conversation from '../Conversation/Conversation';
 import AddConversation from '../AddConversation/AddConversation';
+import EditProfile from '../EditProfile/EditProfile';
 
 function App() {
 
   const [notify, setNotify] = useState(false);
   const [notifyText, setNotifyText] = useState("");
-
 
   const returnNotify = (bool) => {
     return (bool) ? <Notification notifyText={notifyText} setNotify={setNotify}/>: '';
@@ -31,9 +31,7 @@ function App() {
 
   return (
     <div>
-
       <Router>  
-
         <Navbar setNotify={setNotify} setNotifyText={setNotifyText}/> 
         {returnNotify(notify)}  
         <Routes>
@@ -52,10 +50,9 @@ function App() {
           <Route path='/conversations' element={<Conversations/>} />
           <Route path='/addConversation' element={<AddConversation/>} />
           <Route path='/conversation' element={<Conversation/>} />
+          <Route path='/editProfile' element={<EditProfile/>} />
         </Routes>
-        
       </Router>
-      
     </div>
   );
 }

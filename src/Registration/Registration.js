@@ -168,7 +168,6 @@ function Registration (props) {
     } 
   }
 
-
   function handleEmailChange(e) {
     setEmail(e.target.value);
   }
@@ -268,21 +267,15 @@ function Registration (props) {
   }
     
   return (
-
     <div className='modal'>
-
       <div className="regPage">
-
           <div className="regFormDiv">
-
             <div className="regFormTitle">
               <p className="regFormTitleText"> Sign Up </p>
             </div>
-
             <div className={errorStyle}>
               <p className="regFormErrorText">{errorText}</p>
             </div>
-
             <form className='regForm' method='POST' onSubmit={(e) => {signUp(e)}}>
               <input type="email" name="email" onChange={handleEmailChange} value={email} placeholder='Email' required></input><br></br>
               <input type="password"  name="pass" minLength={9} onChange={handlePassChange} value={pass} placeholder='Password' required></input><br></br>
@@ -319,13 +312,9 @@ function Registration (props) {
                 </div>
               </div>
             </form>
-
           </div>
-
       </div>
-      
     </div>
-
   );
 }
 
