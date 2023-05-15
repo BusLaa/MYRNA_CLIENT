@@ -45,19 +45,22 @@ function Chat (props) {
         console.log(message);
         if (message.authorId === localStorage.getItem("user_id")) {
             setContent("");
-            document.getElementById("messageInput").value = "";             
+            document.getElementById("messageInput").value = "";     
+        }
+        let div = document.querySelector(".chatMessages");
+        if (div.scrollTop + 1 + div.clientHeight >= div.scrollHeight) {
             setTimeout(() => {
                 document.querySelector(".chatMessages").scroll({
                     top: document.querySelector(".chatMessages").scrollHeight,
                     behavior: "smooth",
                 });
-            }, 100);                
-        }
-    }
+            }, 100);   
+        }   
+    }                    
 
     useEffect(() => {
         return () => {
-            console.log("Disconnected")
+            console.log("Disconnected");
             socket.disconnect();
         }
     }, [])
@@ -86,6 +89,17 @@ function Chat (props) {
             setMessages(props.messages);
         }
     }, [props.messages])
+
+    useEffect(() => {
+        if (messages.length != 0) {
+            setTimeout(() => {
+                document.querySelector(".chatMessages").scroll({
+                    top: document.querySelector(".chatMessages").scrollHeight,
+                    behavior: "smooth",
+                });
+            }, 100);    
+        }
+    }, [messages]);
 
     async function addMessage(e) {
         e.preventDefault();

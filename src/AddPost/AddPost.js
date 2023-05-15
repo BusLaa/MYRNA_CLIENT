@@ -178,7 +178,7 @@ function AddPost (props) {
     }
 
     return(
-        <div className='addPostPage'>
+        <div className='addPostPage slide'>
             <div className='addPost'>
                 <p className='addPostText'> Add a New Post </p> 
                     <form method="POST" encType="multipart/form-data" onSubmit={async (e) => {e.preventDefault(); addPost(e);}}>

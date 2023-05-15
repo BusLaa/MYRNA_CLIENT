@@ -208,7 +208,7 @@ function Conversation () {
     }, [chooseId])
 
     return(
-            <div className='conversationPage'>
+            <div className='conversationPage slide'>
                 <div className={blackStyle} onClick={toggleBlack}></div>
                 <div className="conversationDiv">
                     <div className="conversation">

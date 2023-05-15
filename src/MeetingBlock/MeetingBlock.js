@@ -96,7 +96,7 @@ useEffect(() =>{
 
     <div className="meetingBlock" id={props.meeting.id}>
         <div className="meetingBlockTop">
-            <Link to="/meeting" state={{ meetingId: props.meeting.id }} >
+            <Link to="/meeting" state={{meetingId: props.meeting.id}} >
                 <div className="meetingBlockName">
                     <p> {props.meeting.name} </p> 
                 </div>

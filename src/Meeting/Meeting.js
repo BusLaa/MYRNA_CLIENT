@@ -238,7 +238,7 @@ function Meeting (props) {
                     setMeeting(setMeetingFast(a));
                 }
             })
-    }, [])
+    }, [state]);
 
     function onChoose(a) {
         setChooseId(a);
@@ -256,7 +256,7 @@ function Meeting (props) {
     }, [chooseId])
 
     return(
-            <div className='meetingPage'>
+            <div className='meetingPage slide'>
                 <div className={blackStyle} onClick={toggleBlack}>
                 </div>
                 <p onClick={clickOnName} className={meetingPageTextStyle} title={meeting?.id}> {meeting?.name}  </p>

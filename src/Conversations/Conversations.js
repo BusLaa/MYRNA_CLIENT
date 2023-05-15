@@ -71,7 +71,7 @@ function Conversations (props) {
     }, [])
 
     return(
-            <div className='conversationsPage  slide'>
+            <div className='conversationsPage slide'>
                 {/* <p className='conversationsPageText'> Conversations </p> */}
                 <div className={yesConversationsDivStyle}>
                     <Link to="/addConversation"> <button> Create a Conversation </button> </Link>

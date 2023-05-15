@@ -104,7 +104,9 @@
 
 .postHeader > p {
     font-size: 38px;
-    margin: 12px 0px 8px 24px;
+    margin: 12px 8px 8px 24px;
+    overflow-wrap: anywhere;
+    line-height: 42px;
 }
 
 
@@ -116,6 +118,7 @@
 }
 
 .postContent > p {
+    overflow-wrap: anywhere;
     white-space: pre-line;
     font-size: 26px;
     margin: 4px 24px 16px 26px;
