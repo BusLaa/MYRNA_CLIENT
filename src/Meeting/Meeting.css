@@ -88,49 +88,53 @@
 }
 
 
-
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingDateText {
+.meetingDateText {
     font-size: 21px;
     margin: 24px;
 }
 
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingPlaceText {
-    font-size: 21px;
+ .meetingPlaceText {
+    font-size: 18px;
     margin: 18px 0px 12px 0px;
 }
 
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingPlace {
+.meetingPlace {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 32px;
 }
 
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingPlace > img {
+.meetingPlace > img {
     max-width: 40%;
-    border-radius: 12px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
     margin: 12px;
+    border-radius: 0.5vw;
+    border-color: #E9E9E9;
+    border-width: 0.1vw;
+    border-style: solid;
 }
 
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingPlace > .meetingPlaceDesc {
+.meetingPlaceDesc {
     text-align: center;
     max-width: 60%;
     margin: 16px;
 }
 
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingPlace > .meetingPlaceDesc > i > .meetingPlaceTextHeader {
+.meetingPlaceTextHeader {
     font-size: 21px;
     margin-bottom: 12px;
 }
 
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingPlace > .meetingPlaceDesc > I > .meetingPlaceTextContent {
-    font-size: 14px;
-    margin: 2px;
+.meetingPlaceTextContent {
+    font-style: italic;
+    font-size: 16px;
+    margin: 2px 12px;
 }
 
 
-
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingMembersHeader {
+.meetingMembersHeader {
     margin: 16px 0px;
     width: 100%;
     display: flex;
@@ -138,12 +142,12 @@
     align-items: center;
 }
 
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingMembersHeader > .meetingMembersText {
+.meetingMembersText {
     font-size: 21px;
     margin-bottom: 4px;
 }
 
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingMembersHeader > .meetingMembersInvite {
+.meetingMembersInvite {
     width: fit-content;
     height: fit-content;
     border-color: #E9E9E9;
@@ -158,15 +162,10 @@
     cursor: pointer;
 }
 
-
-
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingMembersHeader > .meetingMembersInvite:hover {
+.meetingMembersInvite:hover {
     opacity: 75%;
 }
 
-
-.meetingPage > .meetingDiv > .meeting > .meetingInfo > .meetingMembers {
-}
 
 .meetingPage > .meetingDiv > .meetingChat {
     margin: 20px;

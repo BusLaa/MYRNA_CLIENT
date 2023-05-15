@@ -89,9 +89,9 @@ function AddMeeting (props) {
                                     <input onChange={(e) => {setDate(e.target.value); console.log(e.target.value)}} type="date"></input>
                                 </div>
                             </div>
-                            <div className='addMeetingHr'>
+                            {/* <div className='addMeetingHr'>
                                 <hr></hr>
-                            </div>
+                            </div> */}
                             <div className='addMeetingFormPlace'>
                                 <p className='addMeetingFormPlaceText'>Choose the place</p>
                                 <SearchPlaces onChoose={onChoose}></SearchPlaces>

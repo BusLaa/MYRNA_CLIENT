@@ -9,9 +9,11 @@ import Chat from '../Chat/Chat';
 
 import { gql } from 'graphql-request';
 
-import placeImg from '../img/pizzakiosk.jpg';
+import stockAvatar from '../img/pizzakiosk.jpg';
 
 function Meeting (props) {
+
+    const [avatar, setAvatar] = useState(stockAvatar);
 
     const [date, setDate] = useState(new Date());
     const [datePhrase, setDatePhrase] = useState("");
@@ -47,12 +49,15 @@ function Meeting (props) {
 
 
     useEffect(() => {
-        if (meeting?.members != null) {
-            setMembers(setMembersFast());           
+        if (meeting) {
+            setAvatar(process.env.REACT_APP_SERVER_IP + "static/" + meeting?.place.images[0].path);
+            if (meeting.members) {
+                setMembers(setMembersFast());           
+            }
+            let b = new Date(parseInt(meeting?.date));
+            setDate(b);
+            setDatePhrase("The meeting is going to happen on ");
         }
-        let b = new Date(parseInt(meeting?.date));
-        setDate(b);
-        setDatePhrase("The meeting is going to happen on ");
     }, [meeting])
 
     function setMembersFast() {
@@ -109,6 +114,10 @@ function Meeting (props) {
                             postalCode
                         }
                         rating
+                        images {
+                            id 
+                            path
+                        }
                     }
                     messages {
                         content
@@ -274,13 +283,14 @@ function Meeting (props) {
                             <div className="meetingHr">
                                 <hr></hr>    
                             </div>
-                            <p className="meetingPlaceText"> {meeting?.places || ""} </p>
+                            <p className="meetingPlaceText"> in the prettiest place called </p>
                             <div className='meetingPlace'>
-                                <img className='meetingPlaceImg' src={placeImg} alt="place"></img>
-                                <div className='meetingPlaceDesc'>                                
-                                    <i> <p className='meetingPlaceTextContent'> Location: {meeting?.place.location.country || "No data"}, {meeting?.place.location.city || ""} </p> </i>   
-                                    <i> <p className='meetingPlaceTextContent'> Paradigm: {meeting?.place.paradigm || "No data"} </p> </i>         
-                                    <i> <p className='meetingPlaceTextContent'> Rating: {meeting?.place.rating} </p> </i>
+                                <img className='meetingPlaceImg' src={avatar} alt="place"></img>
+                                <div className='meetingPlaceDesc'>         
+                                    <p className='meetingPlaceTextHeader'> { meeting?.place.name } </p>                  
+                                    <p className='meetingPlaceTextContent'> Location: {meeting?.place.location.country || "No data"}, {meeting?.place.location.city || ""} </p>                             
+                                    <p className='meetingPlaceTextContent'> Paradigm: {meeting?.place.paradigm || "No data"} </p>      
+                                    <p className='meetingPlaceTextContent'> Rating: {meeting?.place.rating !== 0 ? meeting?.place.rating + " / 5" : "No ratings yet"} </p>
                                 </div>
                             </div>
                             <div className="meetingHr">

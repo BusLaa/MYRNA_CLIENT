@@ -4,7 +4,7 @@ import { gql } from 'graphql-request';
 
 import "./Place.css";
 
-import stockAvatar from '../img/avatars/avatar1.jpg';
+import stockAvatar from '../img/pizzakiosk.jpg';
 
 import Post from '../Post/Post';
 
