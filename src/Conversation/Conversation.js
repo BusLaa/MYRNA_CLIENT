@@ -9,7 +9,7 @@ import Chat from '../Chat/Chat';
 
 import { gql } from 'graphql-request';
 
-function Conversation (props) {
+function Conversation () {
 
     let a = new Date();
     a.toISOString();
@@ -49,7 +49,7 @@ function Conversation (props) {
             //setMembers(newList);
             setDeleteId(-1);
         }
-    },[deleteId])
+    }, [deleteId])
 
     useEffect(() => {
         if (conversation) {
@@ -208,56 +208,37 @@ function Conversation (props) {
     }, [chooseId])
 
     return(
-
             <div className='conversationPage'>
-
                 <div className={blackStyle} onClick={toggleBlack}></div>
-
                 <div className="conversationDiv">
-
                     <div className="conversation">
-
                         <div className={inviteUserStyle}>
                             <p> Invite user to Conversation </p>
-                            <SearchUsers onChoose={onChoose} members={conversation?.members || []}></SearchUsers>
+                            <SearchUsers onChoose={onChoose} conversationId={conversation?.id} members={conversation?.members || []}></SearchUsers>
                         </div>
-
                         <div className="conversationData">
-
                             <div className="conversationInfo">
-
                             <p onClick={clickOnName} className={conversationPageTextStyle} title={conversation?.id}> {conversation?.name}  </p>
                             <input type="text" className={conversationPageTextChangeStyle} defaultValue={conversation?.name} ></input>
                             <input onClick={clickOnCancel} id="cancel" type="button" className={conversationPageTextChangeStyle} value=" Cancel "></input>
                             <input onClick={editName} type="button" className={conversationPageTextChangeStyle} value=" Save "></input>
-
                                 <p className="conversationIdea"> { conversation?.idea } </p>
-
                                 <div className="conversationHr">
                                     <hr></hr>    
                                 </div>
-
                                 <div className="conversationMembersHeader">
                                     <p className="conversationMembersText"> Members </p>
                                     <input onClick={toggleInviteUser} type="button" className="conversationMembersInvite" value=" Invite "></input>
                                 </div>
-
                                 <div className='conversationMembers'>
                                     {members.map((member) => <ConversationMember setDeleteId={setDeleteId} key={member.id} member={member}/>)}
                                 </div>    
-
                             </div>
-
                         </div>
-
                         <Chat id={conversation?.id} messages={conversation?.messages} type="conversation"/>
-
                     </div>
-
                 </div>
-
             </div>
-
     )
 }
 

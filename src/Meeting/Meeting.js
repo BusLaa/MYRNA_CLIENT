@@ -266,7 +266,7 @@ function Meeting (props) {
                 <div className="meetingDiv">
                     <div className={inviteUserStyle}>
                         <p> Invite user to meeting </p>
-                        <SearchUsers onChoose={onChoose} members={meeting?.members || []}></SearchUsers>
+                        <SearchUsers onChoose={onChoose} meetingId={meeting?.id} members={meeting?.members || []}></SearchUsers>
                     </div>
                     <div className="meeting">
                         <div className="meetingInfo">

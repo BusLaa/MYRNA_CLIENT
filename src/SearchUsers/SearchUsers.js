@@ -8,13 +8,11 @@ import User from '../User/User';
 function SearchUsers (props) {
 
     const [users, setUsers] = useState([]);
-    //const [members, setMembers] = useState(props.members || []);
-
     const [searchString, setSearchString] = useState("");
 
     let query = gql`
         query GetUsersByName {
-            getUsersByName(search: "${searchString}") {
+            getUsersByName(search: "${searchString}", excludeMeeting: ${props.meetingId || null}, excludeConversation: ${props.conversationId || null}) {
                 id
                 email
                 firstName
@@ -68,6 +66,3 @@ function SearchUsers (props) {
 }
 
 export default SearchUsers;
-
-//{/* <img src={avatars[props.member.avatar]}></img>
-//<Link to="/profile" state={{ userId: 1 }} > <p> Georg </p> </Link> */}

@@ -44,9 +44,10 @@ function Navbar (props) {
 
     useEffect(() => {
         getData().then((a) => {
-            if (a.data.getUserById.roles.indexOf('USER') === -1) {
-                setHidden("hidden");
-            } else {
+            if (!a?.data.getUserById?.roles) {
+                return;
+            }
+            if (a?.data.getUserById?.roles.indexOf('USER') !== -1) {
                 setHidden("");
             }
         });
