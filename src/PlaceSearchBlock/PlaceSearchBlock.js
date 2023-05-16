@@ -14,42 +14,10 @@ function PlaceSearchBlock(props) {
             setPlaceImg(process.env.REACT_APP_SERVER_IP + "static/" + props.place.images[0].path);
         }
     }, [props.place]);
-    
-    const [dotsMenuStyle, setDotsMenuStyle] = useState("hidden dotsMenu")
-    const [dotsMenuButtonStyle, ] = useState("dotsMenuButton")
-
-    let query = gql`
-    `;  
-
-    function addToFavorites(e) {
-        e.preventDefault();
-        try {
-            return fetch(process.env.REACT_APP_SERVER_IP, {
-                headers: {'Content-Type': 'application/json'},
-                method: 'POST',
-                body: JSON.stringify({"query": query})
-            }).then((a) =>{
-                return a.json()
-            }).then((b) => {
-                return b
-            })
-        } catch (err) {
-            console.log(err)
-        } 
-    }
-
-    
-    function placeBlockDots() {
-        if (dotsMenuStyle != "dotsMenu") {
-            setDotsMenuStyle("dotsMenu");
-        } else {
-            setDotsMenuStyle("hidden dotsMenu");
-        }
-    }
 
   return (
 
-    <div className="placeSearchBlock" id={props.place.id} onClick={() => {props.onChoose(props.place.id); props.onChoose2()}}>
+    <div className="placeSearchBlock" id={props.place.id} onClick={() => {props.onChoose(props.place.id); props.onChoose2(props.place)}}>
         <div className="placeSearchBlockTop">
             <div className="placeSearchBlockInfo">
                 <div className="placeSearchBlockAvatar">

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {gql} from 'graphql-request';
-import "./Login.css"
 import {Link} from 'react-router-dom';
+import {gql} from 'graphql-request';
 
-function Login(props) {
+import "./Login.css"
+
+function Login() {
 
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -23,36 +24,25 @@ function Login(props) {
   `;
 
   async function signIn(e) {
-
     e.preventDefault();
-
     try {
       const res = await fetch(process.env.REACT_APP_SERVER_IP, {
           headers: {'Content-Type': 'application/json'},
           method: 'POST',
           body: JSON.stringify({"query": query})
       })
-
       let a = await res.json();
-
       try {
-
         localStorage.setItem("user_id", a.data.signin.user.id);
         localStorage.setItem("token", a.data.signin.token);
         window.location.href = "http://localhost:3000/profile";
-        
       } catch (e) {
-
         setErrorText(a.errors[0].message)
         setErrorStyle("logFormError");
-
       }
-
     } catch (err) {
-
         setErrorText(err)
         setErrorStyle("logFormError");
-
     }
   }
 
@@ -65,25 +55,15 @@ function Login(props) {
   }
 
   return (
-
-    <div className='modal'>
-
+    <div className='logModal slide'>
       <div className="logPage">
-
-          {/* <div className="logXDiv">
-            <div className="logX" onClick={closeModal} to="/"> <img src={crossImg}></img> </div>
-          </div> */}
-
           <div className="logFormDiv">
-
             <div className="logFormTitle">
               <p className="logFormTitleText"> Sign In </p>
             </div>
-
             <div className={errorStyle}>
               <p className="logFormErrorText">{errorText}</p>
             </div>
-
             <form className='logForm' method='POST' onSubmit={signIn}>
               <input type="email" name="email" onChange={handleEmailChange} value={email} placeholder='Email' required></input><br></br>
               <input type="password"  name="pass" onChange={handlePassChange} value={pass} placeholder='Password' required></input><br></br>
@@ -94,23 +74,14 @@ function Login(props) {
                 </div>
               </div>
             </form>
-
           </div>
-
           <hr></hr>
-
           <div className="logRegDiv">
-
             <p> Don't have an account yet? </p>
-
-            <Link to="/registration"> <button> Register </button> </Link>
-
+            <Link to="/registration"> <button> Create one </button> </Link>
           </div>
-
       </div>
-      
     </div>
-
   );
 }
 

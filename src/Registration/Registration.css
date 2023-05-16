@@ -1,21 +1,21 @@
-.modal {
+.regModal {
     display: flex;
     justify-content: center;
-    margin-top: 3vw;
     width: 100%;
     outline-style: none;
 }
 
 .regPage {
-    width: 30vw;
+    width: 520px;
     height: fit-content;
     background-color: white;
     border-radius: 0.5vw;
     border-color: #E9E9E9;
     border-width: 0.1vw;
     border-style: solid;
-    padding: 1vw;
+    padding: 12px;
     text-align: center;
+    margin: 36px 0px;
 }
 
 .regDiv {
@@ -27,65 +27,72 @@
 .regFormDiv {
     width: 100%;
     background-color: white;
+    margin-bottom: 8px;
 }
 
-.regForm {
-    margin-bottom: 2vw;
+.regFormPrompt {
+    font-size: 18px;
+    margin: 16px 0px 6px 0px;
 }
 
-
-.birthdayCheck {
+.regFormBirthdayCheck {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    margin: 24px 12px 12px 12px;
+    margin-left: 96px;
 }
 
-.birthdayCheckbox { 
+.regFormBirthdayCheckbox { 
     margin: 12px;
+    width: 18px;
+    aspect-ratio: 1 / 1;
 }
 
-.birthdayCheck > p { 
+.regFormBirthdayCheck > p { 
     font-size: 21px;
 }
 
-.locationCheck {
+.regFormLocationCheck {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    margin: 12px;
+    margin-left: 96px;
 }
 
-.locationCheckbox { 
+.regFormLocationCheckbox { 
     margin: 12px;
+    width: 18px;
+    aspect-ratio: 1 / 1;
 }
 
-.locationCheck > p { 
+.regFormLocationCheck > p { 
     font-size: 21px;
 }
 
-
-.avatarCheck {
+.regFormAvatarCheck {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    margin: 12px;
+    margin-left: 96px;
 }
 
-.avatarCheckbox { 
+.regFormAvatarCheckbox { 
     margin: 12px;
+    width: 18px;
+    aspect-ratio: 1 / 1;
 }
 
-.avatarCheck > p { 
+.regFormAvatarCheck > p { 
     font-size: 21px;
 }
-
-
-
 
 .regFormImage {
     display: flex !important;
     justify-content: center;
+}
+
+.regFormImage.hidden {
+    height: 0;
 }
 
 .regFormImage > div {
@@ -166,7 +173,6 @@ div:has(> .regFormImagePreview) {
 }
 
 .regFormButtons {
-    width: 24vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -212,7 +218,7 @@ div:has(> .regFormImagePreview) {
 }
 
 .regFormTitleText {
-    font-size: 2vw;
+    font-size: 36px
 }
 
 
@@ -239,7 +245,6 @@ div:has(> .regFormImagePreview) {
     background-color: #ECECEC;
 }
 
-
 .regForm > input {
     border-radius: 0.65vw;
 }
@@ -264,12 +269,11 @@ div:has(> .regFormImagePreview) {
     font-style: italic;
 }
 
-
 .regForm > input[type="password"] {
-    width: 15vw;
-    font-size: 1vw;
-    margin: 0.5vw;
-    padding: 0.6vw;
+    width: 280px;
+    font-size: 18px;
+    margin: 10px 0px 8px 0px;
+    padding: 12px;
     border-style: solid;
     border-color: #E9E9E9;
     border-width:  0.1vw;
@@ -277,22 +281,21 @@ div:has(> .regFormImagePreview) {
 }
 
 .regForm > input[type="email"] {
-    width: 15vw;
-    font-size: 1vw;
-    margin: 0.5vw;
-    padding: 0.6vw;
+    width: 280px;
+    font-size: 18px;
+    margin: 10px 0px 8px 0px;
+    padding: 12px;
     border-style: solid;
     border-color: #E9E9E9;
     border-width:  0.1vw;
     background-color: #f0f0f0;
 }
 
-
 .regForm > input[type="date"] {
-    width: 15vw;
-    font-size: 1vw;
-    margin: 0.5vw;
-    padding: 0.6vw;
+    width: 280px;
+    font-size: 18px;
+    margin: 10px 0px 8px 0px;
+    padding: 12px;
     border-style: solid;
     border-color: #E9E9E9;
     border-width:  0.1vw;
@@ -300,10 +303,10 @@ div:has(> .regFormImagePreview) {
 }
 
 .regForm > input[type="text"] {
-    width: 15vw;
-    font-size: 1vw;
-    margin: 0.5vw;
-    padding: 0.6vw;
+    width: 280px;
+    font-size: 18px;
+    margin: 10px 0px 8px 0px;
+    padding: 12px;
     border-style: solid;
     border-color: #E9E9E9;
     border-width:  0.1vw;
@@ -313,12 +316,12 @@ div:has(> .regFormImagePreview) {
 .regFormButtons > input[type="submit"] {
     width: fit-content;
     border-width: 0px;
-    padding: 0.55vw 1.2vw 0.55vw 1.2vw !important;
+    padding: 12px 16px;
     margin: 26px;
     transition: 0.2s;
     background-color: #067BE2;
     color: white;
-    font-size: 1vw;
+    font-size: 18px;
 }
 
 .regRegDiv > a > button {
@@ -326,7 +329,7 @@ div:has(> .regFormImagePreview) {
     border-width: 0.1vw;
     border-style: solid;
     border-radius: 12px;
-    padding: 0.55vw 1.2vw 0.55vw 1.2vw !important;
+    padding: 12px;
     margin: 1.3vw;
     width: fit-content;
     transition: 0.2s;
@@ -344,4 +347,3 @@ div:has(> .regFormImagePreview) {
     opacity: 75%;
     cursor: pointer;
 }
-

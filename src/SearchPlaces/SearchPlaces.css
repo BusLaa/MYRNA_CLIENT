@@ -10,30 +10,40 @@
     background-color: #f0f0f0;
 }
 
-html::-webkit-scrollbar {
-    width: 6px;              
-  }
-  
-  html::-webkit-scrollbar-track {
-    background: #E9E9E9;
-    border-radius: 32px;      
-  }
-  
-  html::-webkit-scrollbar-thumb {
-    background-color: #d1d1d1;  
-    border-radius: 32px;      
-  }
-
 .placesDiv {
     margin-top: 12px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    height: 275px;
+    max-height: 290px;
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-gutter: stable;
-    border-bottom: 0.1vw solid #E9E9E9;
-    border-top: 0.1vw solid #E9E9E9;
+}
+
+.placesDivBorders {
+  border-bottom: 0.1vw solid #E9E9E9;
+  border-top: 0.1vw solid #E9E9E9;
+}
+
+
+.placesDiv::-webkit-scrollbar {
+  width: 8px;              
+}
+  
+.placesDiv::-webkit-scrollbar-track {
+  background: #E9E9E9;
+  border-radius: 32px;      
+}
+  
+.placesDiv::-webkit-scrollbar-thumb {
+  background-color: #d1d1d1;  
+  border-radius: 32px;      
+}
+
+.addMeetingFormPlaceFoundDiv {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

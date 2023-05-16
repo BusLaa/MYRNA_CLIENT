@@ -71,7 +71,7 @@ function AllPosts (props) {
         }       
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         getData()
             .then((a) =>{
                 a = a.data.getAllPosts;

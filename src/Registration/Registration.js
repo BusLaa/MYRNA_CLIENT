@@ -191,17 +191,14 @@ function Registration (props) {
 
   function handleCountryChange(e) {
     setCountry(e.target.value);
-    console.log(e.target.value);
   }
 
   function handleCityChange(e) {
     setCity(e.target.value);
-    console.log(e.target.value);
   }
 
   function handlePostalCodeChange(e) {
     setPostalCode(e.target.value);
-    console.log(e.target.value);
   }
 
   function toggleBirthday(e) {
@@ -267,7 +264,7 @@ function Registration (props) {
   }
     
   return (
-    <div className='modal'>
+    <div className='regModal slide'>
       <div className="regPage">
           <div className="regFormDiv">
             <div className="regFormTitle">
@@ -277,25 +274,27 @@ function Registration (props) {
               <p className="regFormErrorText">{errorText}</p>
             </div>
             <form className='regForm' method='POST' onSubmit={(e) => {signUp(e)}}>
+              <p className="regFormPrompt"> Mandatory Info </p>
               <input type="email" name="email" onChange={handleEmailChange} value={email} placeholder='Email' required></input><br></br>
               <input type="password"  name="pass" minLength={9} onChange={handlePassChange} value={pass} placeholder='Password' required></input><br></br>
               <input type="text" name="firstname" onChange={handleFirstnameChange} value={firstName} placeholder='First Name' required></input><br></br>
               <input type="text" name="lastname" onChange={handleLastnameChange} value={lastName} placeholder='Last Name' required></input><br></br>
-              <div className="birthdayCheck">
-                <input className="birthdayCheckbox" type="checkbox" onChange={toggleBirthday}></input>
-                <p> Add birthday </p>
+              <p className="regFormPrompt"> Additional Info </p>
+              <div className="regFormBirthdayCheck">
+                <input className="regFormBirthdayCheckbox" type="checkbox" onChange={toggleBirthday}></input>
+                <p> Birthday </p>
               </div>
               <input className={birthdayStyle} type="date" name="birthday" onChange={handleBirthdayChange} value={birthday} required={dateRequire}></input>
-              <div className="locationCheck">
-                <input className="locationCheckbox" type="checkbox" onChange={toggleLocation}></input>
-                <p> Add location </p>
+              <div className="regFormLocationCheck">
+                <input className="regFormLocationCheckbox" type="checkbox" onChange={toggleLocation}></input>
+                <p> Country, City, Postal Code </p>
               </div>
               <input className={locationStyle} type="text" placeholder="Country" name="country" onChange={handleCountryChange} value={country} required={locationRequire}></input>
               <input className={locationStyle} type="text" placeholder="City" name="city" onChange={handleCityChange} value={city} required={locationRequire}></input>
               <input className={locationStyle} type="text" placeholder="Postal Code" name="postalCode" onChange={handlePostalCodeChange} value={postalCode} required={locationRequire}></input>
-              <div className="avatarCheck">
-                <input className="avatarCheckbox" type="checkbox" onChange={toggleAvatar}></input>
-                <p> Add avatar </p>
+              <div className="regFormAvatarCheck">
+                <input className="regFormAvatarCheckbox" type="checkbox" onChange={toggleAvatar}></input>
+                <p> Avatar </p>
               </div>
               <div className={avatarStyle}>
                   <div>

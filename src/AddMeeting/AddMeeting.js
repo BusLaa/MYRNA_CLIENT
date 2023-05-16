@@ -9,10 +9,13 @@ function AddMeeting (props) {
     const [date, setDate] = useState("");
     const [type, setType] = useState("1");
 
-    const [errorStyle, setErrorStyle] = useState("addMeetingFormError hidden");
+    const [errorStyle, setErrorStyle] = useState("hidden");
     const [errorText, setErrorText] = useState("");
 
     const [chooseId, setChooseId] = useState(0);
+
+    const [placeSearchbarStyle, setPlaceSearchbarStyle] = useState("addMeetingFormPlaceSearchbar");
+    const [placeFoundDivStyle, setPlaceFoundDivStyle] = useState("hidden");
 
     let query = gql`
         mutation CreateNewMeeting {
@@ -59,7 +62,15 @@ function AddMeeting (props) {
     }, [chooseId])
 
     function onChoose(id) {
+        setPlaceFoundDivStyle("addMeetingFormPlaceFoundDiv");
+        setPlaceSearchbarStyle("hidden");
         setChooseId(id);
+    }
+
+    function onDechoose() {
+        setPlaceFoundDivStyle("hidden");
+        setPlaceSearchbarStyle("addMeetingFormPlaceSearchbar")
+        setChooseId(0);
     }
    
     return(
@@ -89,12 +100,9 @@ function AddMeeting (props) {
                                     <input onChange={(e) => {setDate(e.target.value); console.log(e.target.value)}} type="date"></input>
                                 </div>
                             </div>
-                            {/* <div className='addMeetingHr'>
-                                <hr></hr>
-                            </div> */}
                             <div className='addMeetingFormPlace'>
                                 <p className='addMeetingFormPlaceText'>Choose the place</p>
-                                <SearchPlaces onChoose={onChoose}></SearchPlaces>
+                                <SearchPlaces placeSearchbarStyle={placeSearchbarStyle} placeFoundDivStyle={placeFoundDivStyle} onDechoose={onDechoose} onChoose={onChoose}></SearchPlaces>
                             </div>
                             <div className='addMeetingFormSubmit'>
                                 <input type="submit" value=" Here we go "></input>

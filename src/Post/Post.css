@@ -152,12 +152,15 @@
     margin: 18px 8px 18px 20px;
     z-index: 1;
     position: relative;
-    cursor: pointer;  
     transition: 0.35s;
     filter: brightness(0) saturate(100%) invert(85%) sepia(0%) saturate(16%) hue-rotate(74deg) brightness(89%) contrast(89%);
 }
 
-.postLike > img:hover {
+.postLike > img.hoverable {
+    cursor: pointer;  
+}
+
+.postLike > img.hoverable:hover {
     opacity: 75%;
     transform: rotateZ(-12deg) scale(1.15);
     filter: brightness(0) saturate(100%) invert(45%) sepia(4%) saturate(2500%) hue-rotate(192deg) brightness(125%) contrast(100%);

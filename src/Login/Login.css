@@ -1,13 +1,13 @@
-.modal {
+.logModal {
     display: flex;
     justify-content: center;
-    margin-top: 3vw;
+    margin-top: 36px;
     width: 100%;
     outline-style: none;
 }
 
 .logPage {
-    width: 30vw;
+    width: fit-content;
     height: fit-content;
     background-color: white;
     border-radius: 0.5vw;

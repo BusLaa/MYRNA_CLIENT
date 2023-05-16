@@ -289,7 +289,6 @@ function Profile (props) {
                         </div>
                         <input className={hiddenMe} type="button" onClick={logout} value="Logout"></input>
                         <Link to="/editProfile" state={user}><input className={hiddenMe} type="button" value="Edit"></input></Link>
-     
                         <input className={subscribeStyle} type="button" onClick={subsribe} value={subsribeText}></input>
                     </div>
                 </div>

@@ -29,14 +29,17 @@ function Post(props) {
     
     const [like, setLike] = useState(props.post.likes);
     const [likeTitle, setLikeTitle] = useState(props.post.likes);
-    const [likeStyle, setLikeStyle] = useState("");
+    const [likeStyle, setLikeStyle] = useState("hoverable");
 
-    const [dotsMenuStyle, setDotsMenuStyle] = useState("hidden dotsMenu");
+    const [dotsMenuStyle, setDotsMenuStyle] = useState("hidden");
 
-    const [hiddenMe, setHiddenMe] = useState("hidden dotsMenuButton");
-    const [hiddenSub, setHiddenSub] = useState("hidden dotsMenuButton");
+    const [hiddenMe, setHiddenMe] = useState("hidden");
+    const [hiddenSub, setHiddenSub] = useState("hidden");
 
     const [deleteId, setDeleteId] = useState(0);
+
+    const [postDotsStyle, setPostDotsStyle] = useState("hidden");
+    const [postCommentStyle, setPostCommentStyle] = useState("hidden");
 
     useEffect(() => {
         if (deleteId !== -1) {
@@ -55,16 +58,22 @@ function Post(props) {
     }, [likeTitle]);
 
     useEffect(() => {
-        if (props.post.isLiked) {
+        if (localStorage.getItem("user_id")) {
+            setPostDotsStyle("postDots");
+            setPostCommentStyle("postComment");
+            if (props.post.isLiked) {
+                setLikeStyle("blue hoverable");
+            } else {
+                setLikeStyle("hoverable");
+            }
+            if (props.post.isCornered) {
+                setAddToCornerText("Throw out of corner 👋");
+            } else {
+                setAddToCornerText("Add to corner ⭐");
+            } 
+        } else {
             setLikeStyle("blue");
-        } else {
-            setLikeStyle("");
-        }
-        if (props.post.isCornered) {
-            setAddToCornerText("Throw out of corner 👋");
-        } else {
-            setAddToCornerText("Add to corner ⭐");
-        }    
+        }   
     }, [])
 
     let query = gql`
@@ -136,10 +145,10 @@ function Post(props) {
             }).then((b) => {
                 if(typeof b.data.likePost !== 'boolean') throw new Error("likePost returned not boolean")
                 if (b.data.likePost) {
-                    setLikeStyle("blue");
+                    setLikeStyle("blue hoverable");
                     setLikeTitle(likeTitle + 1);
                 } else {
-                    setLikeStyle("");   
+                    setLikeStyle("hoverable");   
                     setLikeTitle(likeTitle - 1);       
                 }
             })     
@@ -267,7 +276,7 @@ function Post(props) {
                 <p> {props.post.author.lastName} </p>
                 </Link>
             </div>
-            <div className="postDots">
+            <div className={postDotsStyle}>
                 <img alt="settings" onClick={postDots} src={DotsImg}></img>
                 <div className={dotsMenuStyle}>
                     <div onClick={addToCorner} className={hiddenSub}> {addToCornerText} </div>
@@ -296,7 +305,7 @@ function Post(props) {
         <div className="postComments">
             {comments.map((comment) => <Comment setDeleteId={setDeleteId} key={comment.id} comment={comment}/>)}
         </div>
-        <div className="postComment">
+        <div className={postCommentStyle}>
             <input id="commentInput" onChange={(e) => {setContent(e.target.value)}} className='inputcont' placeholder='Express your opinion' type="text"></input>
             <i onClick={addComment} className="fa fa-paper-plane" aria-hidden='true'></i>
         </div>

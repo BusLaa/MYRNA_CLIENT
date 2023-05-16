@@ -6,7 +6,7 @@
     outline-style: none;
 }
 
-.regPage {
+.editPage {
     width: 30vw;
     height: fit-content;
     background-color: white;
@@ -18,18 +18,18 @@
     text-align: center;
 }
 
-.regDiv {
+.editDiv {
     justify-content: center;
     align-items: center;
     width: 100%;
 }
 
-.regFormDiv {
+.editFormDiv {
     width: 100%;
     background-color: white;
 }
 
-.regForm {
+.editForm {
     margin-bottom: 2vw;
 }
 
@@ -83,18 +83,18 @@
 
 
 
-.regFormImage {
+.editFormImage {
     display: flex !important;
     justify-content: center;
 }
 
-.regFormImage > div {
+.editFormImage > div {
     width: 55%;
     margin: 25px 0px;
     transition: 0.35s;    
 }
 
-.regFormImageArea {
+.editFormImageArea {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,12 +110,12 @@
     transition: 0.35s;    
 }
 
-.regFormImageArea:hover {
+.editFormImageArea:hover {
     opacity: 75%;
 }
 
 
-.regFormImageArea > input {
+.editFormImageArea > input {
     background-color:white;
     border-radius: 12px;
     border-color: #E9E9E9;
@@ -124,31 +124,31 @@
     text-align: center;
 }
 
-.regFormImageArea > i {
+.editFormImageArea > i {
     margin-top: 26px;
     font-size: 1.45rem;
 }
 
-.regFormImageArea > p {
+.editFormImageArea > p {
     font-size: 1.48rem;
 }
 
-.regFormImagePreview {
+.editFormImagePreview {
     border-radius: 12px;
     border-color: #E9E9E9;
     border-width: 0.1vw;
     border-style: solid;
 }
 
-.regFormImagePreview > i {
+.editFormImagePreview > i {
     text-shadow: 0px 0px 4px black;
 }
     
-.regFormImagePreview > p {
+.editFormImagePreview > p {
     text-shadow: 0px 0px 4px black;
 }
 
-div:has(> .regFormImagePreview) {
+div:has(> .editFormImagePreview) {
     width: 70%;
 }
 
@@ -158,106 +158,106 @@ div:has(> .regFormImagePreview) {
 
 
 
-.regFormButtonsDiv {
+.editFormButtonsDiv {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.regFormButtons {
+.editFormButtons {
     width: 24vw;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.regFormButtons > * {
+.editFormButtons > * {
     margin: 1.5vw 1vw 1.5vw 1vw;
 }
 
-.regFormButtons > p {
+.editFormButtons > p {
     color: #067BE2;
     font-size: 1.045vw;
     transition: 0.2s;
 }
 
-.regFormButtons > p:hover {
+.editFormButtons > p:hover {
     opacity: 75%;
     cursor: pointer;
 }
 
 
-.regXDiv {
+.editXDiv {
     display: flex;
     justify-content: end;
 }
 
-.regX {
+.editX {
     display: flex;
     align-items: center;
     cursor: pointer;
 }
 
-.regX > img {
+.editX > img {
     width: 0.95vw;
     filter: invert(37%) sepia(48%) saturate(6009%) hue-rotate(193deg) brightness(97%) contrast(95%);
 }
 
-.regFormTitle {
+.editFormTitle {
     width: 100%;
     padding: 2.2vw 0vw 1.6vw 0vw;
     display: flex;
     justify-content: center;
 }
 
-.regFormTitleText {
+.editFormTitleText {
     font-size: 2vw;
 }
 
 
-.regFormDiv > form {
+.editFormDiv > form {
     text-align: center;
 }
 
 
-.regRegDiv {
+.editeditDiv {
     text-align: center;
     margin-bottom: 2vw;
 }
 
-.regRegDiv > p {
+.editeditDiv > p {
     color: #989898;
     font-size: 1.25vw;
     margin-top: 4vw;
 }
 
 
-.regPage > hr {
+.editPage > hr {
     height: 0.05vw;
     border: none;
     background-color: #ECECEC;
 }
 
 
-.regForm > input {
+.editForm > input {
     border-radius: 0.65vw;
 }
 
-.regFormButtons > input {
+.editFormButtons > input {
     border-radius: 0.65vw;
 }
 
-.regRegDiv > input {
+.editeditDiv > input {
     border-radius: 0.65vw;
 }
 
 
-.regFormError {
+.editFormError {
     margin: 0.2vw 0vw 1.2vw 0vw;
 }
 
-.regFormErrorText {
+.editFormErrorText {
     font-size: 1.1vw;
     color: red;
     font-weight: 600;
@@ -265,7 +265,7 @@ div:has(> .regFormImagePreview) {
 }
 
 
-.regForm > input[type="password"] {
+.editForm > input[type="password"] {
     width: 15vw;
     font-size: 1vw;
     margin: 0.5vw;
@@ -276,7 +276,7 @@ div:has(> .regFormImagePreview) {
     background-color: #f0f0f0;
 }
 
-.regForm > input[type="email"] {
+.editForm > input[type="email"] {
     width: 15vw;
     font-size: 1vw;
     margin: 0.5vw;
@@ -288,7 +288,7 @@ div:has(> .regFormImagePreview) {
 }
 
 
-.regForm > input[type="date"] {
+.editForm > input[type="date"] {
     width: 15vw;
     font-size: 1vw;
     margin: 0.5vw;
@@ -299,7 +299,7 @@ div:has(> .regFormImagePreview) {
     background-color: #f0f0f0;
 }
 
-.regForm > input[type="text"] {
+.editForm > input[type="text"] {
     width: 15vw;
     font-size: 1vw;
     margin: 0.5vw;
@@ -310,7 +310,7 @@ div:has(> .regFormImagePreview) {
     background-color: #f0f0f0;
 }
 
-.regFormButtons > input[type="submit"] {
+.editFormButtons > input[type="submit"] {
     width: fit-content;
     border-width: 0px;
     padding: 0.55vw 1.2vw 0.55vw 1.2vw !important;
@@ -321,7 +321,7 @@ div:has(> .regFormImagePreview) {
     font-size: 1vw;
 }
 
-.regRegDiv > a > button {
+.editeditDiv > a > button {
     border-color: #E9E9E9;
     border-width: 0.1vw;
     border-style: solid;
@@ -335,12 +335,12 @@ div:has(> .regFormImagePreview) {
     font-size: 1vw;
 }
 
-.regFormButtons > input[type="submit"]:hover {
+.editFormButtons > input[type="submit"]:hover {
     opacity: 75%;
     cursor: pointer;
 }
 
-.regRegDiv > input[type="button"]:hover {
+.editeditDiv > input[type="button"]:hover {
     opacity: 75%;
     cursor: pointer;
 }

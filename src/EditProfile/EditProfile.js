@@ -60,7 +60,7 @@ function EditProfile (props) {
   `;
 
   async function imagePreview() {
-    const imageArea = document.querySelector('.regFormImageArea');
+    const imageArea = document.querySelector('.editFormImageArea');
     const inputFile = document.getElementById("image");
     if (inputFile != null) {
       inputFile.click();
@@ -71,8 +71,8 @@ function EditProfile (props) {
           const reader = new FileReader();
           reader.onload = () => {
             const imgUrl = reader.result;
-            if (!imageArea.classList.contains('regFormImagePreview')) {
-              imageArea.classList.add('regFormImagePreview');
+            if (!imageArea.classList.contains('editFormImagePreview')) {
+              imageArea.classList.add('editFormImagePreview');
             }
             imageArea.setAttribute('style', "background-image: url('" + imgUrl + "'); background-repeat: no-repeat; background-size: cover; background-blend-mode: hard-light");
         };
@@ -130,7 +130,7 @@ function EditProfile (props) {
         setLocationId(res_json.data.createLocation.id);
       } catch (e) {
         setErrorText(res_json.errors[0].message);
-        setErrorStyle("regFormError"); 
+        setErrorStyle("editFormError"); 
         setLocationId(-1);
       }
     } catch (e) {
@@ -164,7 +164,7 @@ function EditProfile (props) {
       })
     } catch (err) {
       setErrorText(err);
-      setErrorStyle("regFormError");
+      setErrorStyle("editFormError");
     }
   }
 
@@ -197,16 +197,16 @@ function EditProfile (props) {
   }
     
   return (
-    <div className='modal'>
-      <div className="regPage">
-          <div className="regFormDiv">
-            <div className="regFormTitle">
-              <p className="regFormTitleText"> Edit profile </p>
+    <div className='modal slide'>
+      <div className="editPage">
+          <div className="editFormDiv">
+            <div className="editFormTitle">
+              <p className="editFormTitleText"> Edit profile </p>
             </div>
             <div className={errorStyle}>
-              <p className="regFormErrorText">{errorText}</p>
+              <p className="editFormErrorText">{errorText}</p>
             </div>
-            <form className='regForm' method='POST' onSubmit={(e) => submitForm(e)}>
+            <form className='editForm' method='POST' onSubmit={(e) => submitForm(e)}>
               <input type="email" name="email" onChange={handleEmailChange} value={email} placeholder='Email' required></input><br></br>
               <input type="text" name="firstname" onChange={handleFirstnameChange} value={firstName} placeholder='First Name' required></input><br></br>
               <input type="text" name="lastname" onChange={handleLastnameChange} value={lastName} placeholder='Last Name' required></input><br></br>
@@ -214,17 +214,17 @@ function EditProfile (props) {
               <input type="text" placeholder="Country" name="country" onChange={handleCountryChange} value={country}></input>
               <input type="text" placeholder="City" name="city" onChange={handleCityChange} value={city}></input>
               <input type="text" placeholder="Postal Code" name="postalCode" onChange={handlePostalCodeChange} value={postalCode}></input>
-              <div className="regFormImage">
+              <div className="editFormImage">
                   <div>
-                      <div onClick={imagePreview} className="regFormImageArea">
-                          <input  multiple="multiple" maxLength={3} className='regFormImageInput' id="image" name="image" accept="image/png, image/jpeg" type="file" hidden></input>
+                      <div onClick={imagePreview} className="editFormImageArea">
+                          <input  multiple="multiple" maxLength={3} className='editFormImageInput' id="image" name="image" accept="image/png, image/jpeg" type="file" hidden></input>
                           <i className="fa fa-upload"></i>
                           <p> Upload a picture </p>
                       </div>
                   </div>
               </div>       
-              <div className="regFormButtonsDiv">
-                <div className='regFormButtons'>
+              <div className="editFormButtonsDiv">
+                <div className='editFormButtons'>
                   <input type="submit" value="Change an account"></input>
                 </div>
               </div>
