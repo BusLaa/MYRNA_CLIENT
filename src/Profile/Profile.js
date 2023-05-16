@@ -257,11 +257,6 @@ function Profile (props) {
         } 
     }
 
-    function goToEditUser() {
-        window.history.replaceState(user, "", "http://localhost:3000/editProfile");
-        window.location.href = "http://localhost:3000/editProfile";
-    }
-
     function enablePosts() {
         if (profileTumblerPostsStyle === "profileTumblerPosts") {
             setProfileTumblerPostsStyle("profileTumblerPosts blue");
@@ -293,7 +288,7 @@ function Profile (props) {
                             </div>               
                         </div>
                         <input className={hiddenMe} type="button" onClick={logout} value="Logout"></input>
-                        <input className={hiddenMe} type="button" onClick={goToEditUser} value="Edit"></input>
+                        <Link to="/editProfile" state={user}><input className={hiddenMe} type="button" value="Edit"></input></Link>
      
                         <input className={subscribeStyle} type="button" onClick={subsribe} value={subsribeText}></input>
                     </div>

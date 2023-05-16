@@ -40,19 +40,33 @@
 .avatar {
     border-radius: 32px;
     width: 40%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
     border-color:#ECECEC;
     border-width: 0.05vw;
     border-style: solid;
 }
-
 
 .userInfo {
     font-size: 21px;
     margin: 9px;
 }
 
-
 .profile > input[type="button"] {
+    min-width: 120px;
+    width: fit-content;
+    border-color: #E9E9E9;
+    border-style: none;
+    border-radius: 8px;
+    font-size: 18px;
+    padding: 8px 16px !important;
+    margin: 24px 8px;
+    background-color: #067BE2;
+    color: white;
+    transition: 0.2s;
+}
+
+.profile > a > input[type="button"] {
     min-width: 120px;
     width: fit-content;
     border-color: #E9E9E9;
@@ -71,6 +85,10 @@
     cursor: pointer;
 }
 
+.profile > a > input[type="button"]:hover {
+    opacity: 75%;
+    cursor: pointer;
+}
 
 
 .profileTumblerDiv {

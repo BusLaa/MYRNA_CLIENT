@@ -1,20 +1,40 @@
 import React, {useEffect, useState} from 'react';
+import { useLocation } from 'react-router-dom';
 import {gql} from 'graphql-request';
+
 import "./EditProfile.css"
 
 function EditProfile (props) {
 
-  const [email, setEmail] = useState(window.history.state.email);
-  const [firstName, setFirstname] = useState(window.history.state.firstName);
-  const [lastName, setLastname] = useState(window.history.state.lastName);
-  const [userId, setUserId] = useState(window.history.state.id);
+  const location = useLocation();
+  const [state, ] = useState(location.state);
 
-  const [birthday, setBirthday] = useState(new Date(parseInt(window.history.state.birthday)).toISOString().split('T')[0]);
-  
-  const [country, setCountry] = useState(window.history.state.location?.country);
-  const [city, setCity] = useState(window.history.state.location?.city);
-  const [postalCode, setPostalCode] = useState(window.history.state.location?.postalCode);
+  useEffect(() => {
+    if (state) {
+      setEmail(state.email);
+      setFirstname(state.firstName);
+      setLastname(state.lastName);
+      setUserId(state.id);
+      if (state.birthday) {
+        setBirthday(new Date(parseInt(state.birthday)).toISOString().split('T')[0]);
+      }
+      if (state.location) {
+        setCountry(state.location.country);
+        setCity(state.location.city);
+        setPostalCode(state.location.postalCode);
+      }
 
+    }
+  }, [state])
+
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstname] = useState("");
+  const [lastName, setLastname] = useState("");
+  const [userId, setUserId] = useState(localStorage.getItem("user_id"));
+  const [birthday, setBirthday] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [locationId, setLocationId] = useState(null);
 
   const [imageFile, setImageFile] = useState(null);
@@ -38,12 +58,6 @@ function EditProfile (props) {
       }
     }  
   `;
-
-  useEffect(() => {
-    return () => {
-      window.history.replaceState({}, document.title);
-    }
-  }, []);
 
   async function imagePreview() {
     const imageArea = document.querySelector('.regFormImageArea');
@@ -88,7 +102,7 @@ function EditProfile (props) {
           throw new Error(err);
       }    
     } else {
-      setImageId(window.history.state.avatar?.id);
+      setImageId(state.avatar?.id);
     }
   }
 
@@ -99,10 +113,10 @@ function EditProfile (props) {
         setLocationId(-1);
         return;
       }
-    if (country.trim() === window.history.state.location?.country.trim()
-      && city.trim() === window.history.state.location?.city.trim()
-      && postalCode.trim() === window.history.state.location?.postalCode.trim()) {
-        setLocationId(window.history.state.location?.id);
+    if (country.trim() === state.location?.country.trim()
+      && city.trim() === state.location?.city.trim()
+      && postalCode.trim() === state.location?.postalCode.trim()) {
+        setLocationId(state.location?.id);
         return;
     }
     try {
@@ -120,34 +134,38 @@ function EditProfile (props) {
         setLocationId(-1);
       }
     } catch (e) {
-      console.log(e);
       setLocationId(-1);
     }
   }
 
-  useEffect(() => {
-    if (locationId && imageId) {
-      try {
-        return fetch(process.env.REACT_APP_SERVER_IP, {
-            headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token") || null},
-            method: 'POST',
-            body: JSON.stringify({"query": query})
-        }).then((res) =>{
-            return res.json();
-        }).then((b) => {
-          window.location.href = "http://localhost:3000/profile";
-        })
-      } catch (err) {
-        setErrorText(err);
-        setErrorStyle("regFormError");
-      }
-    }
-  }, [locationId, imageId]);
-
-  async function editProfile(e) {
+  async function submitForm(e) {
     e.preventDefault();
     uploadImage();
     createLocation();
+  }
+
+  useEffect(() => {
+    if (locationId && imageId) {
+      editProfile();
+    }
+  }, [locationId, imageId]);
+
+  async function editProfile() {
+    try {
+      return fetch(process.env.REACT_APP_SERVER_IP, {
+          headers: {'Content-Type': 'application/json', 'verify-token': localStorage.getItem("token") || null},
+          method: 'POST',
+          body: JSON.stringify({"query": query})
+      }).then((res) =>{
+          return res.json();
+      }).then((b) => {
+        window.location.href = "http://localhost:3000/profile";
+        return b;
+      })
+    } catch (err) {
+      setErrorText(err);
+      setErrorStyle("regFormError");
+    }
   }
 
   function handleEmailChange(e) {
@@ -164,22 +182,18 @@ function EditProfile (props) {
 
   function handleBirthdayChange(e) {
     setBirthday(e.target.value);
-    console.log(e.target.value);
   }
 
   function handleCountryChange(e) {
     setCountry(e.target.value);
-    console.log(e.target.value);
   }
 
   function handleCityChange(e) {
     setCity(e.target.value);
-    console.log(e.target.value);
   }
 
   function handlePostalCodeChange(e) {
     setPostalCode(e.target.value);
-    console.log(e.target.value);
   }
     
   return (
@@ -192,17 +206,14 @@ function EditProfile (props) {
             <div className={errorStyle}>
               <p className="regFormErrorText">{errorText}</p>
             </div>
-            <form className='regForm' method='POST' onSubmit={(e) => editProfile(e)}>
+            <form className='regForm' method='POST' onSubmit={(e) => submitForm(e)}>
               <input type="email" name="email" onChange={handleEmailChange} value={email} placeholder='Email' required></input><br></br>
               <input type="text" name="firstname" onChange={handleFirstnameChange} value={firstName} placeholder='First Name' required></input><br></br>
               <input type="text" name="lastname" onChange={handleLastnameChange} value={lastName} placeholder='Last Name' required></input><br></br>
-
               <input  type="date" name="birthday" onChange={handleBirthdayChange} value={birthday}></input>
-
               <input type="text" placeholder="Country" name="country" onChange={handleCountryChange} value={country}></input>
               <input type="text" placeholder="City" name="city" onChange={handleCityChange} value={city}></input>
               <input type="text" placeholder="Postal Code" name="postalCode" onChange={handlePostalCodeChange} value={postalCode}></input>
-
               <div className="regFormImage">
                   <div>
                       <div onClick={imagePreview} className="regFormImageArea">
